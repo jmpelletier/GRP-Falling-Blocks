@@ -1,0 +1,217 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Demos/Shapes/BlockControllerShape1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/GridSquare.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/BalooTamma2-SemiBold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Scenes/Tools/LabeledHSlider.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Scenes/Demos/Scripts/BlockControlDemo.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Demos/Shapes/BlockControllerShape2.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 440, 20 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
+font_data = ExtResource( 4 )
+
+[node name="BlockControlDemo" type="Node2D"]
+script = ExtResource( 7 )
+spawn_scenes = [ ExtResource( 2 ), ExtResource( 9 ) ]
+
+[node name="Grid" type="TextureRect" parent="."]
+margin_left = 580.0
+margin_top = 200.0
+margin_right = 1380.0
+margin_bottom = 1000.0
+texture = ExtResource( 3 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Walls" type="StaticBody2D" parent="Grid"]
+
+[node name="TopCollision" type="CollisionShape2D" parent="Grid/Walls"]
+position = Vector2( 400, -20 )
+shape = SubResource( 1 )
+
+[node name="BottomCollision" type="CollisionShape2D" parent="Grid/Walls"]
+position = Vector2( 400, 820 )
+shape = SubResource( 1 )
+
+[node name="LeftCollision" type="CollisionShape2D" parent="Grid/Walls"]
+position = Vector2( -20, 400 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="RightCollision" type="CollisionShape2D" parent="Grid/Walls"]
+position = Vector2( 820, 400 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Obstacles" type="StaticBody2D" parent="Grid"]
+modulate = Color( 0.827451, 0.172549, 0.172549, 1 )
+
+[node name="Block" parent="Grid/Obstacles" instance=ExtResource( 8 )]
+position = Vector2( 500, 300 )
+
+[node name="Block2" parent="Grid/Obstacles" instance=ExtResource( 8 )]
+position = Vector2( 460, 340 )
+
+[node name="Block3" parent="Grid/Obstacles" instance=ExtResource( 8 )]
+position = Vector2( 420, 380 )
+
+[node name="QuantizedTimer" parent="." instance=ExtResource( 1 )]
+units_per_minute = 60
+loop = false
+process_in_physics_loop = true
+
+[node name="BlockController" parent="." instance=ExtResource( 2 )]
+position = Vector2( 800, 260 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+margin_left = 580.0
+margin_top = 40.0
+margin_right = 1380.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 800, 120 )
+rect_pivot_offset = Vector2( -480, 60 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HorizontalSpeedSlider" parent="UI" instance=ExtResource( 5 )]
+focus_mode = 0
+max_value = 20.0
+step = 0.1
+value = 1.0
+
+[node name="Label" parent="UI/HorizontalSpeedSlider" index="0"]
+custom_fonts/font = SubResource( 2 )
+decimal_digits = 1
+custom_format_string = "%.1f cells per second"
+
+[node name="Description" type="Label" parent="UI/HorizontalSpeedSlider"]
+margin_top = -24.2017
+margin_right = 52.0
+margin_bottom = -5.20174
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Speed (x axis)"
+
+[node name="VerticalSpeedSlider" parent="UI" instance=ExtResource( 5 )]
+margin_top = 40.0
+margin_bottom = 56.0
+focus_mode = 0
+max_value = 20.0
+step = 0.1
+value = 1.0
+
+[node name="Label" parent="UI/VerticalSpeedSlider" index="0"]
+custom_fonts/font = SubResource( 2 )
+decimal_digits = 1
+custom_format_string = "%.1f cells per second"
+
+[node name="Description" type="Label" parent="UI/VerticalSpeedSlider"]
+margin_top = -24.2017
+margin_right = 52.0
+margin_bottom = -5.20174
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Speed (y axis)"
+
+[node name="EasingSlider" parent="UI" instance=ExtResource( 5 )]
+margin_top = 80.0
+margin_bottom = 96.0
+focus_mode = 0
+max_value = 0.9
+step = 0.01
+value = 0.5
+
+[node name="Label" parent="UI/EasingSlider" index="0"]
+custom_fonts/font = SubResource( 2 )
+
+[node name="Description" type="Label" parent="UI/EasingSlider"]
+margin_top = -24.2017
+margin_right = 52.0
+margin_bottom = -5.20174
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Easing"
+
+[node name="DumpBlocksButton" type="Button" parent="UI"]
+margin_left = 700.0
+margin_top = 60.0
+margin_right = 800.0
+margin_bottom = 100.0
+focus_mode = 0
+text = "Dump blocks"
+
+[node name="SpawnButton" type="Button" parent="UI"]
+margin_left = 700.0
+margin_right = 800.0
+margin_bottom = 40.0
+disabled = true
+text = "Spawn"
+
+[node name="Description" type="Label" parent="."]
+margin_left = 60.0
+margin_top = 20.0
+margin_right = 500.0
+margin_bottom = 809.0
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "This scene demonstrates how to use the BlockController node.
+
+This node uses user input to control its movement. This motion is constrained by the cell size parameter so that it is always aligned on a grid.
+
+You can change the speed at which the blocks move when the player holds down on the movement keys by changing the maximum rows per second parameter. You can constrain motion to a single dimension by setting either  x or y values to 0.
+
+By setting the easing parameter to a value between 0 and 1, you can adjust the animation -- at 0 motion is instantaneous, closer to 1, the blocks will smoothly move to their target cell.
+
+Note that child nodes must inherit from CollisionShape2D for collisions to function. Normally, you would add Block instances to create a shape.
+
+Try moving or adding obstables, as well as child blocks to see how collisions work.
+
+Check the input map in project settings. The BlockController uses the following actions:
+
+move_left
+move_right
+move_up
+move_down
+rotate_clockwise
+rotate_counterclockwise"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description2" type="Label" parent="."]
+margin_left = 1440.0
+margin_top = 20.0
+margin_right = 1880.0
+margin_bottom = 809.0
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "When you call a BlockController's dump_blocks function, all its child nodes are moved to another node you must specify using the  dump target parameter.
+
+As a default behaviour, once a BlockController has \"dumped\" its  nodes to another parent, it is then deleted. If you wish to keep the BlockController, pass \"false\" as an argument."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="value_changed" from="UI/HorizontalSpeedSlider" to="." method="_on_HorizontalSpeedSlider_value_changed"]
+[connection signal="value_changed" from="UI/VerticalSpeedSlider" to="." method="_on_VerticalSpeedSlider_value_changed"]
+[connection signal="value_changed" from="UI/EasingSlider" to="." method="_on_EasingSlider_value_changed"]
+[connection signal="pressed" from="UI/DumpBlocksButton" to="." method="_on_DumpBlocksButton_pressed"]
+[connection signal="pressed" from="UI/SpawnButton" to="." method="_on_SpawnButton_pressed"]
+
+[editable path="BlockController"]
+[editable path="UI/HorizontalSpeedSlider"]
+[editable path="UI/VerticalSpeedSlider"]
+[editable path="UI/EasingSlider"]

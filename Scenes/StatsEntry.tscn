@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/StatsFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=2]
+
+[node name="StatsEntry" type="VBoxContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -1920.0
+margin_bottom = 1080.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 1920.0
+margin_bottom = 33.0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "SCORE"
+align = 2
+
+[node name="Value" type="Label" parent="."]
+margin_top = 37.0
+margin_right = 1920.0
+margin_bottom = 90.0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "1,234,567"
+align = 2

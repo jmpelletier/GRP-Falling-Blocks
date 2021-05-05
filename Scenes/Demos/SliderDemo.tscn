@@ -1,0 +1,139 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/Tools/LabeledVSlider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fonts/BalooTamma2-SemiBold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Scenes/Tools/LabeledHSlider.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Tools/UrlButton.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 3 )
+
+[node name="SliderDemo" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = 40.0
+margin_right = -100.0
+margin_bottom = -60.0
+custom_constants/separation = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_right = 1720.0
+margin_bottom = 41.0
+
+[node name="Description" type="Label" parent="VBoxContainer/CenterContainer"]
+margin_left = 460.0
+margin_right = 1260.0
+margin_bottom = 41.0
+rect_min_size = Vector2( 800, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "This scene demonstrates how to use the labeled sliders. These are normal HSlider and VSlider nodes that have a self-updating labels attached to them."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 141.0
+margin_right = 1720.0
+margin_bottom = 341.0
+custom_constants/separation = 240
+alignment = 1
+
+[node name="LabeledVSlider" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 529.0
+margin_right = 545.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="Label" parent="VBoxContainer/HBoxContainer/LabeledVSlider" index="0"]
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+
+[node name="Description" type="Label" parent="VBoxContainer/HBoxContainer/LabeledVSlider"]
+margin_top = 239.0
+margin_right = 220.0
+margin_bottom = 478.0
+rect_min_size = Vector2( 220, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Check \"editable children\" by right-clicking the slider node to reveal the label.  You can then  customize the label, changing its appearance or position. If you change the font, make sure to use the \"make unique\" option if you don't want all labels to be affected."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabeledHSlider" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 785.0
+margin_right = 935.0
+rect_min_size = Vector2( 150, 0 )
+step = 0.01
+
+[node name="Label" parent="VBoxContainer/HBoxContainer/LabeledHSlider" index="0"]
+margin_left = 4.0
+margin_top = 25.0
+margin_right = 44.0
+margin_bottom = 78.0
+decimal_digits = 4
+
+[node name="Description" type="Label" parent="VBoxContainer/HBoxContainer/LabeledHSlider"]
+margin_left = 4.0
+margin_top = 99.0
+margin_right = 224.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 220, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Try changing the slider label's decimal digits parameter. If this value is 0 or less, the number will be displayed as an integer."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabeledVSlider2" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 1175.0
+margin_right = 1191.0
+rect_min_size = Vector2( 0, 200 )
+step = 0.001
+
+[node name="Label" parent="VBoxContainer/HBoxContainer/LabeledVSlider2" index="0"]
+decimal_digits = 5
+custom_format_string = "%06.1f km"
+
+[node name="Description" type="Label" parent="VBoxContainer/HBoxContainer/LabeledVSlider2"]
+margin_left = 5.0
+margin_top = 259.0
+margin_right = 225.0
+margin_bottom = 498.0
+rect_min_size = Vector2( 220, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "You can also provide a custom format string to the slider label. See the official Godot reference to learn how to write this string. If this string is not empty, the decimal digits parameter is ignored."
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UrlButton" parent="VBoxContainer/HBoxContainer/LabeledVSlider2" instance=ExtResource( 5 )]
+margin_left = 5.0
+margin_top = 449.0
+margin_right = 51.0
+margin_bottom = 479.0
+text = "Open Godot Reference"
+url = "https://docs.godotengine.org/en/stable/getting_started/scripting/gdscript/gdscript_format_string.html"
+
+[editable path="VBoxContainer/HBoxContainer/LabeledVSlider"]
+[editable path="VBoxContainer/HBoxContainer/LabeledHSlider"]
+[editable path="VBoxContainer/HBoxContainer/LabeledVSlider2"]

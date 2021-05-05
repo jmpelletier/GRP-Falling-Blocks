@@ -1,0 +1,119 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/StatsEntry.tscn" type="PackedScene" id=1]
+
+[node name="Stats" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1720.0
+margin_bottom = -480.0
+rect_min_size = Vector2( 200, 600 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" parent="Container" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_right = 200.0
+margin_bottom = 116.0
+
+[node name="Label" parent="Container/Score" index="0"]
+margin_right = 200.0
+margin_bottom = 33.0
+
+[node name="Value" parent="Container/Score" index="1"]
+margin_top = 37.0
+margin_right = 200.0
+margin_bottom = 90.0
+
+[node name="BestScore" parent="Container" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 120.0
+margin_right = 200.0
+margin_bottom = 237.0
+
+[node name="Label" parent="Container/BestScore" index="0"]
+margin_right = 200.0
+margin_bottom = 33.0
+text = "BEST SCORE"
+
+[node name="Value" parent="Container/BestScore" index="1"]
+margin_top = 37.0
+margin_right = 200.0
+margin_bottom = 90.0
+
+[node name="Level" parent="Container" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 241.0
+margin_right = 200.0
+margin_bottom = 358.0
+
+[node name="Label" parent="Container/Level" index="0"]
+margin_right = 200.0
+margin_bottom = 33.0
+text = "LEVEL"
+
+[node name="Value" parent="Container/Level" index="1"]
+margin_top = 37.0
+margin_right = 200.0
+margin_bottom = 90.0
+text = "1"
+
+[node name="Lines" parent="Container" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 362.0
+margin_right = 200.0
+margin_bottom = 479.0
+
+[node name="Label" parent="Container/Lines" index="0"]
+margin_right = 200.0
+margin_bottom = 33.0
+text = "LINES"
+
+[node name="Value" parent="Container/Lines" index="1"]
+margin_top = 37.0
+margin_right = 200.0
+margin_bottom = 90.0
+text = "1"
+
+[node name="Time" parent="Container" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 483.0
+margin_right = 200.0
+margin_bottom = 600.0
+
+[node name="Label" parent="Container/Time" index="0"]
+margin_right = 200.0
+margin_bottom = 33.0
+text = "TIME"
+
+[node name="Value" parent="Container/Time" index="1"]
+margin_top = 37.0
+margin_right = 200.0
+margin_bottom = 90.0
+text = "00:00.00"
+
+[editable path="Container/Score"]
+[editable path="Container/BestScore"]
+[editable path="Container/Level"]
+[editable path="Container/Lines"]
+[editable path="Container/Time"]
