@@ -24,36 +24,36 @@ texture = ExtResource( 4 )
 modulate = Color( 1, 0, 0, 1 )
 texture = ExtResource( 3 )
 
-[node name="Units" type="Label" parent="Timeline/Line marker"]
-margin_left = 16.0
-margin_top = -112.0
-margin_right = 84.0
-margin_bottom = -59.0
+[node name="Ticks" type="Label" parent="Timeline/Line marker"]
+margin_left = 21.0
+margin_top = -116.661
+margin_right = 89.0
+margin_bottom = -63.661
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "units"
+text = "ticks"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="UnitLabel" type="Label" parent="Timeline/Line marker"]
-margin_left = -30.5055
-margin_top = -120.0
-margin_right = 9.49454
-margin_bottom = -67.0
+[node name="TicksLabel" type="Label" parent="Timeline/Line marker"]
+margin_left = -36.5646
+margin_top = -131.652
+margin_right = 11.4354
+margin_bottom = -62.652
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "00"
+text = "0"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Seconds" type="Label" parent="Timeline/Line marker"]
-margin_left = 16.0
-margin_top = 91.0
-margin_right = 87.0
-margin_bottom = 144.0
+margin_left = 21.0
+margin_top = 94.263
+margin_right = 92.0
+margin_bottom = 147.263
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "seconds"
@@ -62,13 +62,13 @@ __meta__ = {
 }
 
 [node name="TimeLabel" type="Label" parent="Timeline/Line marker"]
-margin_left = -72.0
+margin_left = -78.5251
 margin_top = 80.0
-margin_right = 8.0
-margin_bottom = 133.0
+margin_right = 16.4749
+margin_bottom = 149.0
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "00.00"
+text = "10.00"
 __meta__ = {
 "_edit_use_anchors_": false
 }

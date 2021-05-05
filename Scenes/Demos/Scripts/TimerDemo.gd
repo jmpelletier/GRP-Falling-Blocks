@@ -11,10 +11,10 @@ func _on_QuantizedTimer_update():
 
 func _on_QuantizedTimer_step():
 	$"Timeline/Dot marker".position.x = $QuantizedTimer.get_quantized_value()
-	$"Timeline/Line marker/UnitLabel".text = str($QuantizedTimer.get_units())
+	$"Timeline/Line marker/TicksLabel".text = str($QuantizedTimer.get_ticks())
 
 func _on_TurboButton_toggled(button_pressed):
 	if button_pressed:
-		$QuantizedTimer.units_per_minute *= 2
+		$QuantizedTimer.ticks_per_minute *= 2
 	else:
-		$QuantizedTimer.units_per_minute *= 0.5
+		$QuantizedTimer.ticks_per_minute *= 0.5

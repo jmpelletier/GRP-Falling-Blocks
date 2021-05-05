@@ -37,15 +37,15 @@ func spawn():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	default_ticks_per_minute = $QuantizedTimer.units_per_minute
+	default_ticks_per_minute = $QuantizedTimer.ticks_per_minute
 	rng.randomize()
 	spawn()
 	
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_pressed("move_down"):
-		$QuantizedTimer.units_per_minute = default_ticks_per_minute * soft_drop_speedup
+		$QuantizedTimer.ticks_per_minute = default_ticks_per_minute * soft_drop_speedup
 	else:
-		$QuantizedTimer.units_per_minute = default_ticks_per_minute
+		$QuantizedTimer.ticks_per_minute = default_ticks_per_minute
 	
 func _on_QuantizedTimer_on_step():
 	if block_controller and not game_over:
