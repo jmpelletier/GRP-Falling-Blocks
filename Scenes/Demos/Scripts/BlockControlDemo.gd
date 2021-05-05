@@ -53,3 +53,4 @@ func _on_SpawnButton_pressed():
 		new_object.set_position(spawn_point)
 		new_object.easing = $UI/EasingSlider.value
 		new_object.maximum_cells_per_second = Vector2($UI/HorizontalSpeedSlider.value, $UI/VerticalSpeedSlider.value)
+		new_object.dump_target = $Grid/Obstacles

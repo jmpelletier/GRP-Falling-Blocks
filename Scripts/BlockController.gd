@@ -23,13 +23,55 @@ var motion = Vector2.ZERO
 var target_position:Vector2
 var rotation_rad = 0
 
+# Move by the specified number of cells
+func move(x_cells:int, y_cells:int):
+	var old_target_position = target_position
+	target_position += Vector2(x_cells, y_cells) * cell_size
+	
+	var move_vertically = y_cells != 0
+	var move_horizontally = x_cells != 0
+	var delta_position = target_position - position
+	
+	if move_vertically and move_horizontally:
+		var will_collide = test_move(transform, Vector2(0, delta_position.y))
+		if will_collide: # Cannot move vertically
+			# Let's see if we can move horizontally
+			will_collide = test_move(transform, Vector2(delta_position.x, 0))
+			if will_collide: # We cannot move in any direction
+				target_position = old_target_position
+				return false
+			else: # Can move horizontally
+				# Let's try moving horizontally, THEN vertically
+				var virtual_transform = transform
+				virtual_transform.origin += Vector2(delta_position.x, 0)
+				will_collide = test_move(virtual_transform, Vector2(0, delta_position.y))
+				if will_collide: # That didn't work either
+					target_position = old_target_position
+					return false
+		else:
+			# Let's try moving vertically, THEN horizontally
+			var virtual_transform = transform
+			virtual_transform.origin += Vector2(0, delta_position.y)
+			will_collide = test_move(virtual_transform, Vector2(delta_position.x, 0))
+			if will_collide: # That didn't work
+				target_position.x = old_target_position.x
+				return false
+			
+	elif move_vertically or move_horizontally:
+		var will_collide = test_move(transform, delta_position)
+		if will_collide:
+			target_position = old_target_position
+			return false
+			
+	return true
+
 # Sends child blocks to the dump_target node. Deletes this node if 
 # destroy_self is true.
 func dump_blocks(destroy_self = true):
 	# Move to target position to avoid blocks falling off the grid lines.
 	position = target_position 
 	if dump_target:
-		var new_parent = get_node(dump_target)
+		var new_parent = get_node(dump_target) if dump_target is NodePath else dump_target
 		for child in get_children():
 			var global_transform = child.global_transform
 			remove_child(child)
@@ -112,42 +154,11 @@ func _update(delta):
 		motion_input.y += 1
 	
 	motion += motion_input * maximum_cells_per_second * delta
+	
 	var quantized_motion = Vector2(int(motion.x), int(motion.y))
 	motion -= quantized_motion
 	
-	var old_target_position = target_position
-	target_position += quantized_motion * cell_size
-	
-	var move_vertically = abs(quantized_motion.y) > 0
-	var move_horizontally = abs(quantized_motion.x) > 0
-	var delta_position = target_position - position
-	
-	if move_vertically and move_horizontally:
-		var will_collide = test_move(transform, Vector2(0, delta_position.y))
-		if will_collide: # Cannot move vertically
-			# Let's see if we can move horizontally
-			will_collide = test_move(transform, Vector2(delta_position.x, 0))
-			if will_collide: # We cannot move in any direction
-				target_position = old_target_position
-			else: # Can move horizontally
-				# Let's try moving horizontally, THEN vertically
-				var virtual_transform = transform
-				virtual_transform.origin += Vector2(delta_position.x, 0)
-				will_collide = test_move(virtual_transform, Vector2(0, delta_position.y))
-				if will_collide: # That didn't work either
-					target_position = old_target_position
-		else:
-			# Let's try moving vertically, THEN horizontally
-			var virtual_transform = transform
-			virtual_transform.origin += Vector2(0, delta_position.y)
-			will_collide = test_move(virtual_transform, Vector2(delta_position.x, 0))
-			if will_collide: # That didn't work
-				target_position.x = old_target_position.x
-			
-	elif move_vertically or move_horizontally:
-		var will_collide = test_move(transform, delta_position)
-		if will_collide:
-			target_position = old_target_position
+	move(quantized_motion.x, quantized_motion.y)
 
 	position = lerp(target_position, position, easing)
 	
