@@ -18,6 +18,12 @@ export var maximum_cells_per_second = Vector2(4, 4)
 # before moving to the next cell
 export var autoshift_delay = 0.5
 
+# When "kicking" is allowed, the blocks are translated to allow rotation when
+# it would otherwise be blocked
+export var allow_wall_kick = true
+export var allow_floor_kick = true
+export var allow_ceiling_kick = true
+
 # Gradually ease into target cell when > 0
 export(float, 0.0, 0.99) var easing = 0.0
 
@@ -108,7 +114,8 @@ func _rotate_node(node, theta):
 func _rotate_blocks(theta):
 	# We don't actually rotate the transform, instead we move child nodes
 	# individually.
-	for child in get_children():
+	var children = get_children()
+	for child in children:
 		_rotate_node(child, theta)
 	
 	# After rotation, check for collisions. It is tempting to use something like:
@@ -119,9 +126,70 @@ func _rotate_blocks(theta):
 	var will_collide = test_move(transform, Vector2.ZERO)
 	
 	if will_collide:
+		var undo_rotation = true
+		# Try to "kick"
+		if allow_floor_kick:
+			var bottom = 0
+			for child in children:
+				if child.position.y > bottom:
+					bottom = child.position.y
+			var offset = cell_size.y
+			while offset <= bottom:
+				will_collide = test_move(transform.translated(Vector2.UP * offset), Vector2.ZERO)
+				if not will_collide:
+					undo_rotation = false
+					position.y -= offset
+					target_position.y -= offset
+					break
+				offset += cell_size.y
+
+		if undo_rotation and allow_wall_kick:
+			var left = position.x
+			var right = position.x
+			for child in children:
+				if child.position.x < left:
+					left = child.position.x
+				if child.position.x > right:
+					right = child.position.x
+			var offset = cell_size.x
+			while offset <= -left:
+				will_collide = test_move(transform.translated(Vector2.RIGHT * offset), Vector2.ZERO)
+				if not will_collide:
+					undo_rotation = false
+					position.x += offset
+					target_position.x += offset
+					break
+				offset += cell_size.x
+			if undo_rotation:
+				offset = cell_size.x
+				while offset <= right:
+					will_collide = test_move(transform.translated(Vector2.LEFT * offset), Vector2.ZERO)
+					if not will_collide:
+						undo_rotation = false
+						position.x -= offset
+						target_position.x -= offset
+						break
+					offset += cell_size.x
+
+		if undo_rotation and allow_ceiling_kick:
+			var top = 0
+			for child in children:
+				if child.position.y < top:
+					top = child.position.y
+			var offset = -cell_size.y
+			while offset >= top:
+				will_collide = test_move(transform.translated(Vector2.UP * offset), Vector2.ZERO)
+				if not will_collide:
+					undo_rotation = false
+					position.y -= offset
+					target_position.y -= offset
+					break
+				offset -= cell_size.y
+		
 		# Undo the rotation
-		for child in get_children():
-			_rotate_node(child, -theta)
+		if undo_rotation:
+			for child in children:
+				_rotate_node(child, -theta)
 			
 func _update(delta):
 	# Translation

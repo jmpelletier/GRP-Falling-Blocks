@@ -188,6 +188,8 @@ You can change the speed at which the blocks move when the player holds down on 
 By setting the easing parameter to a value between 0 and 1, you can adjust the animation -- at 0 motion is instantaneous, closer to 1, the blocks will smoothly move to their target cell.
 
 The autoshift delay is the time between the moment the player presses a movement key and when the blocks start moving continuously.
+
+In the BlockController, you can turn \"kicking\" on and off to allow rotation near edges.
 "
 autowrap = true
 __meta__ = {
