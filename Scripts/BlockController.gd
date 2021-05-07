@@ -14,9 +14,15 @@ export var cell_size = Vector2(40, 40)
 # The maximum speed in cells per second for the x and y axes
 export var maximum_cells_per_second = Vector2(4, 4)
 
+# The rotation speed in quarter-turns per second
+export var autorotate_speed = 4
+
 # When the player keeps a movement key press, wait for this amount of seconds
 # before moving to the next cell
 export var autoshift_delay = 0.5
+
+# The same as autoshift_delay but for rotation
+export var autorotate_delay = 0.5
 
 # When "kicking" is allowed, the blocks are translated to allow rotation when
 # it would otherwise be blocked
@@ -32,6 +38,7 @@ export(NodePath) var dump_target
 var target_position:Vector2
 var autoshift_motion = Vector2.ZERO
 var autoshift_wait_time = 0
+var autorotate_wait_time = 0
 
 # Move by the specified number of cells
 func move(x_cells:int, y_cells:int):
@@ -225,12 +232,25 @@ func _update(delta):
 	var rotation_rad = 0
 	if Input.is_action_just_pressed("rotate_clockwise"):
 		rotation_rad =  PI * 0.5
+		autorotate_wait_time = 0
 	elif Input.is_action_just_pressed("rotate_counterclockwise"):
 		rotation_rad = PI * -0.5
+		autorotate_wait_time = 0
 	
 	if rotation_rad != 0:
 		_rotate_blocks(rotation_rad)
 		rotation_rad = 0
+	else:
+		if Input.is_action_pressed("rotate_clockwise"):
+			rotation_rad =  PI * 0.5
+		elif Input.is_action_pressed("rotate_counterclockwise"):
+			rotation_rad = PI * -0.5
+		if rotation_rad != 0:
+			autorotate_wait_time += delta
+			if autorotate_wait_time >= autorotate_delay:
+				_rotate_blocks(rotation_rad)
+				if autorotate_delay > 0:
+					autorotate_wait_time -= 1.0 / autorotate_speed
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
