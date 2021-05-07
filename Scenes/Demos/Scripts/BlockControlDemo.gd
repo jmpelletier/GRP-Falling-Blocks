@@ -16,6 +16,7 @@ func _ready():
 	$UI/HorizontalSpeedSlider.value = cells_per_second.x
 	$UI/VerticalSpeedSlider.value = cells_per_second.y
 	$UI/EasingSlider.value = $BlockController.easing
+	$UI/AutoshiftSlider.value = $BlockController.autoshift_delay
 	
 	spawn_point = $BlockController.position
 	rng.randomize()
@@ -54,3 +55,7 @@ func _on_SpawnButton_pressed():
 		new_object.easing = $UI/EasingSlider.value
 		new_object.maximum_cells_per_second = Vector2($UI/HorizontalSpeedSlider.value, $UI/VerticalSpeedSlider.value)
 		new_object.dump_target = $Grid/Obstacles
+
+
+func _on_AutoshiftSlider_value_changed(value):
+	$BlockController.autoshift_delay = value

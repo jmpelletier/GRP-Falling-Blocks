@@ -14,14 +14,18 @@ export var cell_size = Vector2(40, 40)
 # The maximum speed in cells per second for the x and y axes
 export var maximum_cells_per_second = Vector2(4, 4)
 
+# When the player keeps a movement key press, wait for this amount of seconds
+# before moving to the next cell
+export var autoshift_delay = 0.5
+
 # Gradually ease into target cell when > 0
 export(float, 0.0, 0.99) var easing = 0.0
 
 export(NodePath) var dump_target
 
-var motion = Vector2.ZERO
 var target_position:Vector2
-var rotation_rad = 0
+var autoshift_motion = Vector2.ZERO
+var autoshift_wait_time = 0
 
 # Move by the specified number of cells
 func move(x_cells:int, y_cells:int):
@@ -118,49 +122,43 @@ func _rotate_blocks(theta):
 		# Undo the rotation
 		for child in get_children():
 			_rotate_node(child, -theta)
-
-func _input(event):
-	var motion_input = Vector2.ZERO
-	if event.is_action_pressed("move_left"):
-		motion_input.x += -1
-	if event.is_action_pressed("move_right"):
-		motion_input.x += 1
-	if event.is_action_pressed("move_up"):
-		motion_input.y += -1
-	if event.is_action_pressed("move_down"):
-		motion_input.y += 1
-		
-	if motion_input.x != 0 and maximum_cells_per_second.x > 0:
-		motion.x = motion_input.x
-	if motion_input.y != 0 and maximum_cells_per_second.y > 0:
-		motion.y = motion_input.y
-		
-	if event.is_action_pressed("rotate_clockwise"):
-		rotation_rad =  PI * 0.5
-	elif event.is_action_pressed("rotate_counterclockwise"):
-		rotation_rad = PI * -0.5
-	else:
-		rotation_rad = 0
 			
 func _update(delta):
+	# Translation
 	var motion_input = Vector2.ZERO
-	if Input.is_action_pressed("move_left"):
+	if Input.is_action_pressed("move_left") and maximum_cells_per_second.x > 0:
 		motion_input.x += -1
-	if Input.is_action_pressed("move_right"):
+	if Input.is_action_pressed("move_right") and maximum_cells_per_second.x > 0:
 		motion_input.x += 1
-	if Input.is_action_pressed("move_up"):
+	if Input.is_action_pressed("move_up") and maximum_cells_per_second.y > 0:
 		motion_input.y += -1
-	if Input.is_action_pressed("move_down"):
+	if Input.is_action_pressed("move_down") and maximum_cells_per_second.y > 0:
 		motion_input.y += 1
+		
+	if (Input.is_action_just_pressed("move_left")
+	or Input.is_action_just_pressed("move_right")
+	or Input.is_action_just_pressed("move_up")
+	or Input.is_action_just_pressed("move_down")) :
+		autoshift_wait_time = 0
+		autoshift_motion = motion_input
+		move(motion_input.x, motion_input.y)
+	elif motion_input.x != 0 or motion_input.y != 0:
+		autoshift_wait_time += delta
+		if autoshift_wait_time >= autoshift_delay:
+			autoshift_motion += motion_input * maximum_cells_per_second * delta
+			var quantized_motion = Vector2(int(autoshift_motion.x), int(autoshift_motion.y))
+			autoshift_motion -= quantized_motion
 	
-	motion += motion_input * maximum_cells_per_second * delta
-	
-	var quantized_motion = Vector2(int(motion.x), int(motion.y))
-	motion -= quantized_motion
-	
-	move(quantized_motion.x, quantized_motion.y)
+			move(quantized_motion.x, quantized_motion.y)
 
 	position = lerp(target_position, position, easing)
+	
+	# Rotation
+	var rotation_rad = 0
+	if Input.is_action_just_pressed("rotate_clockwise"):
+		rotation_rad =  PI * 0.5
+	elif Input.is_action_just_pressed("rotate_counterclockwise"):
+		rotation_rad = PI * -0.5
 	
 	if rotation_rad != 0:
 		_rotate_blocks(rotation_rad)

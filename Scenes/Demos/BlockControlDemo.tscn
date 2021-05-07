@@ -137,6 +137,26 @@ custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Easing"
 
+[node name="AutoshiftSlider" parent="UI" instance=ExtResource( 5 )]
+margin_top = 120.0
+margin_bottom = 136.0
+focus_mode = 0
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Label" parent="UI/AutoshiftSlider" index="0"]
+custom_fonts/font = SubResource( 2 )
+custom_format_string = "%.1f seconds"
+
+[node name="Description" type="Label" parent="UI/AutoshiftSlider"]
+margin_top = -24.2017
+margin_right = 52.0
+margin_bottom = -5.20174
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Autoshift Delay"
+
 [node name="DumpBlocksButton" type="Button" parent="UI"]
 margin_left = 700.0
 margin_top = 60.0
@@ -167,18 +187,8 @@ You can change the speed at which the blocks move when the player holds down on 
 
 By setting the easing parameter to a value between 0 and 1, you can adjust the animation -- at 0 motion is instantaneous, closer to 1, the blocks will smoothly move to their target cell.
 
-Note that child nodes must inherit from CollisionShape2D for collisions to function. Normally, you would add Block instances to create a shape.
-
-Try moving or adding obstables, as well as child blocks to see how collisions work.
-
-Check the input map in project settings. The BlockController uses the following actions:
-
-move_left
-move_right
-move_up
-move_down
-rotate_clockwise
-rotate_counterclockwise"
+The autoshift delay is the time between the moment the player presses a movement key and when the blocks start moving continuously.
+"
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -191,7 +201,20 @@ margin_right = 1880.0
 margin_bottom = 809.0
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "When you call a BlockController's dump_blocks function, all its child nodes are moved to another node you must specify using the  dump target parameter.
+text = "Note that child nodes must inherit from CollisionShape2D for collisions to function. Normally, you would add Block instances to create a shape.
+
+Try moving or adding obstables, as well as child blocks to see how collisions work.
+
+Check the input map in project settings. The BlockController uses the following actions:
+
+move_left
+move_right
+move_up
+move_down
+rotate_clockwise
+rotate_counterclockwise
+
+When you call a BlockController's dump_blocks function, all its child nodes are moved to another node you must specify using the  dump target parameter.
 
 As a default behaviour, once a BlockController has \"dumped\" its  nodes to another parent, it is then deleted. If you wish to keep the BlockController, pass \"false\" as an argument."
 autowrap = true
@@ -202,6 +225,7 @@ __meta__ = {
 [connection signal="value_changed" from="UI/HorizontalSpeedSlider" to="." method="_on_HorizontalSpeedSlider_value_changed"]
 [connection signal="value_changed" from="UI/VerticalSpeedSlider" to="." method="_on_VerticalSpeedSlider_value_changed"]
 [connection signal="value_changed" from="UI/EasingSlider" to="." method="_on_EasingSlider_value_changed"]
+[connection signal="value_changed" from="UI/AutoshiftSlider" to="." method="_on_AutoshiftSlider_value_changed"]
 [connection signal="pressed" from="UI/DumpBlocksButton" to="." method="_on_DumpBlocksButton_pressed"]
 [connection signal="pressed" from="UI/SpawnButton" to="." method="_on_SpawnButton_pressed"]
 
@@ -209,3 +233,4 @@ __meta__ = {
 [editable path="UI/HorizontalSpeedSlider"]
 [editable path="UI/VerticalSpeedSlider"]
 [editable path="UI/EasingSlider"]
+[editable path="UI/AutoshiftSlider"]
