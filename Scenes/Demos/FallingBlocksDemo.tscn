@@ -1,18 +1,24 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Demos/Scripts/FallingBlocksDemo.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Demos/Shapes/BlockControllerShape2.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Demos/Shapes/BlockControllerShape1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/BlockController.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Demos/Shapes/L_Shape.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Demos/Shapes/O_Shape.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Demos/Shapes/I_Shape.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Demos/Shapes/J_Shape.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Sprites/GridSquare.png" type="Texture" id=8]
 [ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Scenes/Demos/Shapes/T_Shape.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Demos/Shapes/S_Shape.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Demos/Shapes/Z_Shape.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 440, 20 )
 
 [node name="FallingBlocksDemo" type="Node2D"]
 script = ExtResource( 1 )
-spawn_scenes = [ ExtResource( 7 ), ExtResource( 4 ) ]
+spawn_scenes = [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 12 ) ]
 
 [node name="Grid" type="TextureRect" parent="."]
 margin_left = 580.0
@@ -71,15 +77,15 @@ margin_right = 500.0
 margin_bottom = 809.0
 custom_fonts/font = ExtResource( 9 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "This scene demonstrates how to combine the BlockController with a QuantizedTimer to cause blocks to fall as though under the influence of gravity.
-
-The BlockController is not in the node tree at first but is instantiated (spawned) from the script on the root node."
+text = "This scene demonstrates how to combine the BlockController with a QuantizedTimer to cause blocks to fall as though under the influence of gravity."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2( 960, 180 )
+position = Vector2( 940, 280 )
+
+[node name="BlockController" parent="." instance=ExtResource( 3 )]
 
 [connection signal="on_step" from="QuantizedTimer" to="." method="_on_QuantizedTimer_on_step"]

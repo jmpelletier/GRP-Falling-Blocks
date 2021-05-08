@@ -4,6 +4,7 @@
 
 extends Node2D
 
+export var default_shape = 0
 export(Array, PackedScene)  var spawn_scenes
 
 var spawn_point = Vector2.ZERO
@@ -16,11 +17,6 @@ func spawn():
 		var new_object = spawn_scenes[i].instance()
 		$BlockController.set_position(spawn_point)
 		$BlockController.grab_blocks(new_object)
-#		add_child(new_object)
-#		new_object.set_position(spawn_point)
-#		new_object.easing = $UI/EasingSlider.value
-#		new_object.maximum_cells_per_second = Vector2($UI/HorizontalSpeedSlider.value, $UI/VerticalSpeedSlider.value)
-#		new_object.dump_target = $Grid/Obstacles
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,7 +29,9 @@ func _ready():
 	spawn_point = $BlockController.position
 	rng.randomize()
 	
-	spawn()
+#	spawn()
+	var new_object = spawn_scenes[default_shape].instance()
+	$BlockController.grab_blocks(new_object)
 	
 
 func _on_EasingSlider_value_changed(value):

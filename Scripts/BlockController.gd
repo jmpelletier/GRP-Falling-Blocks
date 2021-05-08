@@ -36,6 +36,7 @@ export(float, 0.0, 0.99) var easing = 0.0
 export(NodePath) var dump_target
 
 var target_position:Vector2
+var rotation_pivot = Vector2.ZERO
 var autoshift_motion = Vector2.ZERO
 var autoshift_wait_time = 0
 var autorotate_wait_time = 0
@@ -100,9 +101,13 @@ func dump_blocks(destroy_self = false):
 # This function moves all the child nodes of target to this BlockController.
 # Use this when spawning new shapes.
 func grab_blocks(target:Node2D, destroy_target = true):
+	rotation_pivot = Vector2.ZERO
 	for child in target.get_children():
 		target.remove_child(child)
-		add_child(child)
+		if child.name == "Pivot" or child.name == "pivot":
+			rotation_pivot = child.position
+		else:
+			add_child(child)
 	if destroy_target:
 		target.queue_free()
 		
@@ -120,11 +125,12 @@ func _ready():
 	
 func _rotate_node(node, theta):
 	if node is Node2D:
-		var l = node.position.length()
-		var a = node.position.angle()
+		var p = node.position - rotation_pivot
+		var l = p.length()
+		var a = p.angle()
 		a += theta
-		var x = round(cos(a) * l / cell_size.x) * cell_size.x
-		var y = round(sin(a) * l / cell_size.y) * cell_size.y
+		var x = cos(a) * l + rotation_pivot.x
+		var y = sin(a) * l + rotation_pivot.y
 		node.position = Vector2(x, y)
 	
 func _rotate_blocks(theta):
