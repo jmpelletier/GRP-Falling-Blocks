@@ -84,7 +84,7 @@ func move(x_cells:int, y_cells:int):
 
 # Sends child blocks to the dump_target node. Deletes this node if 
 # destroy_self is true.
-func dump_blocks(destroy_self = true):
+func dump_blocks(destroy_self = false):
 	# Move to target position to avoid blocks falling off the grid lines.
 	position = target_position 
 	if dump_target:
@@ -96,6 +96,15 @@ func dump_blocks(destroy_self = true):
 			child.global_transform = global_transform
 	if destroy_self:
 		queue_free()
+		
+# This function moves all the child nodes of target to this BlockController.
+# Use this when spawning new shapes.
+func grab_blocks(target:Node2D, destroy_target = true):
+	for child in target.get_children():
+		target.remove_child(child)
+		add_child(child)
+	if destroy_target:
+		target.queue_free()
 		
 func set_position(new_position:Vector2):
 	position = new_position

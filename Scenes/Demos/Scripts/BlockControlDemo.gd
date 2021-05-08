@@ -10,6 +10,18 @@ var spawn_point = Vector2.ZERO
 
 var rng = RandomNumberGenerator.new()
 
+func spawn():
+	if spawn_scenes.size() > 0:
+		var i = rng.randi_range(0, spawn_scenes.size() - 1)
+		var new_object = spawn_scenes[i].instance()
+		$BlockController.set_position(spawn_point)
+		$BlockController.grab_blocks(new_object)
+#		add_child(new_object)
+#		new_object.set_position(spawn_point)
+#		new_object.easing = $UI/EasingSlider.value
+#		new_object.maximum_cells_per_second = Vector2($UI/HorizontalSpeedSlider.value, $UI/VerticalSpeedSlider.value)
+#		new_object.dump_target = $Grid/Obstacles
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var cells_per_second = $BlockController.maximum_cells_per_second
@@ -20,6 +32,8 @@ func _ready():
 	
 	spawn_point = $BlockController.position
 	rng.randomize()
+	
+	spawn()
 	
 
 func _on_EasingSlider_value_changed(value):
@@ -47,14 +61,7 @@ func _on_SpawnButton_pressed():
 	$UI/DumpBlocksButton.disabled = false
 	$UI/SpawnButton.disabled = true
 	
-	if spawn_scenes.size() > 0:
-		var i = rng.randi_range(0, spawn_scenes.size() - 1)
-		var new_object = spawn_scenes[i].instance()
-		add_child(new_object)
-		new_object.set_position(spawn_point)
-		new_object.easing = $UI/EasingSlider.value
-		new_object.maximum_cells_per_second = Vector2($UI/HorizontalSpeedSlider.value, $UI/VerticalSpeedSlider.value)
-		new_object.dump_target = $Grid/Obstacles
+	spawn()
 
 
 func _on_AutoshiftSlider_value_changed(value):

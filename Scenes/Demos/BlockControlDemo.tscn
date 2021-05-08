@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=17 format=2]
 
+[ext_resource path="res://Scenes/Demos/Shapes/L_Shape.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Demos/Shapes/BlockControllerShape1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/GridSquare.png" type="Texture" id=3]
 [ext_resource path="res://Fonts/BalooTamma2-SemiBold.ttf" type="DynamicFontData" id=4]
@@ -7,7 +8,12 @@
 [ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=6]
 [ext_resource path="res://Scenes/Demos/Scripts/BlockControlDemo.gd" type="Script" id=7]
 [ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Demos/Shapes/BlockControllerShape2.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Demos/Shapes/O_Shape.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Demos/Shapes/I_Shape.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Demos/Shapes/J_Shape.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Demos/Shapes/T_Shape.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Demos/Shapes/S_Shape.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/Demos/Shapes/Z_Shape.tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 440, 20 )
@@ -18,7 +24,7 @@ font_data = ExtResource( 4 )
 
 [node name="BlockControlDemo" type="Node2D"]
 script = ExtResource( 7 )
-spawn_scenes = [ ExtResource( 2 ), ExtResource( 9 ) ]
+spawn_scenes = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 1 ), ExtResource( 9 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ) ]
 
 [node name="Grid" type="TextureRect" parent="."]
 margin_left = 580.0
@@ -64,7 +70,7 @@ position = Vector2( 460, 340 )
 position = Vector2( 420, 380 )
 
 [node name="BlockController" parent="." instance=ExtResource( 2 )]
-position = Vector2( 800, 260 )
+position = Vector2( 780, 280 )
 autorotate_delay = 1.0
 
 [node name="UI" type="Control" parent="."]
