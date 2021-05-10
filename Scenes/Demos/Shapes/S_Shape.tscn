@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Demos/Kicks/DefaultQuadKick.tscn" type="PackedScene" id=2]
 
-[node name="I_Shape" type="Node2D"]
+[node name="S_Shape" type="Node2D"]
 
 [node name="Block" parent="." instance=ExtResource( 1 )]
 position = Vector2( -20, -20 )
@@ -18,3 +19,5 @@ position = Vector2( -60, -20 )
 
 [node name="Pivot" type="Node2D" parent="."]
 position = Vector2( -20, -20 )
+
+[node name="Kick" parent="." instance=ExtResource( 2 )]

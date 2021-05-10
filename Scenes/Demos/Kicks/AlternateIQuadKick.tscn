@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/KickSettings.gd" type="Script" id=1]
+
+[node name="Kick" type="Node2D"]
+position = Vector2( 20, -20 )
+script = ExtResource( 1 )
+"forward rotation offsets/0 to ccw" = [ Vector2( 2, 0 ), Vector2( -1, 0 ), Vector2( -1, 2 ), Vector2( 2, -1 ) ]
+"forward rotation offsets/180 to ccw" = [ Vector2( 2, 0 ), Vector2( 1, 0 ), Vector2( 2, 1 ), Vector2( -1, -1 ) ]
+"forward rotation offsets/0 to cw" = [ Vector2( -2, 0 ), Vector2( 1, 0 ), Vector2( 1, 2 ), Vector2( -2, -1 ) ]
+"forward rotation offsets/180 to cw" = [ Vector2( -2, 0 ), Vector2( 1, 0 ), Vector2( -2, 1 ), Vector2( 1, -1 ) ]
+"reverse rotation offsets/ccw to 0" = [ Vector2( -2, 0 ), Vector2( 1, 0 ), Vector2( 1, -2 ), Vector2( -2, 1 ) ]
+"reverse rotation offsets/ccw to 180" = [ Vector2( -2, 0 ), Vector2( -1, 0 ), Vector2( -2, -1 ), Vector2( 1, 1 ) ]
+"reverse rotation offsets/cw to 0" = [ Vector2( 2, 0 ), Vector2( -1, 0 ), Vector2( -1, -2 ), Vector2( 2, 1 ) ]
+"reverse rotation offsets/cw to 180" = [ Vector2( 2, 0 ), Vector2( -1, 0 ), Vector2( 2, -1 ), Vector2( -1, 1 ) ]
