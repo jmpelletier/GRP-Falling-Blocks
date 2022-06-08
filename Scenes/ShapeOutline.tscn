@@ -1,15 +1,35 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/ShapeOutline.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/OutlineBlock.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/Corners/corner_round.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Corners/corner_dot.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Corners/corner_straight_v.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Corners/corner_square.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Corners/corner_straight_h.png" type="Texture" id=6]
 
 [node name="ShapeOutline" type="Node2D"]
 script = ExtResource( 1 )
+round_corner = ExtResource( 2 )
+square_corner = ExtResource( 5 )
+dot_corner = ExtResource( 3 )
+horizontal_corner = ExtResource( 6 )
+vertical_corner = ExtResource( 4 )
 
-[node name="OutlineBlock" parent="." instance=ExtResource( 2 )]
+[node name="top_right" type="Sprite" parent="."]
+position = Vector2( 10, -10 )
+texture = ExtResource( 2 )
 
-[node name="OutlineBlock2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 40, 0 )
+[node name="bottom_right" type="Sprite" parent="."]
+position = Vector2( 10, 10 )
+rotation = 1.57079
+texture = ExtResource( 2 )
 
-[node name="OutlineBlock3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 40, -40 )
+[node name="bottom_left" type="Sprite" parent="."]
+position = Vector2( -10, 10 )
+rotation = -3.14159
+texture = ExtResource( 2 )
+
+[node name="top_left" type="Sprite" parent="."]
+position = Vector2( -10, -10 )
+rotation = -1.57079
+texture = ExtResource( 2 )
