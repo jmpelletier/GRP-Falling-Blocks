@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/Tools/ControlGrid.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/RotationHelper.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Tools/Arrow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Tools/PivotMarker.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Tools/EditorLabel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Tools/OpenBlock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Tools/ClosedBlock.tscn" type="PackedScene" id=8]
+
+[node name="RotationHelper" type="Node2D"]
+script = ExtResource( 2 )
+grid_size = Vector2( 8, 8 )
+grid_scene = ExtResource( 1 )
+arrow_scene = ExtResource( 3 )
+from_block = ExtResource( 4 )
+to_block = ExtResource( 4 )
+kick_block = ExtResource( 4 )
+open_block = ExtResource( 7 )
+collision_block = ExtResource( 8 )
+
+[node name="FromGrid" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 160 )
+size = Vector2( 8, 8 )
+offset = Vector2( -4, -4 )
+
+[node name="PivotMarker" parent="FromGrid" instance=ExtResource( 5 )]
+z_index = 1000
+
+[node name="ToGrid" parent="." instance=ExtResource( 1 )]
+position = Vector2( 520, 160 )
+size = Vector2( 8, 8 )
+offset = Vector2( -4, -4 )
+
+[node name="PivotMarker" parent="ToGrid" instance=ExtResource( 5 )]
+z_index = 1000
+
+[node name="KickGrids" type="Node2D" parent="."]
+
+[node name="FromLabel" parent="." instance=ExtResource( 6 )]
+margin_top = 360.0
+margin_bottom = 397.0
+
+[node name="ToLabel" parent="." instance=ExtResource( 6 )]
+margin_left = 360.0
+margin_top = 360.0
+margin_right = 599.0
+margin_bottom = 397.0
+text = "To: 90 (clockwise)"

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/GridItem.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Tile_Relief_01.png" type="Texture" id=2]
+
+[node name="Tile" type="Node2D"]
+position = Vector2( 80, 240 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+cell = Vector2( 2, 6 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 20, 20 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )

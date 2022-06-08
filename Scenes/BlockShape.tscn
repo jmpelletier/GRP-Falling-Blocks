@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scripts/Pivot.gd" type="Script" id=1]
+[ext_resource path="res://Resources/SRS_RotationSettings.tres" type="Resource" id=2]
+[ext_resource path="res://Scripts/BlockShape.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Grid.tscn" type="PackedScene" id=6]
+
+[node name="BlockShape" instance=ExtResource( 6 )]
+script = ExtResource( 5 )
+size = Vector2( 6, 6 )
+offset = Vector2( -3, -3 )
+rotation_settings = ExtResource( 2 )
+
+[node name="Background" parent="." index="0"]
+margin_left = -120.0
+margin_top = -120.0
+margin_right = 120.0
+margin_bottom = 120.0
+
+[node name="Pivot" type="Node2D" parent="." index="1"]
+script = ExtResource( 1 )
+cell = Vector2( 3, 3 )

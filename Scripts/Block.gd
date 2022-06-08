@@ -2,41 +2,33 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-# This script is only used to make sure that blocks are aligned with the grid.
-# In this implementation, the grid cell size is not set explicitely, rather
-# it is defined using a RectangleShape2D, which is also used for collision 
-# detection.
-
 tool
-extends CollisionShape2D
+extends Node2D
 
-# If the collision shape lines up perfectly with the grid, collisions will be
-# registered between neighbours. To avoid this, if this parameter is true, the 
-# the extents of the collision rectangle will be reduced by one pixel to fix this
-# problem.
-export var shrink_shape = true
+# The rotation offset is the displacement, in cell units,
+# between the center of this block and its shape's rotation
+# pivot. This is used to calculate the new position when rotating
+# the shape.
+# The value of this property is set automatically by the Pivot node.
+# There is no need to modify it manually.
+export var rotation_offset = Vector2.ZERO
 
-# Call this function if you want to align this block on the implicit grid.
-func align(offset = Vector2.ZERO):
-	if shape is RectangleShape2D:
-		var p = position - offset
-		var size = shape.extents
-		if shrink_shape and not Engine.editor_hint:
-			size += Vector2.ONE
-		align_to_grid(size, offset)
 
-# Call this function if you wish to align this block to an explicit grid.
-func align_to_grid(cell_size:Vector2, offset = Vector2.ZERO):
-	var p = position - offset
-	position = p.snapped(cell_size) + offset
-
-func get_size():
-	if shrink_shape and not Engine.editor_hint:
-		return shape.extents * 2 + Vector2(2, 2)
+func set_cell_size(size:Vector2) -> void:
+	if $Sprite.texture != null:
+		scale = 2.0 * size / $Sprite.texture.get_size()
+		
+func get_size() -> Vector2:
+	if $Sprite.texture != null:
+		return $Sprite.texture.get_size() * scale * 0.5
 	else:
-		return shape.extents * 2
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	if shrink_shape and shape is RectangleShape2D and not Engine.editor_hint:
-		shape.extents -= Vector2.ONE
+		return Vector2.ZERO
+		
+func get_bounds() -> Array:
+	var bounds = [0, 0, 0, 0]
+	var s = get_size()
+	bounds[0] = position.x - s.x * 0.5
+	bounds[1] = position.y - s.y * 0.5
+	bounds[2] = position.x + s.x * 0.5
+	bounds[3] = position.y + s.y * 0.5
+	return bounds

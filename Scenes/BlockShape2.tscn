@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/Pivot.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Tools/RotationHelper.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Test_RotationSettings.tres" type="Resource" id=4]
+[ext_resource path="res://Scripts/BlockShape.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Grid.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Tools/OpenBlock.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Tools/ClosedBlock.tscn" type="PackedScene" id=8]
+
+[node name="BlockShape" instance=ExtResource( 6 )]
+script = ExtResource( 5 )
+size = Vector2( 6, 6 )
+offset = Vector2( -3, -3 )
+rotation_settings = ExtResource( 4 )
+
+[node name="Background" parent="." index="0"]
+margin_left = -120.0
+margin_top = -120.0
+margin_right = 120.0
+margin_bottom = 120.0
+
+[node name="Block" parent="." index="1" instance=ExtResource( 2 )]
+position = Vector2( -20, -60 )
+rotation_offset = Vector2( -0.5, -1.5 )
+
+[node name="Block2" parent="." index="2" instance=ExtResource( 2 )]
+position = Vector2( -20, -20 )
+rotation_offset = Vector2( -0.5, -0.5 )
+
+[node name="Block3" parent="." index="3" instance=ExtResource( 2 )]
+position = Vector2( 20, -20 )
+rotation_offset = Vector2( 0.5, -0.5 )
+
+[node name="Block4" parent="." index="4" instance=ExtResource( 2 )]
+position = Vector2( 60, -20 )
+rotation_offset = Vector2( 1.5, -0.5 )
+
+[node name="Pivot" type="Node2D" parent="." index="5"]
+script = ExtResource( 1 )
+cell = Vector2( 3, 3 )
+
+[node name="RotationHelper" parent="." index="6" instance=ExtResource( 3 )]
+position = Vector2( 170.189, 59.6488 )
+grid_size = Vector2( 8, 8 )
+open_block = ExtResource( 7 )
+collision_block = ExtResource( 8 )
+
+[node name="FromGrid" parent="RotationHelper" index="0"]
+position = Vector2( 160, 160 )
+size = Vector2( 8, 8 )
+offset = Vector2( -4, -4 )
+
+[node name="PivotMarker" parent="RotationHelper/FromGrid" index="2"]
+position = Vector2( 0, 0 )
+scale = Vector2( 0.234375, 0.234375 )
+
+[node name="ToGrid" parent="RotationHelper" index="1"]
+position = Vector2( 520, 160 )
+size = Vector2( 8, 8 )
+offset = Vector2( -4, -4 )
+
+[node name="PivotMarker" parent="RotationHelper/ToGrid" index="2"]
+position = Vector2( 0, 0 )
+scale = Vector2( 0.234375, 0.234375 )
+
+[node name="FromLabel" parent="RotationHelper" index="3"]
+margin_top = 360.0
+margin_bottom = 397.0
+
+[node name="ToLabel" parent="RotationHelper" index="4"]
+margin_left = 360.0
+margin_top = 360.0
+margin_right = 669.0
+margin_bottom = 397.0
+
+[connection signal="update" from="Pivot" to="RotationHelper" method="_pivot_changed"]
+
+[editable path="RotationHelper"]

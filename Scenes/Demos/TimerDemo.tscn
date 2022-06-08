@@ -82,7 +82,7 @@ custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "This scene demonstrates how to use the QuantizedTimer node. Take a look at the TimerDemo script and try changing the QuantizedTimer properties in the inspector. 
 
-Note that the timer only updates in the main or physics loop, which will limit the precision so single frames.
+Note that the timer only updates in the main or physics loop, which will limit the precision to single frames.
 
 The turbo toggle doubles the speed of the timer."
 autowrap = true

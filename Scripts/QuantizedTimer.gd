@@ -21,6 +21,9 @@ signal on_reset
 # in the main or physics loops.
 signal on_update
 
+# Whether the timer is ticking
+export var enabled = true
+
 # The "tempo" of the metronome, the number of beats per minute, in musical terms.
 export var ticks_per_minute = 60
 
@@ -67,8 +70,10 @@ func _update(delta):
 			reset()
 		else:
 			ticks = new_ticks
-		emit_signal("on_step")
-	emit_signal("on_update")
+		if enabled:
+			emit_signal("on_step")
+	if enabled:
+		emit_signal("on_update")
 
 # Return the time elapsed in seconds since the last reset
 func get_time():

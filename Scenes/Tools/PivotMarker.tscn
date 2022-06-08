@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprites/Stroke_Circle_001.png" type="Texture" id=1]
+
+[node name="PivotMarker" type="Sprite"]
+self_modulate = Color( 0, 0.694118, 0.0588235, 1 )
+position = Vector2( 49.5715, 89.7116 )
+scale = Vector2( 0.135705, 0.135705 )
+texture = ExtResource( 1 )

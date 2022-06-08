@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Tools/RadioButtons.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/ShapeSelector.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Tools/ShapeSelectorButton.tscn" type="PackedScene" id=3]
+
+[node name="ShapeSelector" instance=ExtResource( 1 )]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+count = 7
+layout = 0
+button = ExtResource( 3 )

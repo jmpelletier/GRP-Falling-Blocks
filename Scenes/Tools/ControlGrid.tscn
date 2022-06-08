@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/BlockController.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Grid.tscn" type="PackedScene" id=2]
+
+[node name="ControlGrid" instance=ExtResource( 2 )]
+
+[node name="BlockControl" parent="." index="1" instance=ExtResource( 1 )]
+accept_user_input = false

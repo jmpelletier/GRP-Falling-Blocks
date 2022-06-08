@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Grid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/RotationTester.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Tile.tscn" type="PackedScene" id=5]
+
+[node name="RotationTester" type="Node2D"]
+script = ExtResource( 4 )
+tile = ExtResource( 5 )
+
+[node name="Grid" parent="." instance=ExtResource( 2 )]
+position = Vector2( 163.445, 107.393 )
+
+[connection signal="mouse_drag" from="Grid" to="." method="_on_Grid_mouse_drag"]
+[connection signal="mouse_press" from="Grid" to="." method="_on_Grid_mouse_press"]

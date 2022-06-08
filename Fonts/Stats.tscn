@@ -30,12 +30,9 @@ margin_bottom = 116.0
 
 [node name="Label" parent="Container/Score" index="0"]
 margin_right = 200.0
-margin_bottom = 33.0
 
 [node name="Value" parent="Container/Score" index="1"]
-margin_top = 37.0
 margin_right = 200.0
-margin_bottom = 90.0
 
 [node name="BestScore" parent="Container" instance=ExtResource( 1 )]
 anchor_left = 0.0
@@ -47,13 +44,10 @@ margin_bottom = 237.0
 
 [node name="Label" parent="Container/BestScore" index="0"]
 margin_right = 200.0
-margin_bottom = 33.0
 text = "BEST SCORE"
 
 [node name="Value" parent="Container/BestScore" index="1"]
-margin_top = 37.0
 margin_right = 200.0
-margin_bottom = 90.0
 
 [node name="Level" parent="Container" instance=ExtResource( 1 )]
 anchor_left = 0.0
@@ -65,13 +59,10 @@ margin_bottom = 358.0
 
 [node name="Label" parent="Container/Level" index="0"]
 margin_right = 200.0
-margin_bottom = 33.0
 text = "LEVEL"
 
 [node name="Value" parent="Container/Level" index="1"]
-margin_top = 37.0
 margin_right = 200.0
-margin_bottom = 90.0
 text = "1"
 
 [node name="Lines" parent="Container" instance=ExtResource( 1 )]
@@ -84,13 +75,10 @@ margin_bottom = 479.0
 
 [node name="Label" parent="Container/Lines" index="0"]
 margin_right = 200.0
-margin_bottom = 33.0
 text = "LINES"
 
 [node name="Value" parent="Container/Lines" index="1"]
-margin_top = 37.0
 margin_right = 200.0
-margin_bottom = 90.0
 text = "1"
 
 [node name="Time" parent="Container" instance=ExtResource( 1 )]
@@ -103,13 +91,10 @@ margin_bottom = 600.0
 
 [node name="Label" parent="Container/Time" index="0"]
 margin_right = 200.0
-margin_bottom = 33.0
 text = "TIME"
 
 [node name="Value" parent="Container/Time" index="1"]
-margin_top = 37.0
 margin_right = 200.0
-margin_bottom = 90.0
 text = "00:00.00"
 
 [editable path="Container/Score"]
