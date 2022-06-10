@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Pivot.gd" type="Script" id=1]
 [ext_resource path="res://Resources/SRS_RotationSettings.tres" type="Resource" id=2]
+[ext_resource path="res://Scripts/ShapeOutline.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/Corners/corner_round.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/BlockShape.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Grid.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Sprites/Corners/corner_dot.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Corners/corner_straight_v.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Corners/corner_square.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Corners/corner_straight_h.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/BlockOutline.tscn" type="PackedScene" id=11]
 
 [node name="BlockShape" instance=ExtResource( 6 )]
 script = ExtResource( 5 )
@@ -20,3 +27,12 @@ margin_bottom = 120.0
 [node name="Pivot" type="Node2D" parent="." index="1"]
 script = ExtResource( 1 )
 cell = Vector2( 3, 3 )
+
+[node name="ShapeOutline" type="Node2D" parent="." index="2"]
+script = ExtResource( 3 )
+round_corner = ExtResource( 4 )
+square_corner = ExtResource( 9 )
+dot_corner = ExtResource( 7 )
+horizontal_corner = ExtResource( 10 )
+vertical_corner = ExtResource( 8 )
+block_outline = ExtResource( 11 )

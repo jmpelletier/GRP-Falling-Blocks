@@ -9,7 +9,7 @@ resource_local_to_scene = true
 script = ExtResource( 2 )
 tries = [ [ Vector2( -1, 0 ), Vector2( 1, 0 ), Vector2( 1, 0 ), Vector2( 1, 0 ), Vector2( 1, 0 ), Vector2( -1, 0 ), Vector2( -1, 0 ), Vector2( -1, 0 ) ], [ Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 1, -1 ), Vector2( 1, -1 ), Vector2( 1, 1 ), Vector2( -1, 1 ), Vector2( -1, -1 ), Vector2( -1, -1 ) ], [ Vector2( 0, -2 ), Vector2( 0, -2 ), Vector2( 0, 2 ), Vector2( 0, 2 ), Vector2( 0, -2 ), Vector2( 0, -2 ), Vector2( 0, 2 ), Vector2( 0, 2 ) ], [ Vector2( -1, -2 ), Vector2( 1, -2 ), Vector2( 1, 2 ), Vector2( 1, 2 ), Vector2( 1, -2 ), Vector2( -1, -2 ), Vector2( -1, 2 ), Vector2( -1, 2 ) ] ]
 
-[node name="O_Shape" instance=ExtResource( 3 )]
+[node name="Test_Shape" instance=ExtResource( 3 )]
 position = Vector2( 100, 100 )
 rotation_settings = SubResource( 1 )
 
