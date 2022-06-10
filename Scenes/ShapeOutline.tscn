@@ -21,15 +21,15 @@ texture = ExtResource( 2 )
 
 [node name="bottom_right" type="Sprite" parent="."]
 position = Vector2( 10, 10 )
-rotation = 1.57079
+scale = Vector2( 1, -1 )
 texture = ExtResource( 2 )
 
 [node name="bottom_left" type="Sprite" parent="."]
 position = Vector2( -10, 10 )
-rotation = -3.14159
+scale = Vector2( -1, -1 )
 texture = ExtResource( 2 )
 
 [node name="top_left" type="Sprite" parent="."]
 position = Vector2( -10, -10 )
-rotation = -1.57079
+scale = Vector2( -1, 1 )
 texture = ExtResource( 2 )

@@ -85,20 +85,25 @@ func _ready():
 		
 	if neighbors[RIGHT] and neighbors[BOTTOM_RIGHT] and neighbors[BOTTOM]:
 		$bottom_right.visible = false
+		
+	$top_right.texture = null
+	$top_left.texture = null
+	$bottom_right.texture = null
+	$bottom_left.texture = null
 	
 	# Corner type: round
 	if not neighbors[LEFT] and not neighbors[TOP_LEFT] and not neighbors[TOP]:
 		$top_left.texture = round_corner
-		
+
 	if not neighbors[RIGHT] and not neighbors[TOP_RIGHT] and not neighbors[TOP]:
 		$top_right.texture = round_corner
-		
+
 	if not neighbors[LEFT] and not neighbors[BOTTOM_LEFT] and not neighbors[BOTTOM]:
 		$bottom_left.texture = round_corner
-		
+
 	if not neighbors[RIGHT] and not neighbors[BOTTOM_RIGHT] and not neighbors[BOTTOM]:
 		$bottom_right.texture = round_corner
-		
+
 	# Corner type: dot
 	if neighbors[TOP]:
 		if neighbors[RIGHT] and not neighbors[TOP_RIGHT]:
@@ -117,24 +122,37 @@ func _ready():
 		
 	if not neighbors[BOTTOM] and neighbors[RIGHT]:
 		$bottom_right.texture = horizontal_corner
-		
+
 	if not neighbors[BOTTOM] and neighbors[LEFT]:
 		$bottom_left.texture = horizontal_corner
-		
+
 	if not neighbors[TOP] and neighbors[LEFT]:
 		$top_left.texture = horizontal_corner
-		
+
 	# Corner type: straight vertical
 	if neighbors[TOP] and not neighbors[RIGHT]:
 		$top_right.texture = vertical_corner
-		
+
 	if neighbors[BOTTOM] and not neighbors[RIGHT]:
 		$bottom_right.texture = vertical_corner
-		
+
 	if neighbors[BOTTOM] and not neighbors[LEFT]:
 		$bottom_left.texture = vertical_corner
-		
+
 	if neighbors[TOP] and not neighbors[LEFT]:
 		$top_left.texture = vertical_corner
+		
+	# Corner type: square
+	if not neighbors[TOP] and not neighbors[RIGHT] and neighbors[TOP_RIGHT]:
+		$top_right.texture = square_corner
+		
+	if not neighbors[BOTTOM] and not neighbors[RIGHT] and neighbors[BOTTOM_RIGHT]:
+		$bottom_right.texture = square_corner
+		
+	if not neighbors[BOTTOM] and not neighbors[LEFT] and neighbors[BOTTOM_LEFT]:
+		$bottom_left.texture = square_corner
+		
+	if not neighbors[TOP] and not neighbors[LEFT] and neighbors[TOP_LEFT]:
+		$top_left.texture = square_corner
 	
 	
