@@ -168,6 +168,9 @@ func update_corners(blocks : Array, cell_size : Vector2) -> void:
 				corner.visible = true
 
 		block.set_outline(outline)
+		
+		if not Engine.editor_hint:
+			add_child(outline)
 
 func _set_corners(block_shape : BlockShape):
 	
@@ -192,3 +195,9 @@ func _ready():
 		# Make sure the Block is inside a BlockShape
 		var block_shape := get_parent() as BlockShape
 		init_outline(block_shape)
+
+func show():
+	$AnimationPlayer.play("show")
+	
+func hide():
+	$AnimationPlayer.play("remove")

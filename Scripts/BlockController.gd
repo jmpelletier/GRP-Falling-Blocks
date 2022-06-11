@@ -98,6 +98,8 @@ func add_block(block:Block, cell:Vector2) -> void:
 				block.get_parent().remove_child(block)
 			parent_grid.add_block(block, cell)
 			blocks.push_back(block)
+			# Tell the block it's now under control
+			block.control()
 			
 func set_outline(outline:ShapeOutline):
 	if outline == shape_outline:
@@ -110,7 +112,8 @@ func set_outline(outline:ShapeOutline):
 	if _lazy_load_grid() and outline != null:
 		shape_outline = outline
 		shape_outline.get_parent().remove_child(shape_outline)
-		parent_grid.add_child(shape_outline)
+		parent_grid.add_child(outline)
+		outline.show()
 
 # Signal callback
 func _on_block_removed(block:Node2D, _cell:Vector2) -> void:
@@ -256,8 +259,14 @@ func move(input:Vector2) -> bool:
 		
 	return true
 	
-func dump_blocks():
+func place_blocks():
+	for block in blocks:
+		block.place()
 	blocks.clear()
+	
+	# Also get rid of the outline
+	if shape_outline != null:
+		shape_outline.hide()
 
 func _update(delta_seconds) -> void:
 	if not _lazy_load_grid():

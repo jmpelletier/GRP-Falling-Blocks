@@ -18,5 +18,5 @@ func _ready():
 func _on_block_stuck(stuck_time):
 	if stuck_time >= lockdown_time:
 		if block_controller != null:
-			block_controller.dump_blocks()
+			block_controller.place_blocks()
 		emit_signal("on_lockdown")

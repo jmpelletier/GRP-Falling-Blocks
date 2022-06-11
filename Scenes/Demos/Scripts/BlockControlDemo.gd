@@ -49,7 +49,7 @@ func _on_VerticalSpeedSlider_value_changed(value):
 
 
 func _on_DumpBlocksButton_pressed():
-	$Grid/BlockController.dump_blocks()
+	$Grid/BlockController.place_blocks()
 	$UI/DumpBlocksButton.disabled = true
 	$UI/SpawnButton.disabled = false
 

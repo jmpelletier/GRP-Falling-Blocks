@@ -53,3 +53,9 @@ func get_outline():
 func place_outline(offset:Vector2) -> void:
 	if outline != null:
 		outline.position = position + offset
+		
+func control():
+	$AnimationPlayer.play("under_control")
+	
+func place():
+	$AnimationPlayer.play("placed")

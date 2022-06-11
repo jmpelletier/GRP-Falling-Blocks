@@ -22,7 +22,6 @@ script = ExtResource( 13 )
 [node name="ShapeLoader" parent="." instance=ExtResource( 9 )]
 position = Vector2( 0, 1 )
 target = NodePath("../EditableGrid/BlockController")
-outline_container = NodePath("../EditableGrid/Outlines")
 spawn_cell = Vector2( 5, 2 )
 shapes = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 1 ) ]
 
@@ -42,7 +41,7 @@ ticks_per_minute = 60
 script = ExtResource( 15 )
 
 [node name="Block" parent="EditableGrid" instance=ExtResource( 12 )]
-position = Vector2( 20, 300 )
+position = Vector2( 20, 180 )
 
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 

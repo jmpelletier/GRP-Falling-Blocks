@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Sprites/Corners/corner_round.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/Tile_Relief_01.png" type="Texture" id=2]
 
 [node name="BlockOutline" type="Node2D"]
 
@@ -26,3 +27,8 @@ position = Vector2( -10, -10 )
 scale = Vector2( -1, 1 )
 z_index = 1000
 texture = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.662745, 0.662745, 0.662745, 0.364706 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
