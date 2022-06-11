@@ -10,6 +10,7 @@ const Block = preload("res://Scripts/Block.gd")
 const Grid = preload("res://Scripts/Grid.gd")
 const BlockShape = preload("res://Scripts/BlockShape.gd")
 const BlockController = preload("res://Scripts/BlockController.gd")
+const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
 
 export(NodePath) var target
 export(Vector2) var spawn_cell = Vector2.ZERO
@@ -55,6 +56,14 @@ func load_shape(index:int) -> void:
 			print("Cannot place!")
 			emit_signal("cannot_place")
 		else:
+			# Try to copy the rotation settings and shape outline
+			if shape_instance is BlockShape and send_to is BlockController:
+				send_to.kicks = shape_instance.get_kicks()
+				var outline := shape_instance.get_outline() as ShapeOutline
+				if outline != null:
+					send_to.set_outline(outline)
+					outline.init_outline(shape_instance)
+					
 			# Reparent only the blocks
 			for child in shape_instance.get_children():
 				if child is Block:
@@ -70,10 +79,7 @@ func load_shape(index:int) -> void:
 						# Can't use grids, just reparent the node
 						shape_instance.remove_child(child)
 						send_to.add_child(child)
-						
-			# Try to copy the rotation settings
-			if shape_instance is BlockShape and send_to is BlockController:
-				send_to.kicks = shape_instance.get_kicks()
+
 		
 		# Release the shape template
 		shape_instance.queue_free()

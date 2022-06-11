@@ -13,6 +13,7 @@ extends Node2D
 # There is no need to modify it manually.
 export var rotation_offset = Vector2.ZERO
 
+var outline = null
 
 func set_cell_size(size:Vector2) -> void:
 	if $Sprite.texture != null:
@@ -32,3 +33,12 @@ func get_bounds() -> Array:
 	bounds[2] = position.x + s.x * 0.5
 	bounds[3] = position.y + s.y * 0.5
 	return bounds
+	
+func set_outline(block_outline : Node2D) -> void:
+	if outline != null:
+		remove_child(outline)
+		
+	outline = block_outline
+	if outline != null:
+		add_child(outline)
+		outline.position = Vector2.ZERO

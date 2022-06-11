@@ -29,4 +29,5 @@ func _enter_tree():
 	if not Engine.editor_hint:
 		printerr("You should not add BlockShape instances to a scene directly. Use utilities like ShapeLoader to add only the blocks.")
 
-	
+func get_outline():
+	return $ShapeOutline

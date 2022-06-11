@@ -28,7 +28,7 @@ position = Vector2( 50, 30 )
 position = Vector2( 140, 60 )
 
 [node name="Block" parent="EditableGrid" instance=ExtResource( 12 )]
-position = Vector2( 180, 100 )
+position = Vector2( 180, 220 )
 
 [node name="QuantizedTimer" parent="." instance=ExtResource( 10 )]
 enabled = false

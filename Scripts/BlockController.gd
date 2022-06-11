@@ -10,6 +10,7 @@ signal on_kick(rotation_index, try_index)
 const Block = preload("res://Scripts/Block.gd")
 const Grid = preload("res://Scripts/Grid.gd")
 const BlockShape = preload("res://Scripts/BlockShape.gd")
+const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
 
 # If this is true, this node allows the user to control the blocks.
 # Turn this off if you want to only control the blocks programatically.
@@ -36,6 +37,7 @@ var kicks = []
 
 var parent_grid:Grid = null
 var blocks = []
+var shape_outline = null 
 var autoshift_motion = Vector2.ZERO
 var autoshift_wait_time = 0
 var autorotate_wait_time = 0
@@ -96,6 +98,15 @@ func add_block(block:Block, cell:Vector2) -> void:
 				block.get_parent().remove_child(block)
 			parent_grid.add_block(block, cell)
 			blocks.push_back(block)
+			
+func set_outline(outline:ShapeOutline):
+	if shape_outline != null:
+			shape_outline.queue_free()
+			shape_outline = null
+	if _lazy_load_grid() and outline != null:
+		shape_outline = outline
+		shape_outline.get_parent().remove_child(shape_outline)
+		parent_grid.add_child(shape_outline)
 
 # Signal callback
 func _on_block_removed(block:Node2D, _cell:Vector2) -> void:
@@ -180,6 +191,9 @@ func rotate_blocks(transform2D:Transform2D) -> void:
 		# Store the new orientation
 		orientation = new_orientation
 		
+		if shape_outline != null:
+			shape_outline.update_corners(blocks, parent_grid.cell_size)
+		
 			
 # Move the blocks that are under control by the number of cells on the grid
 # specified in the input parameter. This method checks for collisions and
@@ -210,6 +224,10 @@ func move(input:Vector2) -> void:
 			var cell = parent_grid.get_cell(block.position)
 			var new_cell = cell + input
 			parent_grid.add_block(block, new_cell)
+		
+		# We must also move the shape outline
+		if shape_outline != null:
+			pass
 		
 		# Update the movement offset so that we know by how much we moved
 		# since the last reset.
