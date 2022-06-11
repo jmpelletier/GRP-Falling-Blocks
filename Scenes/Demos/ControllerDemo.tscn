@@ -17,6 +17,8 @@
 
 [node name="ShapeLoader" parent="." instance=ExtResource( 9 )]
 position = Vector2( 0, 1 )
+single_block_mode = true
+single_block_index = 4
 target = NodePath("../EditableGrid/BlockController")
 spawn_cell = Vector2( 5, 2 )
 shapes = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 1 ) ]

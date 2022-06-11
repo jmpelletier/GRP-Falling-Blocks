@@ -15,6 +15,9 @@ const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
 export var use_random_seed = false
 export var random_seed = 0
 
+export var single_block_mode = false
+export var single_block_index = 0
+
 export(NodePath) var target
 export(Vector2) var spawn_cell = Vector2.ZERO
 export(Array, PackedScene) var shapes
@@ -26,11 +29,14 @@ func _ready():
 		seed(random_seed)
 	else:
 		randomize()
-	call_deferred("load_random_shape")
+	call_deferred("load_next_shape")
 
-func load_random_shape():
-	var i = randi() % shapes.size()
-	load_shape(i)
+func load_next_shape():
+	if single_block_mode:
+		load_shape(single_block_index)
+	else:
+		var i = randi() % shapes.size()
+		load_shape(i)
 
 func load_shape(index:int) -> void:
 	if index >= 0 and index < shapes.size() and shapes[index] != null:
