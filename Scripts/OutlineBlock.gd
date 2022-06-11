@@ -13,7 +13,6 @@ export(Array, CornerShape) var corner_shapes = [CornerShape.CORNER, CornerShape.
 var corners = []
 
 func set_corner_shapes(shapes:Array):
-	print("Allo")
 	for i in range(min(4, shapes.size())):
 		set_corner(i, shapes[i])
 

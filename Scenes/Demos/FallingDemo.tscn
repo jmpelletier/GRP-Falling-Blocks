@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Shapes/4_blocks/I_Shape.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Shapes/4_blocks/J_Shape.tscn" type="PackedScene" id=2]
@@ -12,8 +12,10 @@
 [ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/BlockController.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Demos/Scripts/FallingDemo.gd" type="Script" id=13]
 
-[node name="ControllerDemo" type="Node2D"]
+[node name="FallingDemo" type="Node2D"]
+script = ExtResource( 13 )
 
 [node name="ShapeLoader" parent="." instance=ExtResource( 9 )]
 position = Vector2( 0, 1 )
@@ -29,9 +31,11 @@ position = Vector2( 50, 30 )
 position = Vector2( 140, 60 )
 
 [node name="Block" parent="EditableGrid" instance=ExtResource( 12 )]
-position = Vector2( 180, 220 )
+position = Vector2( 20, 300 )
 
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 
 [node name="QuantizedTimer" parent="." instance=ExtResource( 10 )]
-enabled = false
+ticks_per_minute = 60
+
+[connection signal="on_step" from="QuantizedTimer" to="." method="_on_QuantizedTimer_step"]

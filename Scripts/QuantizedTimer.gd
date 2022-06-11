@@ -59,7 +59,7 @@ func reset_at_next_step():
 
 # Update the time (private method)
 func _update(delta):
-	var ticks_per_second = ticks_per_minute / 60
+	var ticks_per_second = ticks_per_minute / 60.0
 	
 	time_seconds += delta
 	time_ticks += delta * ticks_per_second

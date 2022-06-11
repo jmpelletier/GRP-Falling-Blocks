@@ -13,6 +13,7 @@ const BlockController = preload("res://Scripts/BlockController.gd")
 const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
 
 export(NodePath) var target
+export(NodePath) var outline_container
 export(Vector2) var spawn_cell = Vector2.ZERO
 export(Array, PackedScene) var shapes
 
@@ -64,7 +65,7 @@ func load_shape(index:int) -> void:
 					send_to.set_outline(outline)
 					outline.init_outline(shape_instance)
 					
-			# Reparent only the blocks
+			# Reparent only the blocks, and their outlines
 			for child in shape_instance.get_children():
 				if child is Block:
 					if from_grid != null and to_grid != null:
@@ -79,6 +80,13 @@ func load_shape(index:int) -> void:
 						# Can't use grids, just reparent the node
 						shape_instance.remove_child(child)
 						send_to.add_child(child)
+					var outline = child.get_outline()
+					if outline != null:
+						if outline.get_parent() != null:
+							outline.get_parent().remove_child(outline)
+						get_node(outline_container).add_child(outline)
+						outline.global_position = child.global_position
+
 
 		
 		# Release the shape template

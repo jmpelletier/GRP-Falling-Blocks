@@ -42,12 +42,14 @@ func set_outline(block_outline : Node2D) -> void:
 		remove_child(outline)
 		
 	outline = block_outline
-	if outline != null:
-		add_child(outline)
-		outline.position = Vector2.ZERO
+#	if outline != null:
+#		add_child(outline)
+#		get_parent().add_child(outline)
+#		outline.position = get_position_in_parent()
 		
 func get_outline():
 	return outline
 
 func place_outline(offset:Vector2) -> void:
-	outline.position = offset
+	if outline != null:
+		outline.position = position + offset

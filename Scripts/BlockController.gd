@@ -100,9 +100,13 @@ func add_block(block:Block, cell:Vector2) -> void:
 			blocks.push_back(block)
 			
 func set_outline(outline:ShapeOutline):
+	if outline == shape_outline:
+		return
+		
 	if shape_outline != null:
 			shape_outline.queue_free()
 			shape_outline = null
+			
 	if _lazy_load_grid() and outline != null:
 		shape_outline = outline
 		shape_outline.get_parent().remove_child(shape_outline)
