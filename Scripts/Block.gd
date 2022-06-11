@@ -35,6 +35,9 @@ func get_bounds() -> Array:
 	return bounds
 	
 func set_outline(block_outline : Node2D) -> void:
+	if block_outline == outline:
+		return
+		
 	if outline != null:
 		remove_child(outline)
 		
@@ -42,3 +45,9 @@ func set_outline(block_outline : Node2D) -> void:
 	if outline != null:
 		add_child(outline)
 		outline.position = Vector2.ZERO
+		
+func get_outline():
+	return outline
+
+func place_outline(offset:Vector2) -> void:
+	outline.position = offset

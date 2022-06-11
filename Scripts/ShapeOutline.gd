@@ -23,8 +23,6 @@ const NONE = -1
 # Neighbor / corner indices
 enum {TOP_RIGHT = 0, BOTTOM_RIGHT = 1, BOTTOM_LEFT = 2, TOP_LEFT = 3, TOP = 4, RIGHT = 5, BOTTOM = 6, LEFT = 7}
 
-# enum {TOP_RIGHT = 0, RIGHT = 1, BOTTOM_RIGHT = 2, BOTTOM = 3, BOTTOM_LEFT = 4, LEFT = 5, TOP_LEFT = 6, TOP = 7, NONE = -1}
-
 # Corner types
 enum {ROUND, SQUARE, DOT, HORIZONTAL, VERTICAL}
 
@@ -150,8 +148,10 @@ func update_corners(blocks : Array, cell_size : Vector2) -> void:
 		# Find the appropriate outline corners
 		var corner_types = _get_corner_types(neighbors)
 		
-		# Instantiate block outline
-		var outline = block_outline.instance()
+		# Instantiate block outline if needed
+		var outline = block.get_outline()
+		if outline == null:
+			outline = block_outline.instance()
 		
 		var corners = [outline.get_node("top_right"), outline.get_node("bottom_right"), outline.get_node("bottom_left"), outline.get_node("top_left")]
 		

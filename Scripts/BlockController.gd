@@ -191,9 +191,26 @@ func rotate_blocks(transform2D:Transform2D) -> void:
 		# Store the new orientation
 		orientation = new_orientation
 		
+		# Recalculate the outline
 		if shape_outline != null:
 			shape_outline.update_corners(blocks, parent_grid.cell_size)
+
+# Find out how far, in cell units, we can move the block without
+# hitting something or going out of bounds.
+func maximum_movement(direction:Vector2) -> Vector2:
+	var offset = parent_grid.size
+	for block in blocks:
+		var cell = parent_grid.get_cell(block.position)
+		var block_offset = Vector2.ZERO
+		while parent_grid.cell_is_in_bounds(cell + block_offset + direction):
+			if not _cell_is_empty_or_under_control(cell + block_offset + direction):
+				break
+			else:
+				block_offset += direction
 		
+		offset.x = min(offset.x, block_offset.x)
+		offset.y = min(offset.y, block_offset.y)
+	return offset
 			
 # Move the blocks that are under control by the number of cells on the grid
 # specified in the input parameter. This method checks for collisions and
@@ -299,6 +316,14 @@ func _update(delta_seconds) -> void:
 			rotate_blocks(transform2D)
 			if autorotate_delay > 0:
 				autorotate_wait_time -= 1.0 / autorotate_speed
+				
+	# We now update the outline position
+	var outline_offset = maximum_movement(Vector2.DOWN)
+	outline_offset.x *= parent_grid.cell_size.x
+	outline_offset.y *= parent_grid.cell_size.y
+	
+	for block in blocks:
+		block.place_outline(outline_offset)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
