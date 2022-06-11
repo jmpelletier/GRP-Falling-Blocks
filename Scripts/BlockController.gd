@@ -219,7 +219,7 @@ func maximum_movement(direction:Vector2) -> Vector2:
 # Move the blocks that are under control by the number of cells on the grid
 # specified in the input parameter. This method checks for collisions and
 # keeps the blocks inside the grid's bounds.
-func move(input:Vector2) -> void:
+func move(input:Vector2) -> bool:
 	if input.length_squared() > 0:
 		# Make sure we can move all blocks
 		var can_move = true
@@ -231,7 +231,7 @@ func move(input:Vector2) -> void:
 				break
 				
 		if not can_move:
-			return
+			return false
 			
 		# Before we can move the blocks, we need to release them from 
 		# the grid's control so that they don't collide against each other
@@ -253,6 +253,11 @@ func move(input:Vector2) -> void:
 		# Update the movement offset so that we know by how much we moved
 		# since the last reset.
 		position_offset += input
+		
+	return true
+	
+func dump_blocks():
+	blocks.clear()
 
 func _update(delta_seconds) -> void:
 	if not _lazy_load_grid():
