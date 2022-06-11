@@ -42,10 +42,10 @@ func set_outline(block_outline : Node2D) -> void:
 		remove_child(outline)
 		
 	outline = block_outline
-#	if outline != null:
-#		add_child(outline)
-#		get_parent().add_child(outline)
-#		outline.position = get_position_in_parent()
+	
+	if Engine.editor_hint:
+		add_child(outline)
+		outline.position = Vector2.ZERO
 		
 func get_outline():
 	return outline
