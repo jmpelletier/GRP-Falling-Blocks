@@ -6,6 +6,7 @@ tool
 extends Node2D
 
 signal on_kick(rotation_index, try_index)
+signal on_place
 
 const Block = preload("res://Scripts/Block.gd")
 const Grid = preload("res://Scripts/Grid.gd")
@@ -55,6 +56,7 @@ func _lazy_load_grid() -> bool:
 	if parent_grid == null:
 		parent_grid = get_parent() as Grid
 		if parent_grid != null and not parent_grid.is_connected("block_removed", self, "_on_block_removed"):
+# warning-ignore:return_value_discarded
 			parent_grid.connect("block_removed", self, "_on_block_removed")
 	return parent_grid != null
 
@@ -79,6 +81,7 @@ func reset_movement() -> void:
 	position_offset = Vector2.ZERO
 	
 func get_grid() -> Grid:
+# warning-ignore:return_value_discarded
 	_lazy_load_grid()
 	return parent_grid
 
@@ -267,6 +270,9 @@ func place_blocks():
 	# Also get rid of the outline
 	if shape_outline != null:
 		shape_outline.hide()
+		
+	emit_signal("on_place")	
+	
 
 func _update(delta_seconds) -> void:
 	if not _lazy_load_grid():
@@ -295,7 +301,9 @@ func _update(delta_seconds) -> void:
 		# We move along the y axis first, and then along the x axis.
 		# This is so that collisions only block the movement along
 		# axes that are constrained.
+# warning-ignore:return_value_discarded
 		move(Vector2(0, motion_input.y))
+# warning-ignore:return_value_discarded
 		move(Vector2(motion_input.x, 0))
 	elif motion_input.x != 0 or motion_input.y != 0:
 		autoshift_wait_time += delta_seconds
@@ -303,7 +311,9 @@ func _update(delta_seconds) -> void:
 			autoshift_motion += motion_input * maximum_cells_per_second * delta_seconds
 			var quantized_motion = Vector2(int(autoshift_motion.x), int(autoshift_motion.y))
 			autoshift_motion -= quantized_motion
+# warning-ignore:return_value_discarded
 			move(Vector2(0, quantized_motion.y))
+# warning-ignore:return_value_discarded
 			move(Vector2(quantized_motion.x, 0))
 			
 	# Rotation

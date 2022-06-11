@@ -4,7 +4,6 @@
 
 extends Node
 
-signal on_fall
 signal on_stuck(stuck_time)
 
 const BlockController = preload("res://Scripts/BlockController.gd")

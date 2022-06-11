@@ -12,17 +12,25 @@ const BlockShape = preload("res://Scripts/BlockShape.gd")
 const BlockController = preload("res://Scripts/BlockController.gd")
 const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
 
+export var use_random_seed = false
+export var random_seed = 0
+
 export(NodePath) var target
-#export(NodePath) var outline_container
 export(Vector2) var spawn_cell = Vector2.ZERO
 export(Array, PackedScene) var shapes
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	call_deferred("load_shape", 0)
-#	load_shape(0)
-	
+	if use_random_seed:
+		seed(random_seed)
+	else:
+		randomize()
+	call_deferred("load_random_shape")
+
+func load_random_shape():
+	var i = randi() % shapes.size()
+	load_shape(i)
 
 func load_shape(index:int) -> void:
 	if index >= 0 and index < shapes.size() and shapes[index] != null:
@@ -80,12 +88,6 @@ func load_shape(index:int) -> void:
 						# Can't use grids, just reparent the node
 						shape_instance.remove_child(child)
 						send_to.add_child(child)
-#					var outline = child.get_outline()
-#					if outline != null:
-##						if outline.get_parent() != null:
-##							outline.get_parent().remove_child(outline)
-##						get_node(outline_container).add_child(outline)
-#						outline.global_position = child.global_position
 
 		# Release the shape template
 		shape_instance.queue_free()
