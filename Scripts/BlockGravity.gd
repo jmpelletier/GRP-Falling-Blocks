@@ -4,7 +4,8 @@
 
 extends Node
 
-signal on_gravity_move(success)
+signal on_gravity(success)
+
 
 const BlockController = preload("res://Scripts/BlockController.gd")
 
@@ -14,8 +15,10 @@ var block_controller = null
 
 func _ready():
 	block_controller = get_parent() as BlockController
+	
+func _on_timer_update(_time_secs, _time_ticks):
+	emit_signal("on_gravity", block_controller.can_move(direction))		
 
 func _on_timer_step(_time_secs, _time_ticks):
 	if block_controller != null:
-		var move_success = block_controller.move(direction)
-		emit_signal("on_gravity_move", move_success)
+		var _move_success = block_controller.move(direction)

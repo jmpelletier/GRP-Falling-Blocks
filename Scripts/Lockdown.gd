@@ -37,10 +37,6 @@ func _check_lockdown():
 		
 func update(time_seconds, _time_ticks):
 	time = time_seconds
-	if is_lockdown:
-		emit_signal("on_lockdown_countdown", get_lockdown_time_left())
-	_check_lockdown()
-	
 
 func _on_user_action(line_change:int) -> void:
 	if is_lockdown:
@@ -55,11 +51,13 @@ func _on_user_action(line_change:int) -> void:
 				if line_change > 0:
 					lockdown_start_time = time
 
-func _on_gravity_move(success:bool):
-	if success:
+func _on_gravity(can_move:bool):
+	if can_move:
 		is_lockdown = false
 	else:
 		if not is_lockdown:
 			lockdown_start_time = time
 			lockdown_moves = 0
 			is_lockdown = true
+		emit_signal("on_lockdown_countdown", get_lockdown_time_left())
+		_check_lockdown()

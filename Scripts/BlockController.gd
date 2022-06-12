@@ -240,6 +240,15 @@ func maximum_movement(direction:Vector2) -> Vector2:
 		offset.x = min(offset.x, block_offset.x)
 		offset.y = min(offset.y, block_offset.y)
 	return offset
+	
+func can_move(movement:Vector2) -> bool:
+	for block in blocks:
+		var cell = parent_grid.get_cell(block.position)
+		var new_cell = cell + movement
+		if not _cell_is_empty_or_under_control(new_cell):
+			return false
+			
+	return true
 			
 # Move the blocks that are under control by the number of cells on the grid
 # specified in the input parameter. This method checks for collisions and
@@ -247,13 +256,7 @@ func maximum_movement(direction:Vector2) -> Vector2:
 func move(input:Vector2) -> bool:
 	if input.length_squared() > 0:
 		# Make sure we can move all blocks
-		var can_move = true
-		for block in blocks:
-			var cell = parent_grid.get_cell(block.position)
-			var new_cell = cell + input
-			if not _cell_is_empty_or_under_control(new_cell):
-				can_move = false
-				break
+		var can_move = can_move(input)
 				
 		if not can_move:
 			return false

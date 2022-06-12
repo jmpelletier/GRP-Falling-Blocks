@@ -49,7 +49,6 @@ ticks_per_minute = 60
 
 [node name="Lockdown" type="Node" parent="EditableGrid/BlockController"]
 script = ExtResource( 15 )
-lockdown_mode = 1
 
 [node name="Block" parent="EditableGrid" instance=ExtResource( 12 )]
 position = Vector2( 180, 340 )
@@ -75,8 +74,9 @@ __meta__ = {
 [connection signal="on_move" from="EditableGrid/BlockController" to="EditableGrid/BlockController/Lockdown" method="_on_user_action"]
 [connection signal="on_place" from="EditableGrid/BlockController" to="ShapeLoader" method="load_next_shape"]
 [connection signal="on_rotate" from="EditableGrid/BlockController" to="EditableGrid/BlockController/Lockdown" method="_on_user_action"]
-[connection signal="on_gravity_move" from="EditableGrid/BlockController/BlockGravity" to="EditableGrid/BlockController/Lockdown" method="_on_gravity_move"]
+[connection signal="on_gravity" from="EditableGrid/BlockController/BlockGravity" to="EditableGrid/BlockController/Lockdown" method="_on_gravity"]
 [connection signal="on_step" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/BlockGravity" method="_on_timer_step"]
 [connection signal="on_update" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/Lockdown" method="update"]
+[connection signal="on_update" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/BlockGravity" method="_on_timer_update"]
 [connection signal="on_lockdown" from="EditableGrid/BlockController/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
 [connection signal="on_lockdown_countdown" from="EditableGrid/BlockController/Lockdown" to="LockdownLabel" method="set_value"]
