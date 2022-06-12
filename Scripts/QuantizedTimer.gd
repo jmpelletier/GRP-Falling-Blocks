@@ -28,16 +28,16 @@ signal on_update(time_seconds, time_ticks)
 export var enabled = true
 
 # The "tempo" of the metronome, the number of beats per minute, in musical terms.
-export var ticks_per_minute = 60
+export var ticks_per_minute = 60.0
 
 # Unit values may be multiplied by this value.
-export var unit_scale = 40
+export var unit_scale = 40.0
 
 # Whether the timer loops after a given number of ticks.
 export var loop = false
 
 # If the timer loops, how many ticks per loop.
-export var ticks_per_loop = 20
+export var ticks_per_loop = 20.0
 
 # If this is true, the timer will update in the physics loop, otherwise it 
 # updates in the main loop.
@@ -69,7 +69,7 @@ func _update(delta):
 	
 	var new_ticks = floor(time_ticks)
 	if new_ticks != ticks:
-		if should_reset or new_ticks == ticks_per_loop:
+		if should_reset or (loop and new_ticks == ticks_per_loop):
 			reset()
 		else:
 			ticks = new_ticks

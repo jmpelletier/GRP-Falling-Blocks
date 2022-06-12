@@ -336,9 +336,7 @@ func _update(delta_seconds) -> void:
 		# We move along the y axis first, and then along the x axis.
 		# This is so that collisions only block the movement along
 		# axes that are constrained.
-# warning-ignore:return_value_discarded
 		move_sucess = move(Vector2(0, motion_input.y))
-# warning-ignore:return_value_discarded
 		move_sucess = move(Vector2(motion_input.x, 0)) or move_sucess
 		
 	elif motion_input.x != 0 or motion_input.y != 0:
@@ -348,9 +346,7 @@ func _update(delta_seconds) -> void:
 			var quantized_motion = Vector2(int(autoshift_motion.x), int(autoshift_motion.y))
 			autoshift_motion -= quantized_motion
 			
-# warning-ignore:return_value_discarded
 			move_sucess = move(Vector2(0, quantized_motion.y)) or move_sucess
-# warning-ignore:return_value_discarded
 			move_sucess = move(Vector2(quantized_motion.x, 0)) or move_sucess
 			
 	# Rotation
