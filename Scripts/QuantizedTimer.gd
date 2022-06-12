@@ -10,7 +10,10 @@
 extends Node
 
  # This signal is sent every time the unit value changes.
-signal on_step
+signal on_step(time_seconds, time_ticks)
+
+# This signal is sent right after on_step.
+signal on_late_step(time_seconds, time_ticks)
 
 # This signal is sent when the timer is set back to 0,
 # either when the reset function is called manually or when
@@ -19,7 +22,7 @@ signal on_reset
 
 # This signal is sent whenever the time is updated, either 
 # in the main or physics loops.
-signal on_update
+signal on_update(time_seconds, time_ticks)
 
 # Whether the timer is ticking
 export var enabled = true
@@ -71,9 +74,10 @@ func _update(delta):
 		else:
 			ticks = new_ticks
 		if enabled:
-			emit_signal("on_step")
+			emit_signal("on_step", time_seconds, time_ticks)
+			emit_signal("on_late_step", time_seconds, time_ticks)
 	if enabled:
-		emit_signal("on_update")
+		emit_signal("on_update", time_seconds, time_ticks)
 
 # Return the time elapsed in seconds since the last reset
 func get_time():

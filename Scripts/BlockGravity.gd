@@ -15,7 +15,7 @@ var block_controller = null
 func _ready():
 	block_controller = get_parent() as BlockController
 
-func _on_timer_step():
+func _on_timer_step(_time_secs, _time_ticks):
 	if block_controller != null:
 		var move_success = block_controller.move(direction)
 		emit_signal("on_gravity_move", move_success)

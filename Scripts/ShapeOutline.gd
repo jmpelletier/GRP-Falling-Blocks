@@ -169,7 +169,7 @@ func update_corners(blocks : Array, cell_size : Vector2) -> void:
 
 		block.set_outline(outline)
 		
-		if not Engine.editor_hint:
+		if not Engine.editor_hint and outline.get_parent() == null:
 			add_child(outline)
 
 func _set_corners(block_shape : BlockShape):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Shapes/4_blocks/I_Shape.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Shapes/4_blocks/J_Shape.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/BlockController.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/NumberLabel.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scripts/BlockGravity.gd" type="Script" id=14]
 [ext_resource path="res://Scripts/Lockdown.gd" type="Script" id=15]
 [ext_resource path="res://Scenes/ShapePreview.tscn" type="PackedScene" id=16]
@@ -55,9 +56,27 @@ position = Vector2( 180, 340 )
 
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 
+[node name="LockdownLabel" parent="." instance=ExtResource( 13 )]
+margin_left = 480.0
+margin_top = 400.0
+margin_right = 608.0
+margin_bottom = 469.0
+decimal_digits = 3
+
+[node name="Label" type="Label" parent="LockdownLabel"]
+margin_top = -20.0
+margin_right = 117.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Time to lockdown:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="on_move" from="EditableGrid/BlockController" to="EditableGrid/BlockController/Lockdown" method="_on_user_action"]
 [connection signal="on_place" from="EditableGrid/BlockController" to="ShapeLoader" method="load_next_shape"]
 [connection signal="on_rotate" from="EditableGrid/BlockController" to="EditableGrid/BlockController/Lockdown" method="_on_user_action"]
 [connection signal="on_gravity_move" from="EditableGrid/BlockController/BlockGravity" to="EditableGrid/BlockController/Lockdown" method="_on_gravity_move"]
 [connection signal="on_step" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/BlockGravity" method="_on_timer_step"]
+[connection signal="on_update" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/Lockdown" method="update"]
 [connection signal="on_lockdown" from="EditableGrid/BlockController/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
+[connection signal="on_lockdown_countdown" from="EditableGrid/BlockController/Lockdown" to="LockdownLabel" method="set_value"]

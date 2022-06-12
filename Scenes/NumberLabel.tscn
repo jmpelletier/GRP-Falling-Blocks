@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/StatsFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/NumberLabel.gd" type="Script" id=2]
+
+[node name="NumberLabel" type="Label"]
+margin_right = 80.0
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "00.000"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

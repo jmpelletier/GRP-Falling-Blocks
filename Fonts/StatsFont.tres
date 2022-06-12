@@ -3,5 +3,5 @@
 [ext_resource path="res://Fonts/BalooTamma2-SemiBold.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 40
+size = 24
 font_data = ExtResource( 1 )

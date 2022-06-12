@@ -5,8 +5,7 @@
 extends Node
 
 signal on_lockdown
-
-const BlockController = preload("res://Scripts/BlockController.gd")
+signal on_lockdown_countdown(time_left)
 
 enum LockdownMode {INFINITE, MOVE, STEP}
 
@@ -14,25 +13,35 @@ export var lockdown_time = 0.5
 export(LockdownMode) var lockdown_mode = LockdownMode.INFINITE
 export var max_lockdown_moves = 15
 
-var block_controller
-
 var lockdown_start_time = 0
 var lockdown_moves = 0
 var time = 0
 var is_lockdown = false
 
+func get_lockdown_time() -> float:
+	if is_lockdown:
+		return time - lockdown_start_time
+	else:
+		return 0.0
+		
+func get_lockdown_time_left() -> float:
+	return lockdown_time - get_lockdown_time()
+
 func reset_lockdown_time():
 	lockdown_start_time = time
-
-func _process(delta):
-	time += delta
+		
+func _check_lockdown():
 	if is_lockdown and time - lockdown_start_time >= lockdown_time:
 		emit_signal("on_lockdown")
 		is_lockdown = false
-
-func _ready():
-	block_controller = get_parent() as BlockController
+		
+func update(time_seconds, _time_ticks):
+	time = time_seconds
+	if is_lockdown:
+		emit_signal("on_lockdown_countdown", get_lockdown_time_left())
+	_check_lockdown()
 	
+
 func _on_user_action(line_change:int) -> void:
 	if is_lockdown:
 		match lockdown_mode:
