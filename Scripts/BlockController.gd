@@ -5,9 +5,19 @@
 tool
 extends Node2D
 
+# This signal is sent when there is a succesful 'kick'.
 signal on_kick(rotation_index, try_index)
+
+# This signal is sent when a piece is locked in place.
 signal on_place
 
+# This signal is sent when the piece is succesfully moved by the player.
+signal on_move(line_change)
+
+# This signal is sent when the piece is succesfully rotated by the player.
+signal on_rotate(line_change)
+
+# Preload the necessary classes
 const Block = preload("res://Scripts/Block.gd")
 const Grid = preload("res://Scripts/Grid.gd")
 const BlockShape = preload("res://Scripts/BlockShape.gd")
@@ -152,7 +162,7 @@ func _can_rotate(transform2D:Transform2D, translation:Vector2) -> bool:
 	return true
 		
 # Rotate the blocks around the pivot.	
-func rotate_blocks(transform2D:Transform2D) -> void:
+func rotate_blocks(transform2D:Transform2D) -> bool:
 	
 	# We can tell if we are rotating clockwise or counter-clockwise,
 	# by looking at the x-basis of the transform. Note that this only
@@ -166,6 +176,9 @@ func rotate_blocks(transform2D:Transform2D) -> void:
 		rotation_index += 1
 	
 	var kick_offset = Vector2.ZERO
+	var did_kick = false
+	var kick_rotation_index = 0
+	var kick_tries = 0
 	var can_rotate = _can_rotate(transform2D, kick_offset)
 	if not can_rotate:
 		# Try 'kicking' the shape
@@ -175,8 +188,9 @@ func rotate_blocks(transform2D:Transform2D) -> void:
 				kick_offset = kicks[i][rotation_index]
 				can_rotate = _can_rotate(transform2D, kick_offset)
 				if can_rotate:
-					# It might be better to emit this signal after having moved the blocks...
-					emit_signal("on_kick", rotation_index, i)
+					did_kick = true
+					kick_rotation_index = rotation_index
+					kick_tries = i
 					break
 		
 	if can_rotate:
@@ -204,6 +218,11 @@ func rotate_blocks(transform2D:Transform2D) -> void:
 		# Recalculate the outline
 		if shape_outline != null:
 			shape_outline.update_corners(blocks, parent_grid.cell_size)
+	
+	if did_kick:
+		emit_signal("on_kick", kick_rotation_index, kick_tries)
+		
+	return can_rotate
 
 # Find out how far, in cell units, we can move the block without
 # hitting something or going out of bounds.
@@ -272,7 +291,16 @@ func place_blocks():
 		shape_outline.hide()
 		
 	emit_signal("on_place")	
+
+func _get_line():
+	var line = -1
 	
+	for block in blocks:
+		var cell = parent_grid.get_cell(block.position)
+		if cell.y > line:
+			line = cell.y
+		
+	return line
 
 func _update(delta_seconds) -> void:
 	if not _lazy_load_grid():
@@ -280,8 +308,11 @@ func _update(delta_seconds) -> void:
 		
 	if not accept_user_input:
 		return
+		
+	var start_line = _get_line()
 	
 	# Translation
+	var move_sucess = false
 	var motion_input = Vector2.ZERO
 	if Input.is_action_pressed("move_left") and maximum_cells_per_second.x > 0:
 		motion_input.x += -1
@@ -298,37 +329,41 @@ func _update(delta_seconds) -> void:
 	or Input.is_action_just_pressed("move_down")) :
 		autoshift_wait_time = 0
 		autoshift_motion = motion_input
+		
 		# We move along the y axis first, and then along the x axis.
 		# This is so that collisions only block the movement along
 		# axes that are constrained.
 # warning-ignore:return_value_discarded
-		move(Vector2(0, motion_input.y))
+		move_sucess = move(Vector2(0, motion_input.y))
 # warning-ignore:return_value_discarded
-		move(Vector2(motion_input.x, 0))
+		move_sucess = move(Vector2(motion_input.x, 0)) or move_sucess
+		
 	elif motion_input.x != 0 or motion_input.y != 0:
 		autoshift_wait_time += delta_seconds
 		if autoshift_wait_time >= autoshift_delay:
 			autoshift_motion += motion_input * maximum_cells_per_second * delta_seconds
 			var quantized_motion = Vector2(int(autoshift_motion.x), int(autoshift_motion.y))
 			autoshift_motion -= quantized_motion
+			
 # warning-ignore:return_value_discarded
-			move(Vector2(0, quantized_motion.y))
+			move_sucess = move(Vector2(0, quantized_motion.y)) or move_sucess
 # warning-ignore:return_value_discarded
-			move(Vector2(quantized_motion.x, 0))
+			move_sucess = move(Vector2(quantized_motion.x, 0)) or move_sucess
 			
 	# Rotation
 	var transform2D = Transform2D()
 	var should_autorotate = false
+	var rotation_sucess = false
 	if Input.is_action_just_pressed("rotate_clockwise"):
 		transform2D.x = Vector2(0, 1)
 		transform2D.y = Vector2(-1, 0)
 		autorotate_wait_time = 0
-		rotate_blocks(transform2D)
+		rotation_sucess = rotate_blocks(transform2D)
 	elif Input.is_action_just_pressed("rotate_counterclockwise"):
 		transform2D.x = Vector2(0, -1)
 		transform2D.y = Vector2(1, 0)
 		autorotate_wait_time = 0
-		rotate_blocks(transform2D)
+		rotation_sucess = rotate_blocks(transform2D)
 	elif Input.is_action_pressed("rotate_clockwise"):
 		transform2D.x = Vector2(0, 1)
 		transform2D.y = Vector2(-1, 0)
@@ -341,7 +376,7 @@ func _update(delta_seconds) -> void:
 	if should_autorotate:
 		autorotate_wait_time += delta_seconds
 		if autorotate_wait_time >= autorotate_delay:
-			rotate_blocks(transform2D)
+			rotation_sucess = rotate_blocks(transform2D) or rotation_sucess
 			if autorotate_delay > 0:
 				autorotate_wait_time -= 1.0 / autorotate_speed
 				
@@ -352,6 +387,13 @@ func _update(delta_seconds) -> void:
 	
 	for block in blocks:
 		block.place_outline(outline_offset)
+		
+	var end_line = _get_line()
+	
+	if move_sucess:
+		emit_signal("on_move", end_line - start_line)
+	if rotation_sucess:
+		emit_signal("on_rotate", end_line - start_line)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

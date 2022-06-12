@@ -39,13 +39,15 @@ ticks_per_minute = 60
 
 [node name="Lockdown" type="Node" parent="EditableGrid/BlockController"]
 script = ExtResource( 15 )
+lockdown_mode = 1
 
 [node name="Block" parent="EditableGrid" instance=ExtResource( 12 )]
 position = Vector2( 20, 180 )
 
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 
+[connection signal="on_move" from="EditableGrid/BlockController" to="EditableGrid/BlockController/Lockdown" method="_on_user_action"]
 [connection signal="on_place" from="EditableGrid/BlockController" to="ShapeLoader" method="load_next_shape"]
-[connection signal="on_stuck" from="EditableGrid/BlockController/BlockGravity" to="EditableGrid/BlockController/Lockdown" method="_on_block_stuck"]
+[connection signal="on_rotate" from="EditableGrid/BlockController" to="EditableGrid/BlockController/Lockdown" method="_on_user_action"]
+[connection signal="on_gravity_move" from="EditableGrid/BlockController/BlockGravity" to="EditableGrid/BlockController/Lockdown" method="_on_gravity_move"]
 [connection signal="on_step" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/BlockGravity" method="_on_timer_step"]
-[connection signal="on_lockdown" from="EditableGrid/BlockController/Lockdown" to="EditableGrid/BlockController/BlockGravity" method="_reset_stuck_state"]
