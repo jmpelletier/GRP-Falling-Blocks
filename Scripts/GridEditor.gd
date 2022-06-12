@@ -38,9 +38,9 @@ func _modify_cell(cell:Vector2) -> void:
 				grid.add_block(new_block, cell)
 
 
-func _on_EditableGrid_mouse_press(button, cell):
+func _on_EditableGrid_mouse_press(_button, cell):
 	_modify_cell(cell)
 
 
-func _on_EditableGrid_mouse_drag(button, cell):
+func _on_EditableGrid_mouse_drag(_button, cell):
 	_modify_cell(cell)

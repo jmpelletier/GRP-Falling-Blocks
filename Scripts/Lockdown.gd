@@ -27,7 +27,7 @@ func reset_lockdown_time():
 func _process(delta):
 	time += delta
 	if is_lockdown and time - lockdown_start_time >= lockdown_time:
-		block_controller.place_blocks()
+		emit_signal("on_lockdown")
 		is_lockdown = false
 
 func _ready():

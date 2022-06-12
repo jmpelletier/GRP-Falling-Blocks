@@ -37,7 +37,7 @@ func _ready():
 		randomize()
 	
 	# Initialize the next shape array
-	for i in range(preview_count):
+	for _i in range(preview_count):
 		next_shapes.append(_get_random_shape_index())	
 		
 	# Get the shape previews
