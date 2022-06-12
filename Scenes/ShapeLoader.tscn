@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/ShapeLoader.gd" type="Script" id=1]
+[ext_resource path="res://Shapes/4_blocks/T_Shape.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Shapes/4_blocks/J_Shape.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Shapes/4_blocks/L_Shape.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Shapes/4_blocks/Z_Shape.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Shapes/4_blocks/I_Shape.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Shapes/4_blocks/O_Shape.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Shapes/4_blocks/S_Shape.tscn" type="PackedScene" id=8]
 
 [node name="ShapeLoader" type="Node2D"]
 script = ExtResource( 1 )
+shapes = [ ExtResource( 6 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 5 ) ]

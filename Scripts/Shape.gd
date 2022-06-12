@@ -26,8 +26,8 @@ func get_bounds():
 				init = true
 	return bounds
 
-func _process(delta):
-	if Engine.editor_hint:
-		for child in get_children():
-			if child is Block:
-				pass
+#func _process(delta):
+#	if Engine.editor_hint:
+#		for child in get_children():
+#			if child is Block:
+#				pass

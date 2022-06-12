@@ -11,6 +11,7 @@ const Grid = preload("res://Scripts/Grid.gd")
 const BlockShape = preload("res://Scripts/BlockShape.gd")
 const BlockController = preload("res://Scripts/BlockController.gd")
 const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
+const ShapePreview = preload("res://Scripts/ShapePreview.gd")
 
 export var use_random_seed = false
 export var random_seed = 0
@@ -18,10 +19,15 @@ export var random_seed = 0
 export var single_block_mode = false
 export var single_block_index = 0
 
+export var preview_count  = 3
+export(PackedScene) var preview_scene
+
 export(NodePath) var target
 export(Vector2) var spawn_cell = Vector2.ZERO
 export(Array, PackedScene) var shapes
 
+var next_shapes = []
+var shape_previews = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,16 +35,43 @@ func _ready():
 		seed(random_seed)
 	else:
 		randomize()
+	
+	# Initialize the next shape array
+	for i in range(preview_count):
+		next_shapes.append(_get_random_shape_index())	
+		
+	# Get the shape previews
+	for child in get_children():
+		if child is ShapePreview:
+			shape_previews.append(child)
+	
 	call_deferred("load_next_shape")
+	
+func _get_random_shape_index():
+	return randi() % shapes.size()
 
 func load_next_shape():
 	if single_block_mode:
 		load_shape(single_block_index)
 	else:
-		var i = randi() % shapes.size()
-		load_shape(i)
+		var index = next_shapes.pop_front()
+		next_shapes.append(_get_random_shape_index())	
+		_update_shape_preview()
+		load_shape(index)
+		
+func _update_shape_preview():
+	for i in range(shape_previews.size()):
+		shape_previews[i].visible = i < next_shapes.size()
+		if i < next_shapes.size():
+			shape_previews[i].visible = true
+			shape_previews[i].preview_shape(shapes[next_shapes[i]])
+		else:
+			shape_previews[i].visible = false
 
 func load_shape(index:int) -> void:
+	if target.is_empty():
+		return
+		
 	if index >= 0 and index < shapes.size() and shapes[index] != null:
 		var shape_instance = shapes[index].instance()
 		# Get all the blocks and move them to the target.
