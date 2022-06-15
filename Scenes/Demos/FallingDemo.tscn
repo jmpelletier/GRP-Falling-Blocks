@@ -9,12 +9,12 @@
 [ext_resource path="res://Shapes/4_blocks/O_Shape.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/EditableGrid.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/ShapeLoader.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Lockdown.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/BlockController.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/NumberLabel.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Scripts/BlockGravity.gd" type="Script" id=14]
-[ext_resource path="res://Scripts/Lockdown.gd" type="Script" id=15]
+[ext_resource path="res://Scenes/BlockGravity.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/ClearLines.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Scenes/ShapePreview.tscn" type="PackedScene" id=16]
 
 [node name="FallingDemo" type="Node2D"]
@@ -42,21 +42,16 @@ position = Vector2( 40, 40 )
 position = Vector2( 140, 60 )
 maximum_cells_per_second = Vector2( 4, 0 )
 
-[node name="BlockGravity" type="Node" parent="EditableGrid/BlockController"]
-script = ExtResource( 14 )
+[node name="BlockGravity" parent="EditableGrid/BlockController" instance=ExtResource( 14 )]
 
-[node name="QuantizedTimer" parent="EditableGrid/BlockController/BlockGravity" instance=ExtResource( 10 )]
-ticks_per_minute = 60.0
-loop = false
-ticks_per_loop = 20.0
-
-[node name="Lockdown" type="Node" parent="EditableGrid/BlockController"]
-script = ExtResource( 15 )
+[node name="Lockdown" parent="EditableGrid/BlockController" instance=ExtResource( 10 )]
 
 [node name="Block" parent="EditableGrid" instance=ExtResource( 12 )]
 position = Vector2( 20, 500 )
 
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
+
+[node name="ClearLines" parent="EditableGrid" instance=ExtResource( 15 )]
 
 [node name="LockdownLabel" parent="." instance=ExtResource( 13 )]
 margin_left = 480.0
@@ -93,9 +88,9 @@ __meta__ = {
 [connection signal="on_place" from="EditableGrid/BlockController" to="ShapeLoader" method="load_next_shape"]
 [connection signal="on_rotate" from="EditableGrid/BlockController" to="EditableGrid/BlockController/Lockdown" method="_on_user_action"]
 [connection signal="on_gravity" from="EditableGrid/BlockController/BlockGravity" to="EditableGrid/BlockController/Lockdown" method="_on_gravity"]
-[connection signal="on_step" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/BlockGravity" method="_on_timer_step"]
-[connection signal="on_update" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/BlockGravity" method="_on_timer_update"]
-[connection signal="on_update" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/Lockdown" method="update"]
 [connection signal="on_update" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="TimerLabel" method="set_quantized_timer_value"]
+[connection signal="on_update" from="EditableGrid/BlockController/BlockGravity/QuantizedTimer" to="EditableGrid/BlockController/Lockdown" method="update"]
 [connection signal="on_lockdown" from="EditableGrid/BlockController/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
 [connection signal="on_lockdown_countdown" from="EditableGrid/BlockController/Lockdown" to="LockdownLabel" method="set_value"]
+
+[editable path="EditableGrid/BlockController/BlockGravity"]

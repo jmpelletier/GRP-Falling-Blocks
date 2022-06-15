@@ -17,8 +17,6 @@ const Block = preload("res://Scripts/Block.gd")
 export(Vector2) var size = Vector2(10, 10) setget set_size
 export(Vector2) var cell_size = Vector2(40, 40) setget set_cell_size
 export(Vector2) var offset = Vector2.ZERO setget set_offset
-#export(Vector2) var wall_size = Vector2(40, 40) setget set_wall_size
-#export(bool) var constrain_items = false setget set_constrain_items
 
 var rows = []
 var block_coordinates = []
@@ -48,15 +46,6 @@ func set_offset(value:Vector2):
 	for child in get_children():
 		_constrain_item(child)
 	_update()
-	
-#func set_wall_size(value:Vector2):
-#	wall_size = value
-#	_update()
-##	_layout()
-	
-#func set_constrain_items(value:bool):
-#	constrain_items = value
-##	_layout()
 	
 func cell_is_in_bounds(cell:Vector2) -> bool:
 	return cell.x >= 0 and cell.x < size.x and cell.y >= 0 and cell.y < size.y
@@ -98,7 +87,29 @@ func get_occupied_cells(relative_coords:bool = false) -> Array:
 					arr.push_back(Vector2(j, i) + offset)
 				else:
 					arr.push_back(Vector2(j, i))
-				
+	return arr
+
+# Check to see if all the cells in a row are occupied.
+func row_is_completed(row:int) -> bool:
+	if row >= 0 and row < rows.size():
+		for i in range(rows[row].size()):
+			if rows[row][i] == null:
+				return false
+		return true
+	else:
+		return false
+		
+# Get a list of completed rows.
+func get_completed_rows() -> Array:
+	var arr = []
+	for i in range(rows.size()):
+		var has_empty_cells = false
+		for j in range(rows[i].size()):
+			if rows[i][j] == null:
+				has_empty_cells = true
+				break
+		if not has_empty_cells:
+			arr.push_back(rows[i])
 	return arr
 
 # Add a block to the grid. If the cell is already occupied,
@@ -150,8 +161,7 @@ func remove(block:Node2D) -> void:
 			rows[int(cell.y)][int(cell.x)] = null
 			remove_child(block)
 			block.queue_free()
-			
-	
+
 func get_item_at_cell(column:int, row:int):
 	for child in get_children():
 		if child is GridItem:
@@ -197,20 +207,6 @@ func _constrain_item(item):
 	else:
 		for child in item.get_children():
 			_constrain_item(child)
-	
-#func add_child(node:Node, legible_unique_name:bool = false):
-#	.add_child(node, legible_unique_name)
-#	_layout_item(node)
-	
-#func _setup_child(child):
-#	if child is GridItem:
-#		child.connect("moved", self, "_item_moved")
-#	else:
-#		for node in child.get_children():
-#			_setup_child(node)
-
-#func _item_moved(item):
-#	_layout_item(item)
 
 var is_dragging = [false, false, false]
 	
@@ -251,39 +247,6 @@ func _update():
 			bg.rect_size = cell_size * size
 		if bg:
 			bg.rect_position = offset * cell_size
-			
-#		var top_shape = $Walls/Top.shape as RectangleShape2D
-#		var right_shape = $Walls/Right.shape as RectangleShape2D
-#		var bottom_shape = $Walls/Bottom.shape as RectangleShape2D
-#		var left_shape = $Walls/Left.shape as RectangleShape2D
-#
-#		top_shape.extents = Vector2(size.x * cell_size.x * 0.5 + wall_size.x, wall_size.y * 0.5)
-#		bottom_shape.extents = top_shape.extents
-#		right_shape.extents = Vector2(wall_size.x * 0.5, size.y * cell_size.y * 0.5)
-#		left_shape.extents = right_shape.extents
-#
-#		$Walls/Top.position = Vector2(top_shape.extents.x - wall_size.x, -top_shape.extents.y) + offset * cell_size
-#		$Walls/Bottom.position = Vector2(bottom_shape.extents.x - wall_size.x, size.y * cell_size.y + bottom_shape.extents.y) + offset * cell_size
-#		$Walls/Left.position = Vector2(-left_shape.extents.x, left_shape.extents.y) + offset * cell_size
-#		$Walls/Right.position = Vector2(size.x * cell_size.x  + right_shape.extents.x, right_shape.extents.y) + offset * cell_size
-			
-#func _layout_item(item):
-#	if item is GridItem:
-#		var scaled_offset = offset * cell_size
-#		var snapped_position = (item.position - scaled_offset).snapped(cell_size)
-#		item.cell = offset + snapped_position / cell_size
-#		item.position = scaled_offset + snapped_position
-#
-#		if constrain_items:
-#			_constrain_item(item)
-#	else:
-#		for child in item.get_children():
-#			_layout_item(child)
-			
-#func _layout():
-#	for child in get_children():
-#		_layout_item(child)
-			
 
 func _update_children() -> void:
 
@@ -296,9 +259,6 @@ func _update_children() -> void:
 func _ready():
 	_update()
 	_update_children()
-#	for child in get_children():
-#		_setup_child(child)
-#	_layout()
 	
 func _process(_delta):
 	if Engine.editor_hint:

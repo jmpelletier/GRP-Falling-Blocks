@@ -16,12 +16,12 @@ export var rotation_offset = Vector2.ZERO
 var outline = null
 
 func set_cell_size(size:Vector2) -> void:
-	if $Sprite.texture != null:
-		scale = 2.0 * size / $Sprite.texture.get_size()
+	if $SpriteContainer/Sprite.texture != null:
+		scale = 2.0 * size / $SpriteContainer/Sprite.texture.get_size()
 		
 func get_size() -> Vector2:
-	if $Sprite.texture != null:
-		return $Sprite.texture.get_size() * scale * 0.5
+	if $SpriteContainer/Sprite.texture != null:
+		return $SpriteContainer/Sprite.texture.get_size() * scale * 0.5
 	else:
 		return Vector2.ZERO
 		
@@ -59,3 +59,6 @@ func control():
 	
 func place():
 	$AnimationPlayer.play("placed")
+	
+func hide():
+	$AnimationPlayer.play("Hide")
