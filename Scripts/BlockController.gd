@@ -315,7 +315,7 @@ func _update(delta_seconds) -> void:
 	var start_line = _get_line()
 	
 	# Translation
-	var move_sucess = false
+	var move_success = false
 	var motion_input = Vector2.ZERO
 	if Input.is_action_pressed("move_left") and maximum_cells_per_second.x > 0:
 		motion_input.x += -1
@@ -336,8 +336,8 @@ func _update(delta_seconds) -> void:
 		# We move along the y axis first, and then along the x axis.
 		# This is so that collisions only block the movement along
 		# axes that are constrained.
-		move_sucess = move(Vector2(0, motion_input.y))
-		move_sucess = move(Vector2(motion_input.x, 0)) or move_sucess
+		move_success = move(Vector2(0, motion_input.y))
+		move_success = move(Vector2(motion_input.x, 0)) or move_success
 		
 	elif motion_input.x != 0 or motion_input.y != 0:
 		autoshift_wait_time += delta_seconds
@@ -346,8 +346,8 @@ func _update(delta_seconds) -> void:
 			var quantized_motion = Vector2(int(autoshift_motion.x), int(autoshift_motion.y))
 			autoshift_motion -= quantized_motion
 			
-			move_sucess = move(Vector2(0, quantized_motion.y)) or move_sucess
-			move_sucess = move(Vector2(quantized_motion.x, 0)) or move_sucess
+			move_success = move(Vector2(0, quantized_motion.y)) or move_success
+			move_success = move(Vector2(quantized_motion.x, 0)) or move_success
 			
 	# Rotation
 	var transform2D = Transform2D()
@@ -381,15 +381,29 @@ func _update(delta_seconds) -> void:
 				
 	# We now update the outline position
 	var outline_offset = maximum_movement(Vector2.DOWN)
-	outline_offset.x *= parent_grid.cell_size.x
-	outline_offset.y *= parent_grid.cell_size.y
+	var outline_offset_pixels = outline_offset * parent_grid.cell_size
+#	outline_offset.x *= parent_grid.cell_size.x
+#	outline_offset.y *= parent_grid.cell_size.y
 	
 	for block in blocks:
-		block.place_outline(outline_offset)
+		block.place_outline(outline_offset_pixels)
+		
+	# We can now check for hard drops. Soft drops are implemented in BlockGravity,
+	# as they only change the speed at which blocks fall.
+	if Input.is_action_just_pressed("drop"):
+		move_success = move(outline_offset)
+		
+		# This should alway be succesful:
+		if move_success:
+			# On a hard drop, we place the blocks immediately.
+			# If you wish to wait for the usual lockdown time instead, remove
+			# this code block.
+			place_blocks()
+			return
 		
 	var end_line = _get_line()
 	
-	if move_sucess:
+	if move_success:
 		emit_signal("on_move", end_line - start_line)
 	if rotation_sucess:
 		emit_signal("on_rotate", end_line - start_line)
