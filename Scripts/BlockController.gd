@@ -98,12 +98,6 @@ func get_grid() -> Grid:
 # This methods adds a block to the list of nodes under control.
 # The block will be reparented to the grid.
 # If there is already a block at the same position, nothing happens.
-#func add_block(block:Block) -> void:
-#	if _lazy_load_grid() and block != null and block.is_inside_tree():
-#		var grid_pos = parent_grid.transform.xform_inv(block.global_position)
-#		var cell = parent_grid.get_cell(grid_pos)
-#		add_block_at_cell(block, cell)
-			
 func add_block(block:Block, cell:Vector2) -> void:
 	if _lazy_load_grid() and block != null:
 		if not parent_grid.cell_is_occupied(cell):
@@ -113,8 +107,11 @@ func add_block(block:Block, cell:Vector2) -> void:
 			blocks.push_back(block)
 			# Tell the block it's now under control
 			block.control()
-			
-func set_outline(outline:ShapeOutline):
+
+# This method initializes the shape outline, or 'ghost' that
+# previews where hard drops will fall. This is called by the 
+# ShapeLoader every time a new shape is loaded into the field.
+func set_outline(outline:ShapeOutline) -> void:
 	if outline == shape_outline:
 		return
 		
@@ -128,13 +125,16 @@ func set_outline(outline:ShapeOutline):
 		parent_grid.add_child(outline)
 		outline.show()
 
-# Signal callback
+# Signal callback: a block was removed from the parent grid.
+# We need to check and update the list of blocks that are under
+# our control.
 func _on_block_removed(block:Node2D, _cell:Vector2) -> void:
 	for i in range(blocks.size()):
 		if blocks[i] == block:
 			blocks.remove(i)
 			break
-			
+
+# This is a helper function that is used for detection collisions.
 func _cell_is_empty_or_under_control(cell:Vector2) -> bool:
 	if parent_grid.cell_is_in_bounds(cell):
 		var existing_block = parent_grid.get_block_at_cell(cell)
@@ -150,7 +150,8 @@ func _cell_is_empty_or_under_control(cell:Vector2) -> bool:
 	
 	# Return false if cell is out of bounds
 	return false
-	
+
+# Checks whether a rotation can be performed without collisions.
 func _can_rotate(transform2D:Transform2D, translation:Vector2) -> bool:
 	for block in blocks:
 		var new_offset = transform2D.xform(block.rotation_offset)
@@ -175,6 +176,10 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 	if orientation_diff == -1 or orientation_diff == 3:
 		rotation_index += 1
 	
+	# If a rotation cannot be performed because a block is in the way,
+	# we try a number of succesive translation before the rotation.
+	# This is known as 'kicking' and every shape can have its own
+	# translations, or 'kicks'.
 	var kick_offset = Vector2.ZERO
 	var did_kick = false
 	var kick_rotation_index = 0
@@ -240,7 +245,8 @@ func maximum_movement(direction:Vector2) -> Vector2:
 		offset.x = min(offset.x, block_offset.x)
 		offset.y = min(offset.y, block_offset.y)
 	return offset
-	
+
+# Checks whether the translation, in cells, is possible without collision.
 func can_move(movement:Vector2) -> bool:
 	for block in blocks:
 		var cell = parent_grid.get_cell(block.position)
@@ -283,7 +289,8 @@ func move(input:Vector2) -> bool:
 		position_offset += input
 		
 	return true
-	
+
+# 'Place', or 'lockdown' the blocks on the field, relinquishing control.
 func place_blocks():
 	for block in blocks:
 		block.place()
@@ -295,7 +302,8 @@ func place_blocks():
 		
 	emit_signal("on_place")	
 
-func _get_line():
+# Get the y value, in cell units, of the lowest block in our control.
+func _get_line() -> int:
 	var line = -1
 	
 	for block in blocks:
@@ -305,13 +313,17 @@ func _get_line():
 		
 	return line
 
+# Update the game state. This is called at every frame.
 func _update(delta_seconds) -> void:
 	if not _lazy_load_grid():
 		return
 		
 	if not accept_user_input:
 		return
-		
+	
+	# Under some rules, time to lockdown is increased only if the shape
+	# has move downwards after player action. Here we get the row of the
+	# lowest block in our control before we process user input.
 	var start_line = _get_line()
 	
 	# Translation
@@ -338,7 +350,8 @@ func _update(delta_seconds) -> void:
 		# axes that are constrained.
 		move_success = move(Vector2(0, motion_input.y))
 		move_success = move(Vector2(motion_input.x, 0)) or move_success
-		
+	
+	# Process auto-shift.
 	elif motion_input.x != 0 or motion_input.y != 0:
 		autoshift_wait_time += delta_seconds
 		if autoshift_wait_time >= autoshift_delay:
@@ -372,6 +385,7 @@ func _update(delta_seconds) -> void:
 		transform2D.y = Vector2(1, 0)
 		should_autorotate = true
 
+	# Process auto-rotate.
 	if should_autorotate:
 		autorotate_wait_time += delta_seconds
 		if autorotate_wait_time >= autorotate_delay:
@@ -382,8 +396,6 @@ func _update(delta_seconds) -> void:
 	# We now update the outline position
 	var outline_offset = maximum_movement(Vector2.DOWN)
 	var outline_offset_pixels = outline_offset * parent_grid.cell_size
-#	outline_offset.x *= parent_grid.cell_size.x
-#	outline_offset.y *= parent_grid.cell_size.y
 	
 	for block in blocks:
 		block.place_outline(outline_offset_pixels)
@@ -400,7 +412,8 @@ func _update(delta_seconds) -> void:
 			# this code block.
 			place_blocks()
 			return
-		
+	
+	# We check the lowest row again.
 	var end_line = _get_line()
 	
 	if move_success:
