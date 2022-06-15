@@ -12,6 +12,8 @@
 script = ExtResource( 6 )
 
 [node name="QuantizedTimer" parent="." instance=ExtResource( 1 )]
+ticks_per_minute = 60.0
+ticks_per_loop = 20.0
 
 [node name="Timeline" type="Node2D" parent="."]
 position = Vector2( 120, 380 )

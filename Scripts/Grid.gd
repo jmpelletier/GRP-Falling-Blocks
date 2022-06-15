@@ -47,8 +47,11 @@ func set_offset(value:Vector2):
 		_constrain_item(child)
 	_update()
 	
+func coords_are_in_bounds(x:int, y:int) -> bool:
+	return x >= 0 and x < size.x and y >= 0 and y < size.y
+	
 func cell_is_in_bounds(cell:Vector2) -> bool:
-	return cell.x >= 0 and cell.x < size.x and cell.y >= 0 and cell.y < size.y
+	return coords_are_in_bounds(cell.x, cell.y)
 	
 func _get_block_at_cell(cell:Vector2) -> Node2D:
 	if not cell_is_in_bounds(cell):
@@ -154,13 +157,29 @@ func release_block(cell:Vector2) -> void:
 		rows[int(cell.y)][int(cell.x)] = null
 
 # Remove the block from the grid.
-func remove(block:Node2D) -> void:
+func remove(block:Node2D, shift_cells:bool = false, shift_direction:Vector2 = Vector2.UP) -> void:
 	if block != null and block.get_parent() == self:
 		var cell = get_cell(block.position)
 		if rows[int(cell.y)][int(cell.x)] == block:
 			rows[int(cell.y)][int(cell.x)] = null
 			remove_child(block)
 			block.queue_free()
+			
+			if shift_cells:
+				var dx = int(shift_direction.x)
+				var dy = int(shift_direction.y)
+				var to_x = int(cell.x)
+				var to_y = int(cell.y)
+				var x = to_x + dx
+				var y = to_y + dy
+				while coords_are_in_bounds(x, y) and coords_are_in_bounds(to_x, to_y):
+					rows[to_y][to_x] = rows[y][x]
+					if rows[to_y][to_x] != null:
+						rows[to_y][to_x].position += cell_size * shift_direction * -1
+					x += dx
+					y += dy
+					to_x += dx
+					to_y += dy 
 
 func get_item_at_cell(column:int, row:int):
 	for child in get_children():

@@ -23,6 +23,8 @@ func clear_lines() -> void:
 	completed_rows = parent_grid.get_completed_rows()
 	if not completed_rows.empty():
 		$AnimationPlayer.play("Clear")
+	else:
+		emit_signal("lines_cleared")
 
 func hide_line_blocks(normalized_column:float) -> void:
 	if not completed_rows.empty():
@@ -37,5 +39,7 @@ func clear_line_animation_done() -> void:
 		
 	for row in completed_rows:
 		for block in row:
-			parent_grid.remove(block)
+			parent_grid.remove(block, true, Vector2.UP)
 	completed_rows = []
+	
+	emit_signal("lines_cleared")

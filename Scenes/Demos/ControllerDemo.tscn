@@ -36,3 +36,5 @@ position = Vector2( 180, 220 )
 
 [node name="QuantizedTimer" parent="." instance=ExtResource( 10 )]
 enabled = false
+ticks_per_minute = 60.0
+ticks_per_loop = 20.0

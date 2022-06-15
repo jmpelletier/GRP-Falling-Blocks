@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/EditableGrid.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/ClearLines.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=3]
 
 [node name="LineClearDemo" type="Node2D"]
 
@@ -16,6 +17,21 @@ margin_top = 800.0
 margin_right = 600.0
 margin_bottom = 840.0
 text = "Clear Lines"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="Label" parent="."]
+margin_left = 500.0
+margin_top = 40.0
+margin_right = 980.0
+margin_bottom = 420.0
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Use this scene to test line clearing animations. You can draw blocks directly in the editable grid in play mode.
+
+You can use the HideBlocksCursor to control how the blocks disapear from the stage. Animate  HideBlocksCursor instances' x-position, with 0 meaning the left edge and 1 the right edge of the grid."
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
