@@ -31,13 +31,17 @@ export(Array, PackedScene) var shapes
 
 var next_shapes = []
 var shape_previews = []
+var bag = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if use_random_seed:
-		seed(random_seed)
+		_set_random_seed(random_seed)
 	else:
-		randomize()
+		_set_random_seed(OS.get_system_time_secs())
+		
+	# Initialize the random bag
+	bag = _new_bag()
 	
 	# Initialize the next shape array
 	for _i in range(preview_count):
@@ -50,8 +54,18 @@ func _ready():
 	
 	call_deferred("load_next_shape")
 	
+func _set_random_seed(val) -> void:
+	seed(val)
+	
 func _get_random_shape_index():
-	return randi() % shapes.size()
+	if bag.empty():
+		bag = _new_bag()
+	return bag.pop_back()
+	
+func _new_bag() -> Array:
+	var b = range(shapes.size())
+	b.shuffle()
+	return b
 
 func load_next_shape():
 	var shape = null
