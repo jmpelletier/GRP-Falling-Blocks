@@ -13,13 +13,13 @@ tries = [ [ Vector2( -1, 0 ), Vector2( 1, 0 ), Vector2( 1, 0 ), Vector2( 1, 0 ),
 rotation_settings = SubResource( 1 )
 
 [node name="Block" parent="." index="2" instance=ExtResource( 1 )]
-position = Vector2( -20, -20 )
+position = Vector2( -20, -60 )
 
 [node name="Block2" parent="." index="3" instance=ExtResource( 1 )]
-position = Vector2( 20, -20 )
+position = Vector2( 20, -60 )
 
 [node name="Block3" parent="." index="4" instance=ExtResource( 1 )]
-position = Vector2( -20, 20 )
+position = Vector2( -20, -20 )
 
 [node name="Block4" parent="." index="5" instance=ExtResource( 1 )]
-position = Vector2( 20, 20 )
+position = Vector2( 20, -20 )
