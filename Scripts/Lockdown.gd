@@ -4,8 +4,8 @@
 
 extends Node
 
-signal on_lockdown
-signal on_lockdown_countdown(time_left)
+signal lockdown_complete
+signal lockdown_in_progress(time_left)
 
 enum LockdownMode {INFINITE, MOVE, STEP}
 
@@ -32,11 +32,11 @@ func reset_lockdown_time():
 		
 func _check_lockdown():
 	if is_lockdown and time - lockdown_start_time >= lockdown_time:
-		emit_signal("on_lockdown")
+		emit_signal("lockdown_complete")
 		is_lockdown = false
-		
-func update(time_seconds, _time_ticks):
-	time = time_seconds
+	
+func _update(time_sec, _delta) -> void:
+	time = time_sec
 
 func _on_user_action(line_change:int) -> void:
 	if is_lockdown:
@@ -51,7 +51,7 @@ func _on_user_action(line_change:int) -> void:
 				if line_change > 0:
 					lockdown_start_time = time
 
-func _on_gravity(can_move:bool):
+func _on_ground_check(can_move:bool):
 	if can_move:
 		is_lockdown = false
 	else:
@@ -59,5 +59,5 @@ func _on_gravity(can_move:bool):
 			lockdown_start_time = time
 			lockdown_moves = 0
 			is_lockdown = true
-		emit_signal("on_lockdown_countdown", get_lockdown_time_left())
+		emit_signal("lockdown_in_progress", get_lockdown_time_left())
 		_check_lockdown()

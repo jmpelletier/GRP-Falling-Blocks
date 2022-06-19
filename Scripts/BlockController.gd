@@ -6,16 +6,16 @@ tool
 extends Node2D
 
 # This signal is sent when there is a succesful 'kick'.
-signal on_kick(rotation_index, try_index)
+signal rotation_kick(rotation_index, try_index)
 
 # This signal is sent when a piece is locked in place.
-signal on_place
+signal blocks_placed
 
 # This signal is sent when the piece is succesfully moved by the player.
-signal on_move(line_change)
+signal blocks_moved(line_change)
 
 # This signal is sent when the piece is succesfully rotated by the player.
-signal on_rotate(line_change)
+signal blocks_rotated(line_change)
 
 # Preload the necessary classes
 const Block = preload("res://Scripts/Block.gd")
@@ -225,7 +225,7 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 			shape_outline.update_corners(blocks, parent_grid.cell_size)
 	
 	if did_kick:
-		emit_signal("on_kick", kick_rotation_index, kick_tries)
+		emit_signal("rotation_kick", kick_rotation_index, kick_tries)
 		
 	return can_rotate
 
@@ -262,10 +262,18 @@ func can_move(movement:Vector2) -> bool:
 func move(input:Vector2) -> bool:
 	if input.length_squared() > 0:
 		# Make sure we can move all blocks
-		var can_move = can_move(input)
+		var can_move_blocks = can_move(input)
 				
-		if not can_move:
-			return false
+		if not can_move_blocks:
+			# Try to limit the movement
+			while abs(input.x) > 1 and not can_move_blocks:
+				input.x -= sign(input.x)
+				can_move_blocks = can_move(input)
+			while abs(input.y) > 1 and not can_move_blocks:
+				input.y -= sign(input.y)
+				can_move_blocks = can_move(input)
+			if not can_move_blocks:
+				return false
 			
 		# Before we can move the blocks, we need to release them from 
 		# the grid's control so that they don't collide against each other
@@ -298,9 +306,9 @@ func place_blocks():
 	
 	# Also get rid of the outline
 	if shape_outline != null:
-		shape_outline.hide()
+		shape_outline.hide() 
 		
-	emit_signal("on_place")	
+	emit_signal("blocks_placed")	
 
 # Get the y value, in cell units, of the lowest block in our control.
 func _get_line() -> int:
@@ -314,7 +322,7 @@ func _get_line() -> int:
 	return line
 
 # Update the game state. This is called at every frame.
-func _update(delta_seconds) -> void:
+func _update(_time_seconds, delta_seconds) -> void:
 	if not _lazy_load_grid():
 		return
 		
@@ -417,21 +425,15 @@ func _update(delta_seconds) -> void:
 	var end_line = _get_line()
 	
 	if move_success:
-		emit_signal("on_move", end_line - start_line)
+		emit_signal("blocks_moved", end_line - start_line)
 	if rotation_sucess:
-		emit_signal("on_rotate", end_line - start_line)
+		emit_signal("blocks_rotated", end_line - start_line)	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if Engine.editor_hint:
 		# This node is assumed to be the child of a Grid.
 		if _lazy_load_grid():
 			# Align on the grid
 			var cell = parent_grid.get_cell(position)
 			position = parent_grid.get_cell_position(cell)
-	elif not process_in_physics_loop:
-		_update(delta)
-			
-func _physics_process(delta):
-	if not Engine.editor_hint and process_in_physics_loop:
-		_update(delta)

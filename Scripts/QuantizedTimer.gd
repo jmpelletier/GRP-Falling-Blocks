@@ -10,19 +10,16 @@
 extends Node
 
  # This signal is sent every time the unit value changes.
-signal on_step(time_seconds, time_ticks)
-
-# This signal is sent right after on_step.
-signal on_late_step(time_seconds, time_ticks)
+signal timer_tick(ticks, delta_ticks)
 
 # This signal is sent when the timer is set back to 0,
 # either when the reset function is called manually or when
 # a loop completes.
-signal on_reset
+signal timer_reset
 
 # This signal is sent whenever the time is updated, either 
 # in the main or physics loops.
-signal on_update(time_seconds, time_ticks)
+signal timer_update(time_seconds, delta_seconds)
 
 # Whether the timer is ticking
 export var enabled = true
@@ -54,11 +51,14 @@ func reset():
 	time_seconds = 0
 	time_ticks = 0
 	ticks = 0
-	emit_signal("on_reset")
+	emit_signal("timer_reset")
 	
 # Schedule a reset when the timer reaches the next unit
 func reset_at_next_step():
 	should_reset = true
+	
+func set_ticks_per_second(val:float) -> void:
+	ticks_per_minute = val * 60.0
 
 # Update the time (private method)
 func _update(delta):
@@ -69,15 +69,15 @@ func _update(delta):
 	
 	var new_ticks = floor(time_ticks)
 	if new_ticks != ticks:
+		var delta_ticks = new_ticks - ticks
 		if should_reset or (loop and new_ticks == ticks_per_loop):
 			reset()
 		else:
 			ticks = new_ticks
 		if enabled:
-			emit_signal("on_step", time_seconds, time_ticks)
-			emit_signal("on_late_step", time_seconds, time_ticks)
+			emit_signal("timer_tick", ticks, delta_ticks)
 	if enabled:
-		emit_signal("on_update", time_seconds, time_ticks)
+		emit_signal("timer_update", time_seconds, delta)
 
 # Return the time elapsed in seconds since the last reset
 func get_time():

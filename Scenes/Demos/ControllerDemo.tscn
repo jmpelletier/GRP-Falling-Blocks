@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/ShapeLoader.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/BlockController.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Sprites/Arrow_001.png" type="Texture" id=13]
 
 [node name="ControllerDemo" type="Node2D"]
 
@@ -20,21 +20,25 @@ position = Vector2( 0, 1 )
 single_block_mode = true
 single_block_index = 4
 target = NodePath("../EditableGrid/BlockController")
-spawn_cell = Vector2( 5, 2 )
+spawn_cell = Vector2( 5, 4 )
 shapes = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 1 ) ]
 
 [node name="EditableGrid" parent="." instance=ExtResource( 8 )]
-position = Vector2( 50, 30 )
+position = Vector2( 128, 144 )
+offset = Vector2( 0, -2 )
 
 [node name="BlockController" parent="EditableGrid" instance=ExtResource( 11 )]
 position = Vector2( 140, 60 )
 
-[node name="Block" parent="EditableGrid" instance=ExtResource( 12 )]
-position = Vector2( 180, 220 )
-
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 
+[node name="Arrow_001" type="Sprite" parent="EditableGrid"]
+position = Vector2( -48, 0 )
+texture = ExtResource( 13 )
+
 [node name="QuantizedTimer" parent="." instance=ExtResource( 10 )]
-enabled = false
 ticks_per_minute = 60.0
+loop = false
 ticks_per_loop = 20.0
+
+[connection signal="timer_update" from="QuantizedTimer" to="EditableGrid/BlockController" method="_update"]

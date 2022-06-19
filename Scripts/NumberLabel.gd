@@ -13,5 +13,5 @@ func _format_value(value:float) -> String:
 func set_value(value:float) -> void:
 	text = _format_value(value)
 	
-func set_quantized_timer_value(time:float, ticks:float) -> void:
-	text = _format_value(time) + " (" + _format_value(ticks) + ")"
+func set_quantized_timer_value(time:float, _delta:float) -> void:
+	text = _format_value(time)

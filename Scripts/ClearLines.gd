@@ -1,6 +1,7 @@
 extends Node
 
 signal lines_cleared
+signal update_line_count(cleared_lines)
 
 const Grid = preload("res://Scripts/Grid.gd")
 
@@ -40,6 +41,9 @@ func clear_line_animation_done() -> void:
 	for row in completed_rows:
 		for block in row:
 			parent_grid.remove(block, true, Vector2.UP)
+	
+	emit_signal("update_line_count", completed_rows.size())
+			
 	completed_rows = []
 	
 	emit_signal("lines_cleared")

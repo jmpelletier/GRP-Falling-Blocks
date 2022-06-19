@@ -4,28 +4,30 @@
 
 extends Node
 
-signal on_gravity(success)
+signal ground_check(can_move)
 
 
 const BlockController = preload("res://Scripts/BlockController.gd")
 
 export var direction = Vector2.DOWN
-export var lines_per_minute = 60.0
+export var lines_per_second = 1
 export var soft_drop_multiplier = 20.0
 
 var block_controller = null
 
-func _ready():
-	block_controller = get_parent() as BlockController
-	
-func _on_timer_update(_time_secs, _time_ticks):
-	if Input.is_action_pressed("soft_drop"):
-		$QuantizedTimer.ticks_per_minute = lines_per_minute * soft_drop_multiplier
-	else:
-		$QuantizedTimer.ticks_per_minute = lines_per_minute 
-		
-	emit_signal("on_gravity", block_controller.can_move(direction))		
+var lines_to_move = 0
+var time = 0
 
-func _on_timer_step(_time_secs, _time_ticks):
+func _ready():
+	for n in get_parent().get_children():
+		if n is BlockController:
+			block_controller = n
+			break
+
+func _update(_time_secs, _delta):
 	if block_controller != null:
-		var _move_success = block_controller.move(direction)
+		emit_signal("ground_check", block_controller.can_move(direction))
+
+func _tick(_ticks, delta_ticks):
+	if block_controller != null:
+		var _move_success = block_controller.move(direction * delta_ticks)
