@@ -17,15 +17,14 @@ const Block = preload("res://Scripts/Block.gd")
 export(Vector2) var size = Vector2(10, 10) setget set_size
 export(Vector2) var cell_size = Vector2(40, 40) setget set_cell_size
 export(Vector2) var offset = Vector2.ZERO setget set_offset
+export(int) var margin_top = 4 setget set_margin_top
+export(bool) var hide_margin = false
+
 
 var rows = []
 var block_coordinates = []
 
-func set_size(value:Vector2):
-	size = value
-	size.x = int(max(1, size.x))
-	size.y = int(max(1, size.y))
-	
+func _update_rows():
 	clear_blocks()
 	rows.resize(size.y)
 	for i in range(size.y):
@@ -33,19 +32,35 @@ func set_size(value:Vector2):
 			rows[i] = []
 		rows[i].resize(size.x)
 
+func set_margin_top(value:int):
+	margin_top = int(max(value, 0))
+	
+	_update_rows()
 	_update()
-#	_layout()
+
+func set_size(value:Vector2):
+	size = value
+	size.x = int(max(1, size.x)) 
+	size.y = int(max(1, size.y))
+	
+	_update_rows()
+	_update()
 		
 func set_cell_size(value:Vector2):
 	cell_size = value
 	_update()
-#	_layout()
 	
 func set_offset(value:Vector2):
 	offset = value
 	for child in get_children():
 		_constrain_item(child)
 	_update()
+
+func _get_block(cell:Vector2):
+	return rows[int(cell.y)][int(cell.x)]
+
+func _set_block(cell:Vector2, value):
+	rows[int(cell.y)][int(cell.x)] = value
 	
 func coords_are_in_bounds(x:int, y:int) -> bool:
 	return x >= 0 and x < size.x and y >= 0 and y < size.y
@@ -56,18 +71,18 @@ func cell_is_in_bounds(cell:Vector2) -> bool:
 func _get_block_at_cell(cell:Vector2) -> Node2D:
 	if not cell_is_in_bounds(cell):
 		return null
-	return rows[int(cell.y)][int(cell.x)]
+	return _get_block(cell)
 	
 func cell_is_occupied(cell:Vector2) -> bool:
 	if not cell_is_in_bounds(cell):
 		return false
 	
-	return rows[int(cell.y)][int(cell.x)] != null
+	return _get_block(cell) != null
 	
 func get_block_cell(block:Block) -> Vector2:
 	if block != null and block.get_parent() == self:
 		var cell = get_cell(block.position)
-		if rows[cell.y][cell.x] == block:
+		if _get_block(cell) == block:
 			return cell
 	return Vector2.ONE * -1
 
@@ -78,7 +93,7 @@ func get_cell_position(cell:Vector2) -> Vector2:
 	
 func get_block_at_cell(cell:Vector2) -> Node2D:
 	if cell_is_in_bounds(cell):
-		return rows[int(cell.y)][int(cell.x)]
+		return _get_block(cell)
 	return null
 	
 func get_occupied_cells(relative_coords:bool = false) -> Array:
@@ -125,10 +140,14 @@ func add_block(block:Block, cell:Vector2) -> void:
 		add_child(block)
 		
 	block.position = get_cell_position(cell)
-	rows[int(cell.y)][int(cell.x)] = block
+	_set_block(cell, block)
 	
 	if block is Block:
 		block.set_cell_size(cell_size)
+
+	if hide_margin:
+		block.visible = cell.y >= margin_top
+		
 		
 func _delete_block(i:int, j:int):
 	if rows[i][j] != null:
@@ -154,14 +173,14 @@ func remove_block(cell:Vector2) -> void:
 func release_block(cell:Vector2) -> void:
 	var block = _get_block_at_cell(cell)
 	if block != null:
-		rows[int(cell.y)][int(cell.x)] = null
+		_set_block(cell, null)
 
 # Remove the block from the grid.
 func remove(block:Node2D, shift_cells:bool = false, shift_direction:Vector2 = Vector2.UP) -> void:
 	if block != null and block.get_parent() == self:
 		var cell = get_cell(block.position)
-		if rows[int(cell.y)][int(cell.x)] == block:
-			rows[int(cell.y)][int(cell.x)] = null
+		if _get_block(cell) == block:
+			_set_block(cell, null)
 			remove_child(block)
 			block.queue_free()
 			
@@ -257,15 +276,16 @@ func _input(event):
 func _update():
 	if is_inside_tree():
 		var bg = $Background
+		var margin_size = Vector2(0, margin_top)
 		if bg != null and bg.texture and bg.texture.get_size().length_squared() > 0:
 			var texture_size = bg.texture.get_size()
 			bg.rect_scale = cell_size / texture_size
-			bg.rect_size = texture_size * size
+			bg.rect_size = texture_size * (size - margin_size)
 		else:
 			bg.rect_scale = Vector2.ONE
 			bg.rect_size = cell_size * size
 		if bg:
-			bg.rect_position = offset * cell_size
+			bg.rect_position = (offset + margin_size) * cell_size
 
 func _update_children() -> void:
 

@@ -47,6 +47,9 @@ cell = Vector2( 3, 3 )
 [node name="ShapeOutline" type="Node2D" parent="." index="2"]
 modulate = Color( 1, 1, 1, 0 )
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
 round_corner = ExtResource( 4 )
 square_corner = ExtResource( 9 )
 dot_corner = ExtResource( 7 )
