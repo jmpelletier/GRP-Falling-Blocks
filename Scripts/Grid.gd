@@ -51,7 +51,7 @@ func coords_are_in_bounds(x:int, y:int) -> bool:
 	return x >= 0 and x < size.x and y >= 0 and y < size.y
 	
 func cell_is_in_bounds(cell:Vector2) -> bool:
-	return coords_are_in_bounds(cell.x, cell.y)
+	return coords_are_in_bounds(int(cell.x), int(cell.y))
 	
 func _get_block_at_cell(cell:Vector2) -> Node2D:
 	if not cell_is_in_bounds(cell):
