@@ -6,5 +6,5 @@
 size = 21
 use_mipmaps = true
 use_filter = true
-extra_spacing_bottom = -10
+extra_spacing_top = 5
 font_data = ExtResource( 1 )

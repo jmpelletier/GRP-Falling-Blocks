@@ -128,6 +128,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="on_step" from="QuantizedTimer" to="." method="_on_QuantizedTimer_step"]
-[connection signal="on_update" from="QuantizedTimer" to="." method="_on_QuantizedTimer_update"]
 [connection signal="toggled" from="TurboButton" to="." method="_on_TurboButton_toggled"]
