@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Shapes/4_blocks/I_Shape.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Shapes/4_blocks/J_Shape.tscn" type="PackedScene" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://Scenes/Levels.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Scripts/SoftDrop.gd" type="Script" id=19]
+[ext_resource path="res://Scripts/ScoreManager.gd" type="Script" id=20]
 
 [node name="FallingDemo" type="Node2D"]
 
@@ -56,7 +57,6 @@ maximum_cells_per_second = Vector2( 4, 0 )
 [node name="Lockdown" parent="EditableGrid" instance=ExtResource( 10 )]
 
 [node name="Levels" parent="EditableGrid" instance=ExtResource( 17 )]
-level = 8
 
 [node name="SoftDrop" type="Node" parent="EditableGrid"]
 script = ExtResource( 19 )
@@ -69,6 +69,9 @@ ticks_per_loop = 20.0
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 
 [node name="ClearLines" parent="EditableGrid" instance=ExtResource( 15 )]
+
+[node name="ScoreManager" type="Node" parent="EditableGrid"]
+script = ExtResource( 20 )
 
 [node name="LockdownLabel" parent="." instance=ExtResource( 13 )]
 margin_left = 640.0
@@ -103,9 +106,9 @@ __meta__ = {
 
 [node name="LevelLabel" parent="." instance=ExtResource( 13 )]
 margin_left = 640.0
-margin_top = 560.0
+margin_top = 580.0
 margin_right = 768.0
-margin_bottom = 629.0
+margin_bottom = 649.0
 decimal_digits = 0
 
 [node name="Label" type="Label" parent="LevelLabel"]
@@ -119,9 +122,9 @@ __meta__ = {
 
 [node name="LinesLabel" parent="." instance=ExtResource( 13 )]
 margin_left = 640.0
-margin_top = 640.0
+margin_top = 660.0
 margin_right = 768.0
-margin_bottom = 709.0
+margin_bottom = 729.0
 decimal_digits = 0
 
 [node name="Label" type="Label" parent="LinesLabel"]
@@ -129,6 +132,22 @@ margin_top = -20.0
 margin_right = 117.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Lines"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreLabel" parent="." instance=ExtResource( 13 )]
+margin_left = 640.0
+margin_top = 740.0
+margin_right = 768.0
+margin_bottom = 809.0
+decimal_digits = 0
+
+[node name="Label" type="Label" parent="ScoreLabel"]
+margin_top = -20.0
+margin_right = 117.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Score"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -141,17 +160,20 @@ __meta__ = {
 [connection signal="ground_check" from="EditableGrid/BlockGravity" to="EditableGrid/Lockdown" method="_on_ground_check"]
 [connection signal="lockdown_complete" from="EditableGrid/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
 [connection signal="lockdown_in_progress" from="EditableGrid/Lockdown" to="LockdownLabel" method="set_value"]
+[connection signal="levelup" from="EditableGrid/Levels" to="EditableGrid/ScoreManager" method="set_level"]
 [connection signal="levelup" from="EditableGrid/Levels" to="LevelLabel" method="set_value"]
 [connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/SoftDrop" method="set_gravity"]
 [connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
 [connection signal="update_line_count" from="EditableGrid/Levels" to="LinesLabel" method="set_value"]
 [connection signal="set_timer_ticks_per_second" from="EditableGrid/SoftDrop" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
 [connection signal="timer_tick" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_tick"]
+[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockController" method="_update"]
 [connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_update"]
 [connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/Lockdown" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockController" method="_update"]
 [connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/SoftDrop" method="_update"]
 [connection signal="lines_cleared" from="EditableGrid/ClearLines" to="ShapeLoader" method="load_next_shape"]
 [connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/Levels" method="on_lines_cleared"]
+[connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/ScoreManager" method="on_lines_cleared"]
+[connection signal="score_changed" from="EditableGrid/ScoreManager" to="ScoreLabel" method="set_value"]
 
 [editable path="EditableGrid/BlockGravity"]
