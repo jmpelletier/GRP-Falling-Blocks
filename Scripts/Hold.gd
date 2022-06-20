@@ -35,7 +35,13 @@ func hold():
 		if held_shape != null:
 			emit_signal("load_shape", held_shape)
 		else:
+			# This is a bit of a hack: We only reach this point the very first time
+			# the player holds a shape. The call to "load_next_shape" would normally
+			# reset can_hold to true, but we don't want that, so we change to value
+			# manually here, so that signals aren't sent out.
+			can_hold = true
 			emit_signal("load_next_shape")
+			can_hold = false
 			
 		held_shape = active_shape
 		
