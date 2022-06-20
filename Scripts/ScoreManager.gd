@@ -20,6 +20,8 @@ func set_level(val:int) -> void:
 func _update_score(points:int) -> void:
 	score += points
 	
+	Logger.log_event("points_scored", String(points))
+	Logger.log_event("score_total", String(score))
 	emit_signal("points_scored", points)
 	emit_signal("score_changed", score)
 

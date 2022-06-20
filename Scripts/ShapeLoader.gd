@@ -56,6 +56,7 @@ func _ready():
 	
 func _set_random_seed(val) -> void:
 	seed(val)
+	Logger.log_event("seed", String(val))
 	
 func _get_random_shape_index():
 	if bag.empty():
@@ -76,6 +77,7 @@ func load_next_shape():
 		next_shapes.append(_get_random_shape_index())	
 		_update_shape_preview()
 		shape = load_shape(index)
+	Logger.log_event("next_shape", shape.resource_path)
 	emit_signal("next_shape", shape)
 		
 func _update_shape_preview():
@@ -84,6 +86,8 @@ func _update_shape_preview():
 		if i < next_shapes.size():
 			shape_previews[i].visible = true
 			shape_previews[i].preview_shape(shapes[next_shapes[i]])
+			
+			Logger.log_event("set_preview", String(i) + ":" + shapes[next_shapes[i]].resource_path)
 		else:
 			shape_previews[i].visible = false
 			
@@ -122,6 +126,7 @@ func load_shape_scene(shape:PackedScene) -> void:
 					break
 					
 	if not can_place:
+		Logger.log_event("game_over", "")
 		emit_signal("cannot_place")
 	else:
 		# Try to copy the rotation settings and shape outline

@@ -31,5 +31,6 @@ func _update(_time_secs, _delta):
 func _tick(_ticks, delta_ticks):
 	if block_controller != null:
 		var motion = block_controller.move(direction * delta_ticks)
+		Logger.log_event("gravity", "(" + String(motion.x) + "," + String(motion.y) + ")")
 		if motion.length_squared() > 0:
 			emit_signal("gravity_move", motion)

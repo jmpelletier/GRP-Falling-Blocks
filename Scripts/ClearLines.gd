@@ -42,6 +42,7 @@ func clear_line_animation_done() -> void:
 		for block in row:
 			parent_grid.remove(block, true, Vector2.UP)
 	
+	Logger.log_event("cleared_lines", String(completed_rows.size()))
 	emit_signal("update_line_count", completed_rows.size())
 			
 	completed_rows = []

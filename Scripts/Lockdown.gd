@@ -32,6 +32,7 @@ func reset_lockdown_time():
 		
 func _check_lockdown():
 	if is_lockdown and time - lockdown_start_time >= lockdown_time:
+		Logger.log_event("lockdown_complete", "")
 		emit_signal("lockdown_complete")
 		is_lockdown = false
 	
@@ -59,5 +60,6 @@ func _on_ground_check(can_move:bool):
 			lockdown_start_time = time
 			lockdown_moves = 0
 			is_lockdown = true
+			Logger.log_event("lockdown_start", "")
 		emit_signal("lockdown_in_progress", get_lockdown_time_left())
 		_check_lockdown()

@@ -425,6 +425,7 @@ func _update(_time_seconds, delta_seconds) -> void:
 		
 		# This should alway be succesful:
 		if move_success:
+			Logger.log_event("hard_drop", "(" + String(outline_offset.x) + "," + String(outline_offset.y) + ")")
 			emit_signal("hard_drop", outline_offset)
 			
 			# On a hard drop, we place the blocks immediately.

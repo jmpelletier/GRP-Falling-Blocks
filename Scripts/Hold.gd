@@ -46,6 +46,8 @@ func hold():
 			can_hold = true
 			emit_signal("load_next_shape")
 			can_hold = false
+			
+		Logger.log_event("hold", held_shape.resource_path)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

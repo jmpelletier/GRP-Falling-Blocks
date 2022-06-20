@@ -71,13 +71,16 @@ func get_gravity() -> float:
 	
 func _set_level(new_level):
 	level = new_level
+	Logger.log_event("levelup", String(level + 1))
 	emit_signal("levelup", level + 1)
 	
 func _set_line_count(new_count):
 	lines_cleared = new_count
+	Logger.log_event("lines_total", String(new_count))
 	emit_signal("update_line_count", lines_cleared)
 	
 func _set_gravity(new_gravity):
+	Logger.log_event("set_gravity", String(new_gravity))
 	emit_signal("set_gravity", new_gravity)
 	
 func on_lines_cleared(count:int):

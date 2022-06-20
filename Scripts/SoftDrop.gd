@@ -14,9 +14,11 @@ var gravity = 1.0
 
 func _update(_time, _delta):
 	if Input.is_action_just_pressed("soft_drop"):
+		Logger.log_event("soft_drop", "start")
 		emit_signal("soft_drop_update", true)
 		
 	if Input.is_action_just_released("soft_drop"):
+		Logger.log_event("soft_drop", "end")
 		emit_signal("soft_drop_update", false)
 	
 	if Input.is_action_pressed("soft_drop"):
