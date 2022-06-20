@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Fonts/Japanese_small.tres" type="DynamicFont" id=1]
+
+[node name="InputEntry" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Action" type="Label" parent="."]
+margin_top = 530.0
+margin_right = 637.0
+margin_bottom = 550.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.215686, 0.215686, 0.215686, 1 )
+text = "←"
+align = 1
+
+[node name="Effect_EN" type="Label" parent="."]
+margin_left = 641.0
+margin_top = 530.0
+margin_right = 1278.0
+margin_bottom = 550.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.215686, 0.215686, 0.215686, 1 )
+text = "Move left"
+
+[node name="Effect_JA" type="Label" parent="."]
+margin_left = 1282.0
+margin_top = 530.0
+margin_right = 1920.0
+margin_bottom = 550.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.215686, 0.215686, 0.215686, 1 )
+text = "左へ移動"
