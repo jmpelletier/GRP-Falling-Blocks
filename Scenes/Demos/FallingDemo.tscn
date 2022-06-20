@@ -43,7 +43,7 @@ position = Vector2( 1280, 481 )
 
 [node name="EditableGrid" parent="." instance=ExtResource( 8 )]
 position = Vector2( 200, 40 )
-size = Vector2( 10, 28 )
+size = Vector2( 10, 24 )
 offset = Vector2( 0, -4 )
 margin_top = 4
 hide_margin = true
@@ -157,6 +157,8 @@ __meta__ = {
 [connection signal="load_shape" from="Hold" to="ShapeLoader" method="load_shape_scene"]
 [connection signal="next_shape" from="ShapeLoader" to="Hold" method="set_active_shape"]
 [connection signal="blocks_placed" from="EditableGrid/BlockController" to="EditableGrid/ClearLines" method="clear_lines"]
+[connection signal="hard_drop" from="EditableGrid/BlockController" to="EditableGrid/ScoreManager" method="on_hard_drop"]
+[connection signal="gravity_move" from="EditableGrid/BlockGravity" to="EditableGrid/ScoreManager" method="on_gravity_move"]
 [connection signal="ground_check" from="EditableGrid/BlockGravity" to="EditableGrid/Lockdown" method="_on_ground_check"]
 [connection signal="lockdown_complete" from="EditableGrid/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
 [connection signal="lockdown_in_progress" from="EditableGrid/Lockdown" to="LockdownLabel" method="set_value"]
@@ -166,6 +168,7 @@ __meta__ = {
 [connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
 [connection signal="update_line_count" from="EditableGrid/Levels" to="LinesLabel" method="set_value"]
 [connection signal="set_timer_ticks_per_second" from="EditableGrid/SoftDrop" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
+[connection signal="soft_drop_update" from="EditableGrid/SoftDrop" to="EditableGrid/ScoreManager" method="on_soft_drop_update"]
 [connection signal="timer_tick" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_tick"]
 [connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockController" method="_update"]
 [connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_update"]

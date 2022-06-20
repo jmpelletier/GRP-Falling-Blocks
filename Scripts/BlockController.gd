@@ -17,6 +17,9 @@ signal blocks_moved(line_change)
 # This signal is sent when the piece is succesfully rotated by the player.
 signal blocks_rotated(line_change)
 
+# This signal is sent when a 'hard drop' is succesfully perfomed by the player.
+signal hard_drop(motion)
+
 # Preload the necessary classes
 const Block = preload("res://Scripts/Block.gd")
 const Grid = preload("res://Scripts/Grid.gd")
@@ -255,11 +258,18 @@ func can_move(movement:Vector2) -> bool:
 			return false
 			
 	return true
+	
+# Tries to move the blocks and checks that the operation was succesful
+func try_move(input:Vector2) -> bool:
+	if input.length_squared() > 0:
+		return move(input) != Vector2.ZERO
+	else:
+		return true
 			
 # Move the blocks that are under control by the number of cells on the grid
 # specified in the input parameter. This method checks for collisions and
 # keeps the blocks inside the grid's bounds.
-func move(input:Vector2) -> bool:
+func move(input:Vector2) -> Vector2:
 	if input.length_squared() > 0:
 		# Make sure we can move all blocks
 		var can_move_blocks = can_move(input)
@@ -273,7 +283,7 @@ func move(input:Vector2) -> bool:
 				input.y -= sign(input.y)
 				can_move_blocks = can_move(input)
 			if not can_move_blocks:
-				return false
+				return Vector2.ZERO
 			
 		# Before we can move the blocks, we need to release them from 
 		# the grid's control so that they don't collide against each other
@@ -296,7 +306,7 @@ func move(input:Vector2) -> bool:
 		# since the last reset.
 		position_offset += input
 		
-	return true
+	return input
 
 # 'Place', or 'lockdown' the blocks on the field, relinquishing control.
 func place_blocks():
@@ -356,8 +366,8 @@ func _update(_time_seconds, delta_seconds) -> void:
 		# We move along the y axis first, and then along the x axis.
 		# This is so that collisions only block the movement along
 		# axes that are constrained.
-		move_success = move(Vector2(0, motion_input.y))
-		move_success = move(Vector2(motion_input.x, 0)) or move_success
+		move_success = try_move(Vector2(0, motion_input.y))
+		move_success = try_move(Vector2(motion_input.x, 0)) or move_success
 	
 	# Process auto-shift.
 	elif motion_input.x != 0 or motion_input.y != 0:
@@ -367,8 +377,8 @@ func _update(_time_seconds, delta_seconds) -> void:
 			var quantized_motion = Vector2(int(autoshift_motion.x), int(autoshift_motion.y))
 			autoshift_motion -= quantized_motion
 			
-			move_success = move(Vector2(0, quantized_motion.y)) or move_success
-			move_success = move(Vector2(quantized_motion.x, 0)) or move_success
+			move_success = try_move(Vector2(0, quantized_motion.y)) or move_success
+			move_success = try_move(Vector2(quantized_motion.x, 0)) or move_success
 			
 	# Rotation
 	var transform2D = Transform2D()
@@ -411,10 +421,12 @@ func _update(_time_seconds, delta_seconds) -> void:
 	# We can now check for hard drops. Soft drops are implemented in BlockGravity,
 	# as they only change the speed at which blocks fall.
 	if Input.is_action_just_pressed("drop"):
-		move_success = move(outline_offset)
+		move_success = try_move(outline_offset)
 		
 		# This should alway be succesful:
 		if move_success:
+			emit_signal("hard_drop", outline_offset)
+			
 			# On a hard drop, we place the blocks immediately.
 			# If you wish to wait for the usual lockdown time instead, remove
 			# this code block.
