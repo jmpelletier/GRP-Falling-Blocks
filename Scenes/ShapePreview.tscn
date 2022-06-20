@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Grid.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/ShapePreview.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/default_square_40.png" type="Texture" id=3]
 
 [node name="ShapePreview" type="Node2D"]
 script = ExtResource( 2 )
@@ -9,3 +10,12 @@ script = ExtResource( 2 )
 [node name="Grid" parent="." instance=ExtResource( 1 )]
 size = Vector2( 6, 5 )
 margin_top = 0
+
+[node name="Background" parent="Grid" index="0"]
+modulate = Color( 0.847059, 0.847059, 0.847059, 1 )
+margin_top = 0.0
+margin_right = 240.0
+margin_bottom = 200.0
+texture = ExtResource( 3 )
+
+[editable path="Grid"]

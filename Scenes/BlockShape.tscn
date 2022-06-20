@@ -12,21 +12,7 @@
 [ext_resource path="res://Sprites/Corners/corner_straight_h.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/BlockOutline.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Animations/outline_remove.tres" type="Animation" id=12]
-
-[sub_resource type="Animation" id=1]
-resource_name = "show"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
+[ext_resource path="res://Animations/outline_show.tres" type="Animation" id=13]
 
 [node name="BlockShape" instance=ExtResource( 6 )]
 script = ExtResource( 5 )
@@ -36,7 +22,7 @@ rotation_settings = ExtResource( 2 )
 
 [node name="Background" parent="." index="0"]
 margin_left = -120.0
-margin_top = -120.0
+margin_top = -40.0
 margin_right = 120.0
 margin_bottom = 120.0
 
@@ -59,4 +45,4 @@ block_outline = ExtResource( 11 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ShapeOutline" index="0"]
 anims/remove = ExtResource( 12 )
-anims/show = SubResource( 1 )
+anims/show = ExtResource( 13 )

@@ -9,7 +9,7 @@ size = Vector2( 10, 20 )
 margin_top = 2
 
 [node name="Background" type="TextureRect" parent="."]
-margin_top = -80.0
+margin_top = 80.0
 margin_right = 400.0
 margin_bottom = 800.0
 texture = ExtResource( 2 )
