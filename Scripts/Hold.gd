@@ -34,17 +34,18 @@ func hold():
 		emit_signal("clear_shape")
 		if held_shape != null:
 			emit_signal("load_shape", held_shape)
+			held_shape = active_shape
 		else:
 			# This is a bit of a hack: We only reach this point the very first time
 			# the player holds a shape. The call to "load_next_shape" would normally
 			# reset can_hold to true, but we don't want that, so we change to value
 			# manually here, so that signals aren't sent out.
+			# "load_next_shape" will also update the active shape, so it's important
+			# to update the held shape before sending the signal out.
+			held_shape = active_shape
 			can_hold = true
 			emit_signal("load_next_shape")
 			can_hold = false
-			
-		held_shape = active_shape
-		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
