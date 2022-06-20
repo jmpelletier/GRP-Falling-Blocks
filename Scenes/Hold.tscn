@@ -12,6 +12,14 @@ script = ExtResource( 1 )
 modulate = Color( 0.356863, 0.356863, 0.356863, 1 )
 position = Vector2( 80, 80 )
 
+[node name="Background" parent="ShapePreview/Grid" index="0"]
+margin_top = 0.0
+margin_right = 240.0
+margin_bottom = 200.0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Active = ExtResource( 3 )
 anims/Inactive = ExtResource( 2 )
+
+[editable path="ShapePreview"]
+[editable path="ShapePreview/Grid"]
