@@ -57,6 +57,12 @@ func reset():
 func reset_at_next_step():
 	should_reset = true
 	
+func start():
+	enabled = true
+	
+func stop():
+	enabled = false
+	
 func set_ticks_per_second(val:float) -> void:
 	ticks_per_minute = val * 60.0
 
