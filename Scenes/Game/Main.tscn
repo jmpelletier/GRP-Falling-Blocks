@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Scenes/ShapePreview.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Shapes/4_blocks/O_Shape.tscn" type="PackedScene" id=2]
@@ -22,8 +22,14 @@
 [ext_resource path="res://Scenes/Levels.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Fonts/GameLabelFont.tres" type="DynamicFont" id=21]
 [ext_resource path="res://Sprites/default_background_1920.png" type="Texture" id=22]
+[ext_resource path="res://Sprites/default_square_40.png" type="Texture" id=23]
+[ext_resource path="res://Fonts/BalooTamma2-SemiBold.ttf" type="DynamicFontData" id=24]
 
-[node name="FallingDemo2" type="Node2D"]
+[sub_resource type="DynamicFont" id=1]
+size = 36
+font_data = ExtResource( 24 )
+
+[node name="Main" type="Node2D"]
 __meta__ = {
 "_edit_horizontal_guides_": [ 140.0, 160.0, 940.0 ],
 "_edit_vertical_guides_": [ 960.0, 580.0, 700.0, 760.0, 1160.0, 1220.0, 1340.0 ]
@@ -191,6 +197,37 @@ custom_fonts/font = ExtResource( 21 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "SCORE"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="Node2D" parent="."]
+position = Vector2( 960, 140 )
+
+[node name="Background" type="Sprite" parent="GameOver"]
+self_modulate = Color( 0, 0, 0, 0.235294 )
+position = Vector2( 1.52588e-05, 400 )
+scale = Vector2( 10, 20 )
+texture = ExtResource( 23 )
+
+[node name="GameOverLabel" type="Label" parent="GameOver"]
+margin_left = -200.0
+margin_top = 380.0
+margin_right = 200.0
+margin_bottom = 443.0
+custom_fonts/font = SubResource( 1 )
+text = "GAME OVER"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" type="Button" parent="GameOver"]
+margin_left = -80.0
+margin_top = 460.0
+margin_right = 80.0
+margin_bottom = 500.0
+text = "PLAY AGAIN"
 __meta__ = {
 "_edit_use_anchors_": false
 }
