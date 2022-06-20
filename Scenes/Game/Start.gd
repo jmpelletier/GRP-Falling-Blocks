@@ -9,16 +9,18 @@ func _ready():
 	$id_entry.visible = false
 	$StartButton.visible = false
 
-func _on_AgreementCheckBox_toggled(button_pressed):
+func _on_AgreementCheckBox_toggled(_button_pressed):
 	$id_entry.visible = true
 
 
 func _on_IdInput_text_validated(new_text:String):
 	# Validate the user id:
 	if new_text.length() == 4:
+		Logger.player_id = new_text
 		$StartButton.visible = true
 
 
 func _on_StartButton_pressed():
+	Logger.start_game()
 	var _err = get_tree().change_scene("res://Scenes/Game/Main.tscn")
 		

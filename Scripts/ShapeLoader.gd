@@ -122,7 +122,6 @@ func load_shape_scene(shape:PackedScene) -> void:
 					break
 					
 	if not can_place:
-		print("Cannot place!")
 		emit_signal("cannot_place")
 	else:
 		# Try to copy the rotation settings and shape outline

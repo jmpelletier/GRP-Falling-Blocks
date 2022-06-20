@@ -14,6 +14,11 @@ config/name="Falling Blocks"
 run/main_scene="res://Scenes/Game/Start.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Logger="*res://Scenes/Logger.tscn"
+AppVersion="*res://Scenes/AppVersion.tscn"
+
 [display]
 
 window/size/width=1920

@@ -11,7 +11,7 @@ var old_text = ""
 
 func _ready():
 	regex.compile("^[0-9]*$")
-	connect("text_changed", self, "_on_text_changed")
+	var _res = connect("text_changed", self, "_on_text_changed")
 	
 
 func _on_text_changed(new_text):

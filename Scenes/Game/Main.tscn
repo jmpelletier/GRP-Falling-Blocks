@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Scenes/ShapePreview.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Shapes/4_blocks/O_Shape.tscn" type="PackedScene" id=2]
@@ -28,10 +28,17 @@
 [ext_resource path="res://Scenes/GameButton.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Scenes/Game/Start.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Scenes/InputEntry.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Fonts/NotoSansJP-Medium.otf" type="DynamicFontData" id=29]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
 font_data = ExtResource( 24 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 10
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 29 )
 
 [node name="Main" type="Node2D"]
 __meta__ = {
@@ -224,6 +231,20 @@ __meta__ = {
 }
 
 [node name="RestartButton" parent="GameOver" instance=ExtResource( 26 )]
+text = "OK"
+
+[node name="LogLocation" type="Label" parent="GameOver"]
+margin_left = -180.0
+margin_top = 740.0
+margin_right = 180.0
+margin_bottom = 780.0
+custom_fonts/font = SubResource( 2 )
+text = "Log saved: "
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Instructions" type="MarginContainer" parent="."]
 margin_left = 80.0

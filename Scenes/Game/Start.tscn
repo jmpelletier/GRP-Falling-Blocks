@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/GameButton.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/Game/Start.gd" type="Script" id=6]
 [ext_resource path="res://Scripts/IntegerInput.gd" type="Script" id=7]
 [ext_resource path="res://Fonts/NotoSansJP-Medium.otf" type="DynamicFontData" id=8]
+[ext_resource path="res://Scenes/AppVersion.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 52
@@ -141,10 +142,12 @@ __meta__ = {
 
 [node name="StartButton" parent="." instance=ExtResource( 2 )]
 margin_left = 880.0
-margin_top = 900.0
+margin_top = 899.0
 margin_right = 1040.0
-margin_bottom = 940.0
+margin_bottom = 939.0
 text = "PLAY"
+
+[node name="AppVersion" parent="." instance=ExtResource( 9 )]
 
 [connection signal="toggled" from="AgreementCheckBox" to="." method="_on_AgreementCheckBox_toggled"]
 [connection signal="text_validated" from="id_entry/IdInput" to="." method="_on_IdInput_text_validated"]

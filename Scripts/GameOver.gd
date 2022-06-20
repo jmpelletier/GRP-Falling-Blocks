@@ -12,8 +12,14 @@ func _ready():
 
 func _on_ShapeLoader_cannot_place():
 	visible = true
+	
+	if Logger.is_log_file_open():
+		$LogLocation.text = "Will save log: " + Logger.get_log_file_path()
+	else:
+		$LogLocation.text = "Cannot save log"
 
-func restart():
+func restart():	
+	Logger.end_game()
 	if restartScene != null:
 		var _err = get_tree().change_scene_to(restartScene)
 	else:
