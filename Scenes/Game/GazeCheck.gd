@@ -1,9 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends Control
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 const TARGET_GAZE_DURATION = 5
 

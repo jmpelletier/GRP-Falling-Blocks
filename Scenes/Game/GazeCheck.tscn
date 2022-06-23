@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/GazeManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/Stroke_Circle_002.png" type="Texture" id=2]
@@ -19,6 +19,12 @@ size = 52
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.933333, 0.933333, 0.933333, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.207843, 0.207843, 0.207843, 1 )
 
 [node name="GazeCheck" type="Control"]
 anchor_right = 1.0
@@ -207,7 +213,9 @@ valign = 1
 margin_left = 128.0
 margin_top = 104.0
 margin_right = 264.0
-margin_bottom = 118.0
+margin_bottom = 112.0
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
 max_value = 5.0
 percent_visible = false
 

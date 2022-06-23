@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends Node2D
 
 signal gaze_update(left, right, timestamp, epoch)
@@ -15,7 +19,6 @@ func _ready():
 		print("UDP connection error: " + err)
 	else:
 		print("UDP connected to " + host_adress + " port " + str(host_port))
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

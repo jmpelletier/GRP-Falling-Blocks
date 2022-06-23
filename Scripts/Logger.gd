@@ -80,3 +80,7 @@ func _input(event):
 func log_event(event:String, data:String) -> void:
 	if game_started and log_file != null and log_file.is_open():
 		log_file.store_csv_line([player_id, revision, event, get_time(), data])
+		
+func log_external_event(timestamp:int, event:String, data:String) -> void:
+	if game_started and log_file != null and log_file.is_open():
+		log_file.store_csv_line([player_id, revision, event, timestamp, data])
