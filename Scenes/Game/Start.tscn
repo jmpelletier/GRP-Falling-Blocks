@@ -35,8 +35,8 @@ margin_left = 760.0
 margin_top = 80.0
 margin_right = 1148.0
 margin_bottom = 170.0
-custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
 text = "FALLING BLOCKS"
 align = 1
 __meta__ = {
@@ -48,30 +48,24 @@ margin_left = 600.0
 margin_top = 400.0
 margin_right = 1320.0
 margin_bottom = 600.0
-custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
 text = "This game is designed for research purposes. During gameplay, your keystrokes will be logged and your eye movements will be tracked and recorded.
 
 If you agree with these conditions, you may proceed to the game."
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Disclaimer_JA" type="Label" parent="."]
 margin_left = 600.0
 margin_top = 200.0
 margin_right = 1340.0
 margin_bottom = 440.0
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "このゲームは研究目的で開発された。プレー中にキーボードの入力が記録され、プレーヤーの視線が追跡されて記録される。
 
 この条件に同意して、ゲームに進む場合、以下の「I agree」チェックボックスをクリックして下さい。"
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AgreementCheckBox" type="CheckBox" parent="."]
 margin_left = 900.0
@@ -79,12 +73,12 @@ margin_top = 540.0
 margin_right = 1020.0
 margin_bottom = 660.0
 focus_mode = 0
-custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
 enabled_focus_mode = 0
 text = "I agree"
 align = 1
@@ -121,8 +115,8 @@ __meta__ = {
 margin_top = 40.0
 margin_right = 720.0
 margin_bottom = 80.0
-custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
 text = "Please enter your 4-digit player id."
 autowrap = true
 __meta__ = {
@@ -132,8 +126,8 @@ __meta__ = {
 [node name="SubjectId_JA" type="Label" parent="id_entry"]
 margin_right = 720.0
 margin_bottom = 40.0
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "4桁のプレーヤーIDを入力して下さい。"
 autowrap = true
 __meta__ = {
@@ -148,6 +142,7 @@ margin_bottom = 939.0
 text = "PLAY"
 
 [node name="AppVersion" parent="." instance=ExtResource( 9 )]
+version = "a0d4a92"
 
 [connection signal="toggled" from="AgreementCheckBox" to="." method="_on_AgreementCheckBox_toggled"]
 [connection signal="text_validated" from="id_entry/IdInput" to="." method="_on_IdInput_text_validated"]

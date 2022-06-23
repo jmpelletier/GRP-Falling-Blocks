@@ -22,5 +22,5 @@ func _on_IdInput_text_validated(new_text:String):
 
 func _on_StartButton_pressed():
 	Logger.start_game()
-	var _err = get_tree().change_scene("res://Scenes/Game/Main.tscn")
+	var _err = get_tree().change_scene("res://Scenes/Game/GazeCheck.tscn")
 		
