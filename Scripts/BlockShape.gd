@@ -3,7 +3,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 tool
-extends "res://Scripts/Grid.gd"
+extends Grid
+class_name BlockShape
 
 export(Resource) var rotation_settings
 

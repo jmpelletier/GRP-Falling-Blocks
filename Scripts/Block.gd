@@ -4,6 +4,7 @@
 
 tool
 extends Node2D
+class_name Block
 
 # The rotation offset is the displacement, in cell units,
 # between the center of this block and its shape's rotation

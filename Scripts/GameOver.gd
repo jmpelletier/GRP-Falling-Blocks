@@ -6,9 +6,15 @@ extends Node2D
 
 export(PackedScene) var restartScene
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _init():
+	add_to_group("Scheduling")
+
+func setup():
 	visible = false
+
+# Called when the node enters the scene tree for the first time.
+#func _ready():
+#	visible = false
 
 func _on_ShapeLoader_cannot_place():
 	visible = true

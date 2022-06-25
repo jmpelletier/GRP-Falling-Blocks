@@ -3,18 +3,13 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 extends Node2D
+class_name ShapeLoader
 
 signal cannot_place
 signal next_shape(shape)
 signal shape_loaded(shape)
 
-
-const Block = preload("res://Scripts/Block.gd")
-const Grid = preload("res://Scripts/Grid.gd")
-const BlockShape = preload("res://Scripts/BlockShape.gd")
-const BlockController = preload("res://Scripts/BlockController.gd")
-const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
-const ShapePreview = preload("res://Scripts/ShapePreview.gd")
+export var autoplay = true
 
 export var use_random_seed = false
 export var random_seed = 0
@@ -33,8 +28,15 @@ var next_shapes = []
 var shape_previews = []
 var bag = []
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _init():
+	add_to_group("Scheduling")
+	
+func clear():
+	for prev in shape_previews:
+		prev.clear()
+
+#func _ready():
+func setup():
 	if use_random_seed:
 		_set_random_seed(random_seed)
 	else:
@@ -52,7 +54,8 @@ func _ready():
 		if child is ShapePreview:
 			shape_previews.append(child)
 	
-	call_deferred("load_next_shape")
+	if autoplay:
+		call_deferred("load_next_shape")
 	
 func _set_random_seed(val) -> void:
 	seed(val)
@@ -86,10 +89,14 @@ func _update_shape_preview():
 		if i < next_shapes.size():
 			shape_previews[i].visible = true
 			shape_previews[i].preview_shape(shapes[next_shapes[i]])
-			
-			Logger.log_event("set_preview", String(i) + ":" + shapes[next_shapes[i]].resource_path)
+			var shape_path = shapes[next_shapes[i]].resource_path
+			Logger.log_event("set_preview", JSON.print({"index":i,"path":shape_path}))
 		else:
 			shape_previews[i].visible = false
+			
+func set_preview_shape(index:int, path:String) -> void:
+	shape_previews[index].visible = true
+	shape_previews[index].preview_shape_at_path(path)
 			
 func load_shape_scene(shape:PackedScene) -> void:
 	if target.is_empty():

@@ -9,9 +9,6 @@ signal shape_selected(shape)
 
 const SHAPE_DIRECTORY = "res://Shapes"
 
-const Node2DContainer = preload("res://Scenes/Tools/Node2DContainer.tscn")
-const BlockShape = preload("res://Scripts/Shape.gd")
-
 var shapes = []
 
 # Called when the node enters the scene tree for the first time.

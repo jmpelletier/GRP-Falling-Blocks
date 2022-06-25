@@ -4,6 +4,7 @@
 
 tool
 extends Node2D
+class_name BlockController
 
 # This signal is sent when there is a succesful 'kick'.
 signal rotation_kick(rotation_index, try_index)
@@ -19,12 +20,6 @@ signal blocks_rotated(line_change)
 
 # This signal is sent when a 'hard drop' is succesfully perfomed by the player.
 signal hard_drop(motion)
-
-# Preload the necessary classes
-const Block = preload("res://Scripts/Block.gd")
-const Grid = preload("res://Scripts/Grid.gd")
-const BlockShape = preload("res://Scripts/BlockShape.gd")
-const ShapeOutline = preload("res://Scripts/ShapeOutline.gd")
 
 # If this is true, this node allows the user to control the blocks.
 # Turn this off if you want to only control the blocks programatically.
@@ -65,6 +60,9 @@ var position_offset = Vector2.ZERO
 # 3: Rotated 90 degrees counter-clockwise
 var orientation:int = 0
 
+func _init():
+	add_to_group("Scheduling")
+
 func _lazy_load_grid() -> bool:
 	if parent_grid == null:
 		parent_grid = get_parent() as Grid
@@ -74,7 +72,8 @@ func _lazy_load_grid() -> bool:
 	return parent_grid != null
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+#func _ready():
+func setup():
 	if not Engine.editor_hint:
 		for child in get_children():
 			if child is Block:

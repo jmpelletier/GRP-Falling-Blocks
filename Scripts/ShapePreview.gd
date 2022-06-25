@@ -1,9 +1,11 @@
 extends Node2D
-
-const Block = preload("res://Scripts/Block.gd")
-const Grid = preload("res://Scripts/Grid.gd")
+class_name ShapePreview
 
 export var display_offset = Vector2(3, 3)
+
+func preview_shape_at_path(path:String) -> void:
+	var shape = load(path) as PackedScene
+	preview_shape(shape)
 
 func preview_shape(shape_scene:PackedScene) -> void:
 	
@@ -23,3 +25,6 @@ func preview_shape(shape_scene:PackedScene) -> void:
 			var to_cell = from_cell + display_offset
 			shape.remove_child(child)
 			$Grid.add_block(child, to_cell)
+
+func clear():
+	$Grid.clear_blocks()

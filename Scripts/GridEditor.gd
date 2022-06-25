@@ -12,8 +12,6 @@
 
 extends Node
 
-const Grid = preload("res://Scripts/Grid.gd")
-
 # This is the block that will be added to the grid.
 export(PackedScene) var block
 

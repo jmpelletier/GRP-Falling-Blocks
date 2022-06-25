@@ -62,11 +62,6 @@ maximum_cells_per_second = Vector2( 4, 0 )
 
 [node name="SoftDrop" parent="EditableGrid" instance=ExtResource( 19 )]
 
-[node name="MainTimer" parent="EditableGrid" instance=ExtResource( 18 )]
-ticks_per_minute = 60.0
-loop = false
-ticks_per_loop = 20.0
-
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 
 [node name="ClearLines" parent="EditableGrid" instance=ExtResource( 15 )]
@@ -152,6 +147,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MainTimer" parent="." instance=ExtResource( 18 )]
+ticks_per_minute = 60.0
+loop = false
+ticks_per_loop = 20.0
+
 [connection signal="clear_shape" from="Hold" to="EditableGrid/BlockController" method="clear_blocks"]
 [connection signal="load_next_shape" from="Hold" to="ShapeLoader" method="load_next_shape"]
 [connection signal="load_shape" from="Hold" to="ShapeLoader" method="load_shape_scene"]
@@ -165,18 +165,18 @@ __meta__ = {
 [connection signal="levelup" from="EditableGrid/Levels" to="EditableGrid/ScoreManager" method="set_level"]
 [connection signal="levelup" from="EditableGrid/Levels" to="LevelLabel" method="set_value"]
 [connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/SoftDrop" method="set_gravity"]
-[connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
+[connection signal="set_gravity" from="EditableGrid/Levels" to="MainTimer" method="set_ticks_per_second"]
 [connection signal="update_line_count" from="EditableGrid/Levels" to="LinesLabel" method="set_value"]
-[connection signal="set_timer_ticks_per_second" from="EditableGrid/SoftDrop" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
+[connection signal="set_timer_ticks_per_second" from="EditableGrid/SoftDrop" to="MainTimer" method="set_ticks_per_second"]
 [connection signal="soft_drop_update" from="EditableGrid/SoftDrop" to="EditableGrid/ScoreManager" method="on_soft_drop_update"]
-[connection signal="timer_tick" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_tick"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockController" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/SoftDrop" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/Lockdown" method="_update"]
 [connection signal="lines_cleared" from="EditableGrid/ClearLines" to="ShapeLoader" method="load_next_shape"]
-[connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/ScoreManager" method="on_lines_cleared"]
 [connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/Levels" method="on_lines_cleared"]
+[connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/ScoreManager" method="on_lines_cleared"]
 [connection signal="score_changed" from="EditableGrid/ScoreManager" to="ScoreLabel" method="set_value"]
+[connection signal="timer_tick" from="MainTimer" to="EditableGrid/BlockGravity" method="_tick"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/BlockController" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/BlockGravity" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/Lockdown" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/SoftDrop" method="_update"]
 
 [editable path="EditableGrid/BlockGravity"]

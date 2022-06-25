@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=2]
@@ -7,16 +7,73 @@
 [ext_resource path="res://Fonts/StatsFont.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Scenes/Demos/Scripts/TimerDemo.gd" type="Script" id=6]
 [ext_resource path="res://Sprites/GridSquare.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Tools/LabeledHSlider.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Demos/Scripts/TimerDelegateDemo.gd" type="Script" id=9]
 
 [node name="TimerDemo" type="Node2D"]
 script = ExtResource( 6 )
 
 [node name="QuantizedTimer" parent="." instance=ExtResource( 1 )]
 ticks_per_minute = 60.0
-ticks_per_loop = 20.0
+
+[node name="TimerDelegateDemo" type="Node" parent="QuantizedTimer"]
+script = ExtResource( 9 )
+
+[node name="Time" type="Label" parent="QuantizedTimer/TimerDelegateDemo"]
+margin_left = 896.0
+margin_top = 256.0
+margin_right = 964.0
+margin_bottom = 315.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Time
+"
+
+[node name="TimeDelta" type="Label" parent="QuantizedTimer/TimerDelegateDemo"]
+margin_left = 1152.0
+margin_top = 256.0
+margin_right = 1220.0
+margin_bottom = 315.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Delta
+"
+
+[node name="TickDelta" type="Label" parent="QuantizedTimer/TimerDelegateDemo"]
+margin_left = 1152.0
+margin_top = 320.0
+margin_right = 1220.0
+margin_bottom = 379.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Delta
+"
+
+[node name="Ticks" type="Label" parent="QuantizedTimer/TimerDelegateDemo"]
+margin_left = 896.0
+margin_top = 320.0
+margin_right = 964.0
+margin_bottom = 373.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Ticks"
+
+[node name="Description" type="Label" parent="QuantizedTimer/TimerDelegateDemo"]
+margin_left = 80.0
+margin_top = 56.0
+margin_right = 780.0
+margin_bottom = 233.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "This scene demonstrates how to use the QuantizedTimer node. Take a look at the TimerDemo script and try changing the QuantizedTimer properties in the inspector. 
+
+Note that the timer only updates in the main or physics loop, which will limit the precision to single frames. However, this applies only to 'ticks'. By setting the speed_ratio property to a value greater than 1.0, more than one timer_update signals can be sent per frame.
+
+The turbo toggle doubles the speed of the timer."
+autowrap = true
 
 [node name="Timeline" type="Node2D" parent="."]
-position = Vector2( 120, 380 )
+position = Vector2( 120, 523 )
 
 [node name="Dot marker" type="Sprite" parent="Timeline"]
 modulate = Color( 0.25098, 0.741176, 0, 1 )
@@ -31,101 +88,95 @@ margin_left = 21.0
 margin_top = -116.661
 margin_right = 89.0
 margin_bottom = -63.661
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "ticks"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TicksLabel" type="Label" parent="Timeline/Line marker"]
 margin_left = -36.5646
 margin_top = -131.652
 margin_right = 11.4354
 margin_bottom = -62.652
-custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
 text = "0"
 align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Seconds" type="Label" parent="Timeline/Line marker"]
 margin_left = 21.0
 margin_top = 94.263
 margin_right = 92.0
 margin_bottom = 147.263
-custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "seconds"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TimeLabel" type="Label" parent="Timeline/Line marker"]
 margin_left = -78.5251
 margin_top = 80.0
 margin_right = 16.4749
 margin_bottom = 149.0
-custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
 text = "10.00"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Description" type="Label" parent="."]
-margin_left = 80.0
-margin_top = 56.0
-margin_right = 780.0
-margin_bottom = 233.0
-custom_fonts/font = ExtResource( 2 )
+margin_left = 896.0
+margin_top = 64.0
+margin_right = 1376.0
+margin_bottom = 216.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "This scene demonstrates how to use the QuantizedTimer node. Take a look at the TimerDemo script and try changing the QuantizedTimer properties in the inspector. 
-
-Note that the timer only updates in the main or physics loop, which will limit the precision to single frames.
-
-The turbo toggle doubles the speed of the timer."
+custom_fonts/font = ExtResource( 2 )
+text = "Instead of connecting signals in the usual way, you can also add nodes that inherit from the TimerDelegate class as children of a QuantizedTimer. See the TimerDelegate and TImerDelegateDemo source code to see how this is done."
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Turbo" type="Label" parent="."]
 margin_left = 80.0
-margin_top = 543.651
+margin_top = 686.651
 margin_right = 148.0
-margin_bottom = 596.651
-custom_fonts/font = ExtResource( 2 )
+margin_bottom = 739.651
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
 text = "Turbo:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="Speed" type="Label" parent="."]
+margin_left = 80.0
+margin_top = 750.0
+margin_right = 148.0
+margin_bottom = 803.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Speed ratio:"
 
 [node name="TurboButton" type="CheckBox" parent="."]
 margin_left = 160.0
-margin_top = 546.0
+margin_top = 689.0
 margin_right = 184.0
-margin_bottom = 570.0
+margin_bottom = 713.0
 focus_mode = 0
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Grid" type="TextureRect" parent="."]
 modulate = Color( 0, 0, 0, 1 )
 margin_left = 120.0
-margin_top = 360.0
+margin_top = 503.0
 margin_right = 520.0
-margin_bottom = 400.0
+margin_bottom = 543.0
 texture = ExtResource( 7 )
 stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
+[node name="SpeedRatioSlider" parent="." instance=ExtResource( 8 )]
+margin_left = 213.0
+margin_top = 759.0
+margin_right = 413.0
+margin_bottom = 775.0
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[connection signal="timer_tick" from="QuantizedTimer" to="." method="_on_QuantizedTimer_timer_tick"]
+[connection signal="timer_update" from="QuantizedTimer" to="." method="_on_QuantizedTimer_timer_update"]
 [connection signal="toggled" from="TurboButton" to="." method="_on_TurboButton_toggled"]
+[connection signal="value_changed" from="SpeedRatioSlider" to="." method="_on_SpeedRatioSlider_value_changed"]

@@ -1,10 +1,13 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends Node
+class_name Levels
 
 signal levelup(new_level)
 signal update_line_count(new_count)
 signal set_gravity(lines_per_second)
-
-const BlockGravity = preload("res://Scripts/BlockGravity.gd")
 
 class LevelDefinition:
 	var gravity = 1.0
@@ -43,8 +46,12 @@ export var lines_cleared = 0
 
 var block_gravity = null
 
+func _init():
+	add_to_group("Scheduling")
+
 # Called when the node enters the scene tree for the first time.
-func _ready():
+#func _ready():
+func setup():
 	for n in get_parent().get_children():
 		if n is BlockGravity:
 			block_gravity = n
@@ -62,11 +69,11 @@ func get_next_level_lines(current_level:int) -> int:
 	current_level = int(clamp(current_level, 0, levels.size() - 1))
 	var total = 0
 	for i in range(current_level + 1):
-		total += levels[i].lines_to_clear
+		total += levels[int(min(i, levels.size() - 1))].lines_to_clear
 	return total
 	
 func get_gravity() -> float:
-	var i = int(clamp(level, 0, levels.size()))
+	var i = int(clamp(level, 0, levels.size() - 1))
 	return levels[i].gravity
 	
 func _set_level(new_level):

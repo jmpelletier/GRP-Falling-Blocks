@@ -4,15 +4,12 @@
 
 tool
 extends Node2D
+class_name Grid
 
 signal mouse_press(button, cell)
 signal mouse_drag(button, cell)
 signal mouse_release(button, cell)
 signal block_removed(block, cell)
-
-const GridItem = preload("res://Scripts/GridItem.gd")
-
-const Block = preload("res://Scripts/Block.gd")
 
 export(Vector2) var size = Vector2(10, 10) setget set_size
 export(Vector2) var cell_size = Vector2(40, 40) setget set_cell_size
@@ -23,6 +20,9 @@ export(bool) var hide_margin = false
 
 var rows = []
 var block_coordinates = []
+
+func _init():
+	add_to_group("Scheduling")
 
 func _update_rows():
 	clear_blocks()
@@ -295,9 +295,13 @@ func _update_children() -> void:
 			add_block(child, cell)
 
 
-func _ready():
+func setup():
 	_update()
 	_update_children()
+	
+#func _ready():
+#	_update()
+#	_update_children()
 	
 func _process(_delta):
 	if Engine.editor_hint:

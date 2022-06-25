@@ -7,11 +7,9 @@
 
 tool
 extends Node2D
+class_name Pivot
 
 signal update(new_position)
-
-const Grid = preload("res://Scripts/Grid.gd")
-const Block = preload("res://Scripts/Block.gd")
 
 export var cell = Vector2.ZERO
 

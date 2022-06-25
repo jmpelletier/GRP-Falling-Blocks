@@ -1,0 +1,633 @@
+[gd_scene load_steps=51 format=2]
+
+[ext_resource path="res://Fonts/GameLabelFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/Hold.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Tools/QuantizedTimer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Shapes/4_blocks/I_Shape.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Lockdown.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/BlockGravity.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Levels.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Shapes/4_blocks/S_Shape.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/BlockController.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/ClearLines.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/ScoreManager.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Background.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/SoftDrop.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/GameButton.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/ShapePreview.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Shapes/4_blocks/Z_Shape.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Shapes/4_blocks/O_Shape.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Shapes/4_blocks/T_Shape.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Shapes/4_blocks/J_Shape.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Scenes/Grid.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Scenes/NumberLabel.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Scenes/InputEntry.tscn" type="PackedScene" id=22]
+[ext_resource path="res://Scenes/Game/PlayLog.gd" type="Script" id=23]
+[ext_resource path="res://Scenes/ShapeLoader.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Scenes/Game/Start.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Shapes/4_blocks/L_Shape.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Fonts/BalooTamma2-SemiBold.ttf" type="DynamicFontData" id=27]
+[ext_resource path="res://Fonts/NotoSansJP-Medium.otf" type="DynamicFontData" id=28]
+[ext_resource path="res://Sprites/default_square_40.png" type="Texture" id=29]
+[ext_resource path="res://Scripts/GameOver.gd" type="Script" id=30]
+[ext_resource path="res://Scenes/GazeDisplay.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Styles/Playback_button_normal.tres" type="StyleBox" id=32]
+[ext_resource path="res://Styles/Playback_button_hover.tres" type="StyleBox" id=33]
+[ext_resource path="res://Styles/Playback_button_focus.tres" type="StyleBox" id=34]
+[ext_resource path="res://Styles/Playback_button_pressed.tres" type="StyleBox" id=35]
+[ext_resource path="res://Styles/Playback_button_disabled.tres" type="StyleBox" id=36]
+[ext_resource path="res://Styles/Quit_button_focus.tres" type="StyleBox" id=37]
+[ext_resource path="res://Styles/Quit_button_hover.tres" type="StyleBox" id=38]
+[ext_resource path="res://Styles/Quit_button_pressed.tres" type="StyleBox" id=39]
+[ext_resource path="res://Styles/Quit_button_disabled.tres" type="StyleBox" id=40]
+[ext_resource path="res://Styles/Quit_button_normal.tres" type="StyleBox" id=41]
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+font_data = ExtResource( 27 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 10
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 28 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.0196078, 0.262745, 0.501961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+content_margin_top = 0.0
+content_margin_bottom = 15.0
+bg_color = Color( 0.300407, 0.4516, 0.610352, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.564706, 0.643137, 0.72549, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.56365, 0.64503, 0.725098, 1 )
+corner_radius_top_left = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="DynamicFont" id=4]
+size = 43
+font_data = ExtResource( 27 )
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Show"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="PlayLog" type="Node2D"]
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 140.0, 160.0, 940.0 ],
+"_edit_vertical_guides_": [ 960.0, 580.0, 700.0, 760.0, 1160.0, 1220.0, 1340.0 ]
+}
+
+[node name="Background" parent="." instance=ExtResource( 12 )]
+
+[node name="HoldLabel" type="Label" parent="."]
+margin_left = 580.0
+margin_top = 140.0
+margin_right = 697.0
+margin_bottom = 160.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "HOLD"
+align = 1
+
+[node name="NextLabel" type="Label" parent="."]
+margin_left = 1220.0
+margin_top = 140.0
+margin_right = 1337.0
+margin_bottom = 160.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "NEXT"
+align = 1
+
+[node name="Hold" parent="." instance=ExtResource( 2 )]
+position = Vector2( 540, 140 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="ShapePreview" parent="Hold" index="0"]
+modulate = Color( 0.627451, 0.627451, 0.627451, 1 )
+
+[node name="ShapeLoader" parent="." instance=ExtResource( 24 )]
+scale = Vector2( 0.5, 0.5 )
+use_random_seed = true
+single_block_index = 6
+target = NodePath("../EditableGrid/BlockController")
+spawn_cell = Vector2( 5, 4 )
+shapes = [ ExtResource( 16 ), ExtResource( 18 ), ExtResource( 8 ), ExtResource( 17 ), ExtResource( 26 ), ExtResource( 19 ), ExtResource( 4 ) ]
+
+[node name="ShapePreview" parent="ShapeLoader" instance=ExtResource( 15 )]
+position = Vector2( 2440, 360 )
+
+[node name="ShapePreview2" parent="ShapeLoader" instance=ExtResource( 15 )]
+position = Vector2( 2440, 600 )
+
+[node name="ShapePreview3" parent="ShapeLoader" instance=ExtResource( 15 )]
+position = Vector2( 2440, 840 )
+
+[node name="EditableGrid" parent="." instance=ExtResource( 20 )]
+position = Vector2( 960, 140 )
+size = Vector2( 10, 24 )
+offset = Vector2( -5, -4 )
+margin_top = 4
+hide_margin = true
+
+[node name="BlockController" parent="EditableGrid" instance=ExtResource( 9 )]
+position = Vector2( -20, -20 )
+maximum_cells_per_second = Vector2( 4, 0 )
+
+[node name="BlockGravity" parent="EditableGrid" instance=ExtResource( 6 )]
+
+[node name="Lockdown" parent="EditableGrid" instance=ExtResource( 5 )]
+
+[node name="Levels" parent="EditableGrid" instance=ExtResource( 7 )]
+
+[node name="SoftDrop" parent="EditableGrid" instance=ExtResource( 13 )]
+
+[node name="Outlines" type="Node2D" parent="EditableGrid"]
+
+[node name="ClearLines" parent="EditableGrid" instance=ExtResource( 10 )]
+
+[node name="ScoreManager" parent="EditableGrid" instance=ExtResource( 11 )]
+
+[node name="TimerLabel" parent="." instance=ExtResource( 21 )]
+margin_left = 1220.0
+margin_top = 900.0
+margin_right = 1340.0
+margin_bottom = 969.0
+text = "0:00.0"
+
+[node name="Label" type="Label" parent="TimerLabel"]
+margin_top = -40.0
+margin_right = 117.0
+margin_bottom = 3.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "TIME"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelLabel" parent="." instance=ExtResource( 21 )]
+margin_left = 580.0
+margin_top = 760.0
+margin_right = 708.0
+margin_bottom = 829.0
+text = "0"
+decimal_digits = 0
+
+[node name="Label" type="Label" parent="LevelLabel"]
+margin_top = -40.0
+margin_right = 117.0
+margin_bottom = 3.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "LEVEL"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LinesLabel" parent="." instance=ExtResource( 21 )]
+margin_left = 580.0
+margin_top = 620.0
+margin_right = 708.0
+margin_bottom = 689.0
+text = "0"
+decimal_digits = 0
+
+[node name="Label" type="Label" parent="LinesLabel"]
+margin_top = -40.0
+margin_right = 120.0
+margin_bottom = -12.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "LINES"
+align = 1
+
+[node name="ScoreLabel" parent="." instance=ExtResource( 21 )]
+margin_left = 580.0
+margin_top = 900.0
+margin_right = 708.0
+margin_bottom = 969.0
+text = "0"
+decimal_digits = 0
+
+[node name="Label" type="Label" parent="ScoreLabel"]
+margin_top = -40.0
+margin_right = 117.0
+margin_bottom = 3.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "SCORE"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="Node2D" parent="."]
+position = Vector2( 960, 140 )
+z_index = 2000
+script = ExtResource( 30 )
+restartScene = ExtResource( 25 )
+
+[node name="Background" type="Sprite" parent="GameOver"]
+self_modulate = Color( 0, 0, 0, 0.603922 )
+position = Vector2( 1.52588e-05, 400 )
+scale = Vector2( 10, 20 )
+texture = ExtResource( 29 )
+
+[node name="GameOverLabel" type="Label" parent="GameOver"]
+margin_left = -200.0
+margin_top = 380.0
+margin_right = 200.0
+margin_bottom = 443.0
+custom_fonts/font = SubResource( 1 )
+text = "GAME OVER"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" parent="GameOver" instance=ExtResource( 14 )]
+text = "OK"
+
+[node name="LogLocation" type="Label" parent="GameOver"]
+margin_left = -180.0
+margin_top = 740.0
+margin_right = 180.0
+margin_bottom = 780.0
+custom_fonts/font = SubResource( 2 )
+text = "Log saved: "
+autowrap = true
+clip_text = true
+
+[node name="Instructions" type="MarginContainer" parent="."]
+margin_left = 80.0
+margin_top = 360.0
+margin_right = 440.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Instructions"]
+margin_right = 360.0
+margin_bottom = 240.0
+
+[node name="left" parent="Instructions/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+
+[node name="Action" parent="Instructions/VBoxContainer/left" index="0"]
+margin_top = 0.0
+margin_right = 117.0
+margin_bottom = 20.0
+
+[node name="Effect_EN" parent="Instructions/VBoxContainer/left" index="1"]
+margin_left = 121.0
+margin_top = 0.0
+margin_right = 238.0
+margin_bottom = 20.0
+
+[node name="Effect_JA" parent="Instructions/VBoxContainer/left" index="2"]
+margin_left = 242.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+
+[node name="right" parent="Instructions/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 24.0
+margin_right = 360.0
+margin_bottom = 44.0
+
+[node name="Action" parent="Instructions/VBoxContainer/right" index="0"]
+margin_top = 0.0
+margin_right = 117.0
+margin_bottom = 20.0
+text = "→"
+
+[node name="Effect_EN" parent="Instructions/VBoxContainer/right" index="1"]
+margin_left = 121.0
+margin_top = 0.0
+margin_right = 238.0
+margin_bottom = 20.0
+text = "Move right"
+
+[node name="Effect_JA" parent="Instructions/VBoxContainer/right" index="2"]
+margin_left = 242.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+text = "右へ移動"
+
+[node name="soft_drop" parent="Instructions/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 48.0
+margin_right = 360.0
+margin_bottom = 68.0
+
+[node name="Action" parent="Instructions/VBoxContainer/soft_drop" index="0"]
+margin_top = 0.0
+margin_right = 117.0
+margin_bottom = 20.0
+text = "↓"
+
+[node name="Effect_EN" parent="Instructions/VBoxContainer/soft_drop" index="1"]
+margin_left = 121.0
+margin_top = 0.0
+margin_right = 238.0
+margin_bottom = 20.0
+text = "Soft drop"
+
+[node name="Effect_JA" parent="Instructions/VBoxContainer/soft_drop" index="2"]
+margin_left = 242.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+text = "高速落下"
+
+[node name="hard_drop" parent="Instructions/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 72.0
+margin_right = 360.0
+margin_bottom = 92.0
+
+[node name="Action" parent="Instructions/VBoxContainer/hard_drop" index="0"]
+margin_top = 0.0
+margin_right = 117.0
+margin_bottom = 20.0
+text = "space"
+
+[node name="Effect_EN" parent="Instructions/VBoxContainer/hard_drop" index="1"]
+margin_left = 121.0
+margin_top = 0.0
+margin_right = 238.0
+margin_bottom = 20.0
+text = "Hard drop"
+
+[node name="Effect_JA" parent="Instructions/VBoxContainer/hard_drop" index="2"]
+margin_left = 242.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+text = "ドロップ"
+
+[node name="rotate_left" parent="Instructions/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 96.0
+margin_right = 360.0
+margin_bottom = 116.0
+
+[node name="Action" parent="Instructions/VBoxContainer/rotate_left" index="0"]
+margin_top = 0.0
+margin_right = 117.0
+margin_bottom = 20.0
+text = "Z"
+
+[node name="Effect_EN" parent="Instructions/VBoxContainer/rotate_left" index="1"]
+margin_left = 121.0
+margin_top = 0.0
+margin_right = 238.0
+margin_bottom = 20.0
+text = "Rotate left"
+
+[node name="Effect_JA" parent="Instructions/VBoxContainer/rotate_left" index="2"]
+margin_left = 242.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+text = "反時計回り回転"
+
+[node name="rotate_right" parent="Instructions/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 120.0
+margin_right = 360.0
+margin_bottom = 140.0
+
+[node name="Action" parent="Instructions/VBoxContainer/rotate_right" index="0"]
+margin_top = 0.0
+margin_right = 117.0
+margin_bottom = 20.0
+text = "X"
+
+[node name="Effect_EN" parent="Instructions/VBoxContainer/rotate_right" index="1"]
+margin_left = 121.0
+margin_top = 0.0
+margin_right = 238.0
+margin_bottom = 20.0
+text = "Rotate right"
+
+[node name="Effect_JA" parent="Instructions/VBoxContainer/rotate_right" index="2"]
+margin_left = 242.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+text = "時計回り回転"
+
+[node name="hold" parent="Instructions/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 144.0
+margin_right = 360.0
+margin_bottom = 164.0
+
+[node name="Action" parent="Instructions/VBoxContainer/hold" index="0"]
+margin_top = 0.0
+margin_right = 117.0
+margin_bottom = 20.0
+text = "C"
+
+[node name="Effect_EN" parent="Instructions/VBoxContainer/hold" index="1"]
+margin_left = 121.0
+margin_top = 0.0
+margin_right = 238.0
+margin_bottom = 20.0
+text = "Hold"
+
+[node name="Effect_JA" parent="Instructions/VBoxContainer/hold" index="2"]
+margin_left = 242.0
+margin_top = 0.0
+margin_right = 360.0
+margin_bottom = 20.0
+text = "ホールド"
+
+[node name="PlaybackUI" type="PanelContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1000.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="Control" type="Control" parent="PlaybackUI"]
+margin_right = 1920.0
+margin_bottom = 80.0
+
+[node name="QuitButon" parent="PlaybackUI/Control" instance=ExtResource( 14 )]
+margin_left = 1816.0
+margin_top = 16.0
+margin_right = 1896.0
+margin_bottom = 66.0
+focus_mode = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = ExtResource( 38 )
+custom_styles/pressed = ExtResource( 39 )
+custom_styles/focus = ExtResource( 37 )
+custom_styles/disabled = ExtResource( 40 )
+custom_styles/normal = ExtResource( 41 )
+enabled_focus_mode = 0
+text = "EXIT"
+
+[node name="PauseButton" parent="PlaybackUI/Control" instance=ExtResource( 14 )]
+margin_left = 1376.0
+margin_top = 16.0
+margin_right = 1456.0
+margin_bottom = 66.0
+focus_mode = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = ExtResource( 33 )
+custom_styles/pressed = ExtResource( 35 )
+custom_styles/focus = ExtResource( 34 )
+custom_styles/disabled = ExtResource( 36 )
+custom_styles/normal = ExtResource( 32 )
+enabled_focus_mode = 0
+text = "PAUSE"
+
+[node name="PlaybackLocation" type="HSlider" parent="PlaybackUI/Control"]
+margin_left = 576.0
+margin_top = 32.0
+margin_right = 1344.0
+margin_bottom = 48.0
+custom_styles/slider = SubResource( 7 )
+custom_styles/grabber_area_highlight = SubResource( 9 )
+custom_styles/grabber_area = SubResource( 8 )
+value = 50.0
+editable = false
+scrollable = false
+
+[node name="KeyLabel" type="Label" parent="PlaybackUI/Control"]
+margin_left = 24.0
+margin_right = 112.0
+margin_bottom = 80.0
+size_flags_horizontal = 0
+size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "KEY"
+align = 1
+valign = 1
+
+[node name="KeyInput" type="Label" parent="PlaybackUI/Control"]
+margin_left = 128.0
+margin_right = 228.0
+margin_bottom = 80.0
+size_flags_horizontal = 0
+size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlaybackUI/Control/KeyInput"]
+anims/RESET = SubResource( 5 )
+anims/Show = SubResource( 6 )
+
+[node name="MainTimer" parent="." groups=["Scheduling"] instance=ExtResource( 3 )]
+enabled = false
+ticks_per_minute = 60.0
+loop = false
+ticks_per_loop = 20.0
+
+[node name="GazeDisplay" parent="." instance=ExtResource( 31 )]
+margin_right = 1920.0
+margin_bottom = 1080.0
+mouse_filter = 2
+
+[connection signal="clear_shape" from="Hold" to="EditableGrid/BlockController" method="clear_blocks"]
+[connection signal="load_next_shape" from="Hold" to="ShapeLoader" method="load_next_shape"]
+[connection signal="load_shape" from="Hold" to="ShapeLoader" method="load_shape_scene"]
+[connection signal="cannot_place" from="ShapeLoader" to="GameOver" method="_on_ShapeLoader_cannot_place"]
+[connection signal="cannot_place" from="ShapeLoader" to="MainTimer" method="stop"]
+[connection signal="next_shape" from="ShapeLoader" to="Hold" method="set_active_shape"]
+[connection signal="blocks_placed" from="EditableGrid/BlockController" to="EditableGrid/ClearLines" method="clear_lines"]
+[connection signal="hard_drop" from="EditableGrid/BlockController" to="EditableGrid/ScoreManager" method="on_hard_drop"]
+[connection signal="gravity_move" from="EditableGrid/BlockGravity" to="EditableGrid/ScoreManager" method="on_gravity_move"]
+[connection signal="ground_check" from="EditableGrid/BlockGravity" to="EditableGrid/Lockdown" method="_on_ground_check"]
+[connection signal="lockdown_complete" from="EditableGrid/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
+[connection signal="levelup" from="EditableGrid/Levels" to="EditableGrid/ScoreManager" method="set_level"]
+[connection signal="levelup" from="EditableGrid/Levels" to="LevelLabel" method="set_value"]
+[connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/SoftDrop" method="set_gravity"]
+[connection signal="set_gravity" from="EditableGrid/Levels" to="MainTimer" method="set_ticks_per_second"]
+[connection signal="update_line_count" from="EditableGrid/Levels" to="LinesLabel" method="set_value"]
+[connection signal="set_timer_ticks_per_second" from="EditableGrid/SoftDrop" to="MainTimer" method="set_ticks_per_second"]
+[connection signal="soft_drop_update" from="EditableGrid/SoftDrop" to="EditableGrid/ScoreManager" method="on_soft_drop_update"]
+[connection signal="lines_cleared" from="EditableGrid/ClearLines" to="ShapeLoader" method="load_next_shape"]
+[connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/Levels" method="on_lines_cleared"]
+[connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/ScoreManager" method="on_lines_cleared"]
+[connection signal="score_changed" from="EditableGrid/ScoreManager" to="ScoreLabel" method="set_value"]
+[connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="restart"]
+[connection signal="pressed" from="PlaybackUI/Control/QuitButon" to="." method="_on_QuitButon_pressed"]
+[connection signal="pressed" from="PlaybackUI/Control/PauseButton" to="." method="_on_PauseButton_pressed"]
+[connection signal="timer_pre_update" from="MainTimer" to="." method="_on_MainTimer_timer_pre_update"]
+[connection signal="timer_tick" from="MainTimer" to="EditableGrid/BlockGravity" method="_tick"]
+[connection signal="timer_update" from="MainTimer" to="Hold" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/BlockController" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/BlockGravity" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/Lockdown" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/SoftDrop" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="TimerLabel" method="set_quantized_timer_value"]
+
+[editable path="Hold"]
+[editable path="Hold/ShapePreview"]
+[editable path="Hold/ShapePreview/Grid"]
+[editable path="EditableGrid/BlockGravity"]
+[editable path="Instructions/VBoxContainer/left"]
+[editable path="Instructions/VBoxContainer/right"]
+[editable path="Instructions/VBoxContainer/soft_drop"]
+[editable path="Instructions/VBoxContainer/hard_drop"]
+[editable path="Instructions/VBoxContainer/rotate_left"]
+[editable path="Instructions/VBoxContainer/rotate_right"]
+[editable path="Instructions/VBoxContainer/hold"]

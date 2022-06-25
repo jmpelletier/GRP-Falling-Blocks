@@ -39,9 +39,6 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "FALLING BLOCKS"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Disclaimer" type="Label" parent="."]
 margin_left = 600.0
@@ -91,9 +88,6 @@ margin_left = 600.0
 margin_top = 660.0
 margin_right = 1320.0
 margin_bottom = 840.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="IdInput" type="LineEdit" parent="id_entry"]
 margin_left = 280.0
@@ -142,8 +136,26 @@ margin_bottom = 939.0
 text = "PLAY"
 
 [node name="AppVersion" parent="." instance=ExtResource( 9 )]
-version = "a0d4a92"
+version = "b987092"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+visible = true
+margin_right = 897.0
+margin_bottom = 529.0
+window_title = "Open a File"
+mode = 0
+access = 1
+filters = PoolStringArray( "*.csv" )
+current_dir = "user://C:/Users/jmp/Documents/Godot/GRP-Falling-Blocks"
+current_path = "user://C:/Users/jmp/Documents/Godot/GRP-Falling-Blocks/"
+
+[node name="InvalidLogFile" type="AcceptDialog" parent="."]
+visible = true
+margin_right = 83.0
+margin_bottom = 58.0
+dialog_text = "Invalid log file."
 
 [connection signal="toggled" from="AgreementCheckBox" to="." method="_on_AgreementCheckBox_toggled"]
 [connection signal="text_validated" from="id_entry/IdInput" to="." method="_on_IdInput_text_validated"]
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

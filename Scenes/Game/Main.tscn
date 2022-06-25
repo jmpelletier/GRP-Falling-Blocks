@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Scenes/ShapePreview.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Shapes/4_blocks/O_Shape.tscn" type="PackedScene" id=2]
@@ -31,6 +31,8 @@
 [ext_resource path="res://Fonts/NotoSansJP-Medium.otf" type="DynamicFontData" id=29]
 [ext_resource path="res://Scenes/GazeManager.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Scenes/Game/LogGaze.gd" type="Script" id=31]
+[ext_resource path="res://Scenes/Game/Main.gd" type="Script" id=32]
+[ext_resource path="res://Scenes/LogTimer.tscn" type="PackedScene" id=33]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
@@ -43,6 +45,7 @@ use_filter = true
 font_data = ExtResource( 29 )
 
 [node name="Main" type="Node2D"]
+script = ExtResource( 32 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 140.0, 160.0, 940.0 ],
 "_edit_vertical_guides_": [ 960.0, 580.0, 700.0, 760.0, 1160.0, 1220.0, 1340.0 ]
@@ -72,16 +75,6 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 21 )
 text = "NEXT"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Hold" parent="." instance=ExtResource( 15 )]
-position = Vector2( 540, 140 )
-scale = Vector2( 0.5, 0.5 )
-
-[node name="ShapePreview" parent="Hold" index="0"]
-modulate = Color( 0.627451, 0.627451, 0.627451, 1 )
 
 [node name="ShapeLoader" parent="." instance=ExtResource( 13 )]
 scale = Vector2( 0.5, 0.5 )
@@ -109,19 +102,6 @@ hide_margin = true
 [node name="BlockController" parent="EditableGrid" instance=ExtResource( 16 )]
 position = Vector2( -20, -20 )
 maximum_cells_per_second = Vector2( 4, 0 )
-
-[node name="BlockGravity" parent="EditableGrid" instance=ExtResource( 11 )]
-
-[node name="Lockdown" parent="EditableGrid" instance=ExtResource( 19 )]
-
-[node name="Levels" parent="EditableGrid" instance=ExtResource( 20 )]
-
-[node name="SoftDrop" parent="EditableGrid" instance=ExtResource( 10 )]
-
-[node name="MainTimer" parent="EditableGrid" instance=ExtResource( 17 )]
-ticks_per_minute = 60.0
-loop = false
-ticks_per_loop = 20.0
 
 [node name="Outlines" type="Node2D" parent="EditableGrid"]
 
@@ -251,8 +231,7 @@ margin_top = 360.0
 margin_right = 440.0
 margin_bottom = 600.0
 __meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
+"_edit_group_": true
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Instructions"]
@@ -449,41 +428,57 @@ text = "ホールド"
 [node name="LogGaze" type="Node" parent="GazeManager"]
 script = ExtResource( 31 )
 
-[connection signal="clear_shape" from="Hold" to="EditableGrid/BlockController" method="clear_blocks"]
-[connection signal="load_next_shape" from="Hold" to="ShapeLoader" method="load_next_shape"]
-[connection signal="load_shape" from="Hold" to="ShapeLoader" method="load_shape_scene"]
-[connection signal="cannot_place" from="ShapeLoader" to="EditableGrid/MainTimer" method="stop"]
+[node name="MainTimer" parent="." groups=["Scheduling"] instance=ExtResource( 17 )]
+enabled = false
+ticks_per_minute = 60.0
+loop = false
+ticks_per_loop = 20.0
+
+[node name="SoftDrop" parent="MainTimer" instance=ExtResource( 10 )]
+
+[node name="Hold" parent="MainTimer" instance=ExtResource( 15 )]
+position = Vector2( 540, 140 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="ShapePreview" parent="MainTimer/Hold" index="0"]
+modulate = Color( 0.627451, 0.627451, 0.627451, 1 )
+
+[node name="LogTimer" parent="MainTimer" instance=ExtResource( 33 )]
+
+[node name="Lockdown" parent="MainTimer" instance=ExtResource( 19 )]
+
+[node name="BlockGravity" parent="MainTimer" instance=ExtResource( 11 )]
+block_controller_path = NodePath("../../EditableGrid/BlockController")
+
+[node name="Levels" parent="MainTimer" instance=ExtResource( 20 )]
+
 [connection signal="cannot_place" from="ShapeLoader" to="GameOver" method="_on_ShapeLoader_cannot_place"]
-[connection signal="next_shape" from="ShapeLoader" to="Hold" method="set_active_shape"]
+[connection signal="cannot_place" from="ShapeLoader" to="MainTimer" method="stop"]
+[connection signal="next_shape" from="ShapeLoader" to="MainTimer/Hold" method="set_active_shape"]
 [connection signal="blocks_placed" from="EditableGrid/BlockController" to="EditableGrid/ClearLines" method="clear_lines"]
 [connection signal="hard_drop" from="EditableGrid/BlockController" to="EditableGrid/ScoreManager" method="on_hard_drop"]
-[connection signal="gravity_move" from="EditableGrid/BlockGravity" to="EditableGrid/ScoreManager" method="on_gravity_move"]
-[connection signal="ground_check" from="EditableGrid/BlockGravity" to="EditableGrid/Lockdown" method="_on_ground_check"]
-[connection signal="lockdown_complete" from="EditableGrid/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
-[connection signal="levelup" from="EditableGrid/Levels" to="EditableGrid/ScoreManager" method="set_level"]
-[connection signal="levelup" from="EditableGrid/Levels" to="LevelLabel" method="set_value"]
-[connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/SoftDrop" method="set_gravity"]
-[connection signal="set_gravity" from="EditableGrid/Levels" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
-[connection signal="update_line_count" from="EditableGrid/Levels" to="LinesLabel" method="set_value"]
-[connection signal="set_timer_ticks_per_second" from="EditableGrid/SoftDrop" to="EditableGrid/MainTimer" method="set_ticks_per_second"]
-[connection signal="soft_drop_update" from="EditableGrid/SoftDrop" to="EditableGrid/ScoreManager" method="on_soft_drop_update"]
-[connection signal="timer_tick" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_tick"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockController" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/BlockGravity" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/Lockdown" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="EditableGrid/SoftDrop" method="_update"]
-[connection signal="timer_update" from="EditableGrid/MainTimer" to="TimerLabel" method="set_quantized_timer_value"]
 [connection signal="lines_cleared" from="EditableGrid/ClearLines" to="ShapeLoader" method="load_next_shape"]
-[connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/Levels" method="on_lines_cleared"]
+[connection signal="update_line_count" from="EditableGrid/ClearLines" to="MainTimer/Levels" method="on_lines_cleared"]
 [connection signal="update_line_count" from="EditableGrid/ClearLines" to="EditableGrid/ScoreManager" method="on_lines_cleared"]
 [connection signal="score_changed" from="EditableGrid/ScoreManager" to="ScoreLabel" method="set_value"]
 [connection signal="pressed" from="GameOver/RestartButton" to="GameOver" method="restart"]
 [connection signal="gaze_update" from="GazeManager" to="GazeManager/LogGaze" method="_on_gaze_update"]
+[connection signal="timer_update" from="MainTimer" to="EditableGrid/BlockController" method="_update"]
+[connection signal="timer_update" from="MainTimer" to="TimerLabel" method="set_quantized_timer_value"]
+[connection signal="set_timer_ticks_per_second" from="MainTimer/SoftDrop" to="MainTimer" method="set_ticks_per_second"]
+[connection signal="soft_drop_update" from="MainTimer/SoftDrop" to="EditableGrid/ScoreManager" method="on_soft_drop_update"]
+[connection signal="clear_shape" from="MainTimer/Hold" to="EditableGrid/BlockController" method="clear_blocks"]
+[connection signal="load_next_shape" from="MainTimer/Hold" to="ShapeLoader" method="load_next_shape"]
+[connection signal="load_shape" from="MainTimer/Hold" to="ShapeLoader" method="load_shape_scene"]
+[connection signal="lockdown_complete" from="MainTimer/Lockdown" to="EditableGrid/BlockController" method="place_blocks"]
+[connection signal="gravity_move" from="MainTimer/BlockGravity" to="EditableGrid/ScoreManager" method="on_gravity_move"]
+[connection signal="ground_check" from="MainTimer/BlockGravity" to="MainTimer/Lockdown" method="_on_ground_check"]
+[connection signal="levelup" from="MainTimer/Levels" to="EditableGrid/ScoreManager" method="set_level"]
+[connection signal="levelup" from="MainTimer/Levels" to="LevelLabel" method="set_value"]
+[connection signal="set_gravity" from="MainTimer/Levels" to="MainTimer" method="set_ticks_per_second"]
+[connection signal="set_gravity" from="MainTimer/Levels" to="MainTimer/SoftDrop" method="set_gravity"]
+[connection signal="update_line_count" from="MainTimer/Levels" to="LinesLabel" method="set_value"]
 
-[editable path="Hold"]
-[editable path="Hold/ShapePreview"]
-[editable path="Hold/ShapePreview/Grid"]
-[editable path="EditableGrid/BlockGravity"]
 [editable path="Instructions/VBoxContainer/left"]
 [editable path="Instructions/VBoxContainer/right"]
 [editable path="Instructions/VBoxContainer/soft_drop"]
@@ -491,3 +486,7 @@ script = ExtResource( 31 )
 [editable path="Instructions/VBoxContainer/rotate_left"]
 [editable path="Instructions/VBoxContainer/rotate_right"]
 [editable path="Instructions/VBoxContainer/hold"]
+[editable path="MainTimer/Hold"]
+[editable path="MainTimer/Hold/ShapePreview"]
+[editable path="MainTimer/Hold/ShapePreview/Grid"]
+[editable path="MainTimer/BlockGravity"]

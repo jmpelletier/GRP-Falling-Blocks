@@ -7,4 +7,4 @@ extends LinkButton
 export var url = "https://example.com"
 
 func _pressed():
-	OS.shell_open(url)
+	var _err = OS.shell_open(url)

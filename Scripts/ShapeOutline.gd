@@ -4,10 +4,7 @@
 
 tool
 extends Node2D
-
-#const OutlineBlock = preload("res://Scripts/OutlineBlock.gd")
-const Block = preload("res://Scripts/Block.gd")
-const BlockShape = preload("res://Scripts/BlockShape.gd")
+class_name ShapeOutline
 
 export(Texture) var round_corner
 export(Texture) var square_corner
@@ -16,7 +13,6 @@ export(Texture) var horizontal_corner
 export(Texture) var vertical_corner
 
 export(PackedScene) var block_outline
-#export(PackedScene) var shape
 
 const NONE = -1
 

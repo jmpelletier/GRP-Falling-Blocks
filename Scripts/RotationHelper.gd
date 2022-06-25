@@ -5,15 +5,6 @@
 tool
 extends Node2D
 
-const Block = preload("res://Scripts/Block.gd")
-const Grid = preload("res://Scripts/Grid.gd")
-const BlockShape = preload("res://Scripts/BlockShape.gd")
-const Pivot = preload("res://Scripts/Pivot.gd")
-const BlockController = preload("res://Scripts/BlockController.gd")
-const RotationSettings = preload("res://Scripts/RotationSettings.gd")
-
-const EditorLabel = preload("res://Scenes/Tools/EditorLabel.tscn")
-
 export var target_rotation = 0 setget set_target_rotation
 
 export var grid_size = Vector2(6,6)

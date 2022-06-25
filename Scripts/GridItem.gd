@@ -1,11 +1,12 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 tool
 extends Node2D
+class_name GridItem
 
 signal moved(node)
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 export var cell = Vector2.ZERO
 
@@ -16,9 +17,3 @@ func _notification(what):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_notify_transform(true)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	if position != previous_position:
-#		emit_signal("moved", self)
-#		previous_position = position

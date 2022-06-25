@@ -5,8 +5,6 @@
 tool
 extends Node2D
 
-const Block = preload("res://Scripts/Block.gd")
-
 # Returns the collision bounds in local coordinates as an array
 # that contains the following values:
 # (x_min, y_min, x_max, y_max)
@@ -25,9 +23,3 @@ func get_bounds():
 				block_bounds = block_bounds
 				init = true
 	return bounds
-
-#func _process(delta):
-#	if Engine.editor_hint:
-#		for child in get_children():
-#			if child is Block:
-#				pass

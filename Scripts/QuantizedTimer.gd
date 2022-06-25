@@ -8,6 +8,7 @@
 #
 # This node keeps track of elapsed time in seconds, as well as quantized "ticks".
 extends Node
+class_name QuantizedTimer
 
  # This signal is sent every time the unit value changes.
 signal timer_tick(ticks, delta_ticks)
@@ -17,9 +18,18 @@ signal timer_tick(ticks, delta_ticks)
 # a loop completes.
 signal timer_reset
 
+# This signal is sent when the timer is started.
+signal timer_started
+
+# This signal is sent when the timer is stopped.
+signal timer_stopped
+
 # This signal is sent whenever the time is updated, either 
 # in the main or physics loops.
 signal timer_update(time_seconds, delta_seconds)
+
+# This is sent just before timer_update
+signal timer_pre_update(time_seconds, delta_seconds)
 
 # Whether the timer is ticking
 export var enabled = true
@@ -40,38 +50,50 @@ export var ticks_per_loop = 20.0
 # updates in the main loop.
 export var process_in_physics_loop = false
 
+# Use this property to adjust the rate at which timer_update and timer_tick
+# signals are sent. For example, at a speed_ratio of 2.0, two timer_update signals
+# will be sent for every actual frame.
+export var speed_ratio = 1.0
+
 var time_seconds = 0 # The elapsed time since the last update
+var real_time_seconds = 0 # The elapsed time without speed_ratio
 var time_ticks = 0 # The number of elapsed ticks
 var ticks = 0 # Quantized number of ticks (integer)
+var phase = 0 # Used to implement speed_ratio
 
 var should_reset = false # Should the timer reset at the next step?
 
-# Reset the timer immediately
+# Reset the timer immediately.
 func reset():
+	real_time_seconds = 0
 	time_seconds = 0
 	time_ticks = 0
 	ticks = 0
 	emit_signal("timer_reset")
 	
-# Schedule a reset when the timer reaches the next unit
+# Schedule a reset when the timer reaches the next unit.
 func reset_at_next_step():
 	should_reset = true
 	
 func start():
 	enabled = true
+	emit_signal("timer_started")
 	
 func stop():
 	enabled = false
+	emit_signal("timer_stopped")
 	
 func set_ticks_per_second(val:float) -> void:
 	ticks_per_minute = val * 60.0
 
-# Update the time (private method)
+# Update the time (private method).
 func _update(delta):
+	real_time_seconds += delta
+	
 	var ticks_per_second = ticks_per_minute / 60.0
 	
-	time_seconds += delta
-	time_ticks += delta * ticks_per_second
+	time_seconds += delta * speed_ratio
+	time_ticks += delta * speed_ratio * ticks_per_second
 	
 	var new_ticks = floor(time_ticks)
 	if new_ticks != ticks:
@@ -82,22 +104,36 @@ func _update(delta):
 			ticks = new_ticks
 		if enabled:
 			emit_signal("timer_tick", ticks, delta_ticks)
+	
+	# Update
 	if enabled:
-		emit_signal("timer_update", time_seconds, delta)
+		phase += speed_ratio
+		while phase >= 1.0:
+			emit_signal("timer_pre_update", time_seconds, delta / speed_ratio)
+			emit_signal("timer_update", time_seconds, delta / speed_ratio)
+			
+			phase -= 1.0
 
-# Return the time elapsed in seconds since the last reset
+# Forces an immediate update, regardless of the enabled status.
+func force_update(delta):
+	var prev_enabled = enabled
+	enabled = true
+	_update(delta)
+	enabled = prev_enabled
+
+# Return the time elapsed in seconds since the last reset.
 func get_time():
 	return time_seconds
 
-# Return the time elapsed in ticks since the last reset (always in integer)
+# Return the time elapsed in ticks since the last reset (always in integer).
 func get_ticks():
 	return ticks
 
-# Return a scaled continuous time value
+# Return a scaled continuous time value.
 func get_continuous_value():
 	return time_ticks * unit_scale
 
-# Return a quantized time value
+# Return a quantized time value.
 func get_quantized_value():
 	return ticks * unit_scale
 

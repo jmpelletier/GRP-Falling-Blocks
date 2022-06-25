@@ -8,6 +8,106 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Block",
+"language": "GDScript",
+"path": "res://Scripts/Block.gd"
+}, {
+"base": "Node2D",
+"class": "BlockController",
+"language": "GDScript",
+"path": "res://Scripts/BlockController.gd"
+}, {
+"base": "TimerDelegate",
+"class": "BlockGravity",
+"language": "GDScript",
+"path": "res://Scripts/BlockGravity.gd"
+}, {
+"base": "Grid",
+"class": "BlockShape",
+"language": "GDScript",
+"path": "res://Scripts/BlockShape.gd"
+}, {
+"base": "Node",
+"class": "ClearLines",
+"language": "GDScript",
+"path": "res://Scripts/ClearLines.gd"
+}, {
+"base": "Node2D",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://Scripts/Grid.gd"
+}, {
+"base": "Node2D",
+"class": "GridItem",
+"language": "GDScript",
+"path": "res://Scripts/GridItem.gd"
+}, {
+"base": "TimerDelegate",
+"class": "Hold",
+"language": "GDScript",
+"path": "res://Scripts/Hold.gd"
+}, {
+"base": "Node",
+"class": "Levels",
+"language": "GDScript",
+"path": "res://Scripts/Levels.gd"
+}, {
+"base": "Node2D",
+"class": "Pivot",
+"language": "GDScript",
+"path": "res://Scripts/Pivot.gd"
+}, {
+"base": "Node",
+"class": "QuantizedTimer",
+"language": "GDScript",
+"path": "res://Scripts/QuantizedTimer.gd"
+}, {
+"base": "Resource",
+"class": "RotationSettings",
+"language": "GDScript",
+"path": "res://Scripts/RotationSettings.gd"
+}, {
+"base": "Node2D",
+"class": "ShapeLoader",
+"language": "GDScript",
+"path": "res://Scripts/ShapeLoader.gd"
+}, {
+"base": "Node2D",
+"class": "ShapeOutline",
+"language": "GDScript",
+"path": "res://Scripts/ShapeOutline.gd"
+}, {
+"base": "Node2D",
+"class": "ShapePreview",
+"language": "GDScript",
+"path": "res://Scripts/ShapePreview.gd"
+}, {
+"base": "Node",
+"class": "TimerDelegate",
+"language": "GDScript",
+"path": "res://Scripts/TimerDelegate.gd"
+} ]
+_global_script_class_icons={
+"Block": "",
+"BlockController": "",
+"BlockGravity": "",
+"BlockShape": "",
+"ClearLines": "",
+"Grid": "",
+"GridItem": "",
+"Hold": "",
+"Levels": "",
+"Pivot": "",
+"QuantizedTimer": "",
+"RotationSettings": "",
+"ShapeLoader": "",
+"ShapeOutline": "",
+"ShapePreview": "",
+"TimerDelegate": ""
+}
+
 [application]
 
 config/name="Falling Blocks"
@@ -24,7 +124,6 @@ AppVersion="*res://Scenes/AppVersion.tscn"
 window/size/width=1920
 window/size/height=1080
 window/size/resizable=false
-window/size/fullscreen=true
 window/dpi/allow_hidpi=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep_width"
@@ -91,6 +190,11 @@ soft_drop={
 hold={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":67,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+open_log={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":79,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

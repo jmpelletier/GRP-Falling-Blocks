@@ -24,3 +24,18 @@ func _on_StartButton_pressed():
 	Logger.start_game()
 	var _err = get_tree().change_scene("res://Scenes/Game/GazeCheck.tscn")
 		
+
+func _process(_delta):
+	if Input.is_action_just_pressed("open_log"):
+		$FileDialog.current_dir = ProjectSettings.globalize_path("user://logs") 
+		$FileDialog.popup_centered()
+
+
+func _on_FileDialog_file_selected(path):
+	# Validate the file:
+	if Logger.is_valid_log_file(path):
+		Logger.load_log(path)
+		var _err = get_tree().change_scene("res://Scenes/Game/LogPlayback.tscn")
+	else:
+		$InvalidLogFile.popup_centered()
+

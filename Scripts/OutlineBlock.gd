@@ -1,6 +1,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 tool
 extends Node2D
 
@@ -8,7 +9,6 @@ enum CornerShape {CORNER, HORIZONTAL_EDGE, VERTICAL_EDGE, BLANK}
 enum Corner {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT}
 
 export(Array, CornerShape) var corner_shapes = [CornerShape.CORNER, CornerShape.CORNER, CornerShape.CORNER, CornerShape.CORNER] setget set_corner_shapes
-#export var cornerShapes = [1, 2, 3]
 
 var corners = []
 

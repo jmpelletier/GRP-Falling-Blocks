@@ -1,4 +1,9 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends Node
+class_name ClearLines
 
 signal lines_cleared
 signal update_line_count(cleared_lines)
@@ -9,16 +14,24 @@ var parent_grid : Grid
 
 var completed_rows = []
 
+func _init():
+	add_to_group("Scheduling")
+
 # Called when the node enters the scene tree for the first time.
-func _ready():
+#func _ready():
+func setup():
 	parent_grid = get_parent() as Grid
 	if parent_grid == null:
 		push_error("ClearLines: Parent is not a Grid. Make sure to place this node inside a Grid or EditableGrid.")
 
+func _lazy_load_grid() -> Grid:
+	if parent_grid == null:
+		parent_grid = get_parent() as Grid
+	return parent_grid
 
 # Clear all completed lines.
 func clear_lines() -> void:
-	if parent_grid == null:
+	if not _lazy_load_grid():
 		return
 	
 	completed_rows = parent_grid.get_completed_rows()

@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends Node
 
 signal points_scored(points)
@@ -9,10 +13,6 @@ var score = 0
 var in_soft_drop = false
 
 var cleared_lines_points = [100, 300, 500, 800]
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 func set_level(val:int) -> void:
 	level = val
