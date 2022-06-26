@@ -23,9 +23,8 @@ func _on_IdInput_text_validated(new_text:String):
 func _on_StartButton_pressed():
 	Logger.start_game()
 	var _err = get_tree().change_scene("res://Scenes/Game/GazeCheck.tscn")
-		
 
-func _process(_delta):
+func _input(event):
 	if Input.is_action_just_pressed("open_log"):
 		$FileDialog.current_dir = ProjectSettings.globalize_path("user://logs") 
 		$FileDialog.popup_centered()

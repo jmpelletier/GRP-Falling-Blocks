@@ -24,6 +24,3 @@ custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 toggle_mode = true
 action_mode = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}

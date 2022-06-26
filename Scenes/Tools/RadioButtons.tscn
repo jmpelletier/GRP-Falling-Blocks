@@ -1,13 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/RadioButtons.gd" type="Script" id=1]
+[ext_resource path="res://Themes/default_theme.tres" type="Theme" id=2]
 
-[node name="RadioButtons" type="Control"]
+[node name="RadioButtons" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_vertical = 11
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-count = 9
-layout = 2
+columns = 0

@@ -1,0 +1,245 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/QuestionnairePage.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Tools/RadioButtons.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Questionnaire/Condition.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Themes/default_theme.tres" type="Theme" id=5]
+
+[sub_resource type="ButtonGroup" id=1]
+
+[sub_resource type="ButtonGroup" id=2]
+
+[node name="QuestionnairePage" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Sections" type="VBoxContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+theme = ExtResource( 5 )
+
+[node name="Section A" type="VBoxContainer" parent="Sections"]
+margin_right = 1920.0
+margin_bottom = 466.0
+
+[node name="Text_JA" type="Label" parent="Sections/Section A"]
+margin_right = 1920.0
+margin_bottom = 147.0
+text = "「天は人の上に人を造らず人の下に人を造らず」と言えり。されば天より人を生ずるには、万人は万人みな同じ位にして、生まれながら貴賤上下の差別なく、万物の霊たる身と心との働きをもって天地の間にあるよろずの物を資り、もって衣食住の用を達し、自由自在、互いに人の妨げをなさずしておのおの安楽にこの世を渡らしめ給うの趣意なり。
+
+「天は人の上に人を造らず人の下に人を造らず」と言えり。されば天より人を生ずるには、万人は万人みな同じ位にして、生まれながら貴賤上下の差別なく、万物の霊たる身と心との働きをもって天地の間にあるよろずの物を資り、もって衣食住の用を達し、自由自在、互いに人の妨げをなさずしておのおの安楽にこの世を渡らしめ給うの趣意なり。"
+autowrap = true
+
+[node name="HSeparator" type="HSeparator" parent="Sections/Section A"]
+margin_top = 151.0
+margin_right = 1920.0
+margin_bottom = 201.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section A"]
+margin_top = 205.0
+margin_right = 1920.0
+margin_bottom = 412.0
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. "
+autowrap = true
+
+[node name="HSeparator2" type="HSeparator" parent="Sections/Section A"]
+margin_top = 416.0
+margin_right = 1920.0
+margin_bottom = 466.0
+
+[node name="Section B" type="VBoxContainer" parent="Sections"]
+margin_top = 470.0
+margin_right = 1920.0
+margin_bottom = 562.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Sections/Section B"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section B/HBoxContainer"]
+margin_right = 1432.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. "
+autowrap = true
+
+[node name="VSeparator" type="VSeparator" parent="Sections/Section B/HBoxContainer"]
+margin_left = 1436.0
+margin_right = 1486.0
+margin_bottom = 38.0
+
+[node name="CheckBox" type="CheckBox" parent="Sections/Section B/HBoxContainer"]
+margin_left = 1490.0
+margin_right = 1920.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+text = "I agree"
+
+[node name="Condition" parent="Sections/Section B/HBoxContainer/CheckBox" instance=ExtResource( 4 )]
+target = NodePath("../../../../Section C")
+
+[node name="HSeparator3" type="HSeparator" parent="Sections/Section B"]
+margin_top = 42.0
+margin_right = 1920.0
+margin_bottom = 92.0
+
+[node name="Section C" type="VBoxContainer" parent="Sections"]
+margin_top = 566.0
+margin_right = 1920.0
+margin_bottom = 890.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Sections/Section C"]
+margin_right = 1920.0
+margin_bottom = 237.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section C/HBoxContainer2"]
+margin_right = 619.0
+margin_bottom = 237.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor.  quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. "
+autowrap = true
+
+[node name="VSeparator" type="VSeparator" parent="Sections/Section C/HBoxContainer2"]
+margin_left = 623.0
+margin_right = 673.0
+margin_bottom = 237.0
+
+[node name="RadioButtons" parent="Sections/Section C/HBoxContainer2" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 677.0
+margin_right = 1296.0
+margin_bottom = 237.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+id = "Fruit"
+button_labels = [ "Apple", "Banana", "Citrus" ]
+
+[node name="Container" parent="Sections/Section C/HBoxContainer2/RadioButtons" index="0"]
+margin_right = 619.0
+margin_bottom = 237.0
+
+[node name="CheckBox" parent="Sections/Section C/HBoxContainer2/RadioButtons/Container" index="0"]
+margin_right = 619.0
+margin_bottom = 76.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "Apple"
+
+[node name="CheckBox2" parent="Sections/Section C/HBoxContainer2/RadioButtons/Container" index="1"]
+margin_top = 80.0
+margin_right = 619.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "Banana"
+
+[node name="CheckBox3" parent="Sections/Section C/HBoxContainer2/RadioButtons/Container" index="2"]
+margin_top = 160.0
+margin_right = 619.0
+margin_bottom = 237.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "Citrus"
+
+[node name="Condition" parent="Sections/Section C/HBoxContainer2/RadioButtons" instance=ExtResource( 4 )]
+target = NodePath("../../RadioButtons2")
+
+[node name="RadioButtons2" parent="Sections/Section C/HBoxContainer2" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1300.0
+margin_right = 1920.0
+margin_bottom = 237.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+id = "Color"
+button_labels = [ "Red", "Green", "Blue", "Black", "White" ]
+
+[node name="Container" parent="Sections/Section C/HBoxContainer2/RadioButtons2" index="0"]
+margin_right = 620.0
+margin_bottom = 237.0
+
+[node name="CheckBox" parent="Sections/Section C/HBoxContainer2/RadioButtons2/Container" index="0"]
+margin_right = 620.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "Red"
+
+[node name="CheckBox2" parent="Sections/Section C/HBoxContainer2/RadioButtons2/Container" index="1"]
+margin_top = 48.0
+margin_right = 620.0
+margin_bottom = 92.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "Green"
+
+[node name="CheckBox3" parent="Sections/Section C/HBoxContainer2/RadioButtons2/Container" index="2"]
+margin_top = 96.0
+margin_right = 620.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "Blue"
+
+[node name="CheckBox4" parent="Sections/Section C/HBoxContainer2/RadioButtons2/Container" index="3"]
+margin_top = 144.0
+margin_right = 620.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "Black"
+
+[node name="CheckBox5" parent="Sections/Section C/HBoxContainer2/RadioButtons2/Container" index="4"]
+margin_top = 192.0
+margin_right = 620.0
+margin_bottom = 237.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "White"
+
+[node name="Condition" parent="Sections/Section C/HBoxContainer2/RadioButtons2" instance=ExtResource( 4 )]
+target = NodePath("../../../Sub-Section C2")
+
+[node name="HSeparator4" type="HSeparator" parent="Sections/Section C"]
+margin_top = 241.0
+margin_right = 1920.0
+margin_bottom = 291.0
+
+[node name="Sub-Section C2" type="VBoxContainer" parent="Sections/Section C"]
+margin_top = 295.0
+margin_right = 1920.0
+margin_bottom = 324.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Sections/Section C/Sub-Section C2"]
+margin_right = 1920.0
+margin_bottom = 29.0
+
+[node name="ContinueButton" type="Button" parent="Sections/Section C/Sub-Section C2/CenterContainer"]
+margin_left = 914.0
+margin_right = 1005.0
+margin_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Continue"
+
+[connection signal="pressed" from="Sections/Section C/Sub-Section C2/CenterContainer/ContinueButton" to="." method="next"]
+
+[editable path="Sections/Section C/HBoxContainer2/RadioButtons"]
+[editable path="Sections/Section C/HBoxContainer2/RadioButtons2"]

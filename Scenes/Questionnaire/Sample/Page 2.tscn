@@ -1,0 +1,881 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://Scripts/QuestionnairePage.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Tools/RadioButtons.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/LikertScale.gd" type="Script" id=3]
+[ext_resource path="res://Themes/default_theme.tres" type="Theme" id=4]
+[ext_resource path="res://Scenes/Questionnaire/LikertScaleItem.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Questionnaire/Condition.tscn" type="PackedScene" id=6]
+
+[sub_resource type="ButtonGroup" id=1]
+
+[sub_resource type="ButtonGroup" id=2]
+
+[sub_resource type="ButtonGroup" id=3]
+
+[sub_resource type="ButtonGroup" id=4]
+
+[sub_resource type="ButtonGroup" id=5]
+
+[sub_resource type="ButtonGroup" id=6]
+
+[sub_resource type="ButtonGroup" id=7]
+
+[sub_resource type="ButtonGroup" id=8]
+
+[sub_resource type="ButtonGroup" id=9]
+
+[sub_resource type="ButtonGroup" id=10]
+
+[sub_resource type="ButtonGroup" id=11]
+
+[sub_resource type="ButtonGroup" id=12]
+
+[sub_resource type="ButtonGroup" id=13]
+
+[sub_resource type="ButtonGroup" id=14]
+
+[sub_resource type="ButtonGroup" id=15]
+
+[sub_resource type="ButtonGroup" id=16]
+
+[sub_resource type="ButtonGroup" id=17]
+
+[sub_resource type="ButtonGroup" id=18]
+
+[node name="QuestionnairePage" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Sections" type="VBoxContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+theme = ExtResource( 4 )
+
+[node name="Section A" type="VBoxContainer" parent="Sections"]
+margin_right = 1920.0
+margin_bottom = 479.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section A"]
+margin_right = 1920.0
+margin_bottom = 207.0
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. "
+autowrap = true
+
+[node name="HSeparator2" type="HSeparator" parent="Sections/Section A"]
+margin_top = 211.0
+margin_right = 1920.0
+margin_bottom = 261.0
+
+[node name="Text_EN2" type="Label" parent="Sections/Section A"]
+margin_top = 265.0
+margin_right = 1920.0
+margin_bottom = 352.0
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. "
+autowrap = true
+
+[node name="HSeparator3" type="HSeparator" parent="Sections/Section A"]
+margin_top = 356.0
+margin_right = 1920.0
+margin_bottom = 406.0
+
+[node name="Text_EN3" type="Label" parent="Sections/Section A"]
+margin_top = 410.0
+margin_right = 1920.0
+margin_bottom = 437.0
+text = "Regular radio buttons:"
+autowrap = true
+
+[node name="RadioButtons" parent="Sections/Section A" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 441.0
+margin_right = 1920.0
+margin_bottom = 479.0
+button_labels = [ "1", "2", "3", "4", "5" ]
+layout = 1
+
+[node name="Container2" parent="Sections/Section A/RadioButtons" index="0"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container2" index="0"]
+margin_right = 380.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container2" index="1"]
+margin_left = 384.0
+margin_right = 765.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container2" index="2"]
+margin_left = 769.0
+margin_right = 1150.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container2" index="3"]
+margin_left = 1154.0
+margin_right = 1535.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container2" index="4"]
+margin_left = 1539.0
+margin_right = 1920.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 1 )
+text = "5"
+
+[node name="Condition" parent="Sections/Section A/RadioButtons" instance=ExtResource( 6 )]
+target = NodePath("../../../Section B")
+
+[node name="Container3" parent="Sections/Section A/RadioButtons" index="2"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container3" index="0"]
+margin_right = 380.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container3" index="1"]
+margin_left = 384.0
+margin_right = 765.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container3" index="2"]
+margin_left = 769.0
+margin_right = 1150.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container3" index="3"]
+margin_left = 1154.0
+margin_right = 1535.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container3" index="4"]
+margin_left = 1539.0
+margin_right = 1920.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 2 )
+text = "5"
+
+[node name="Container4" parent="Sections/Section A/RadioButtons" index="3"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container4" index="0"]
+margin_right = 380.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 3 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container4" index="1"]
+margin_left = 384.0
+margin_right = 765.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 3 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container4" index="2"]
+margin_left = 769.0
+margin_right = 1150.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 3 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container4" index="3"]
+margin_left = 1154.0
+margin_right = 1535.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 3 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container4" index="4"]
+margin_left = 1539.0
+margin_right = 1920.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 3 )
+text = "5"
+
+[node name="Container5" parent="Sections/Section A/RadioButtons" index="4"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container5" index="0"]
+margin_right = 380.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 4 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container5" index="1"]
+margin_left = 384.0
+margin_right = 765.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 4 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container5" index="2"]
+margin_left = 769.0
+margin_right = 1150.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 4 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container5" index="3"]
+margin_left = 1154.0
+margin_right = 1535.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 4 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container5" index="4"]
+margin_left = 1539.0
+margin_right = 1920.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 4 )
+text = "5"
+
+[node name="Container6" parent="Sections/Section A/RadioButtons" index="5"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container6" index="0"]
+margin_right = 380.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 5 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container6" index="1"]
+margin_left = 384.0
+margin_right = 765.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 5 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container6" index="2"]
+margin_left = 769.0
+margin_right = 1150.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 5 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container6" index="3"]
+margin_left = 1154.0
+margin_right = 1535.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 5 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container6" index="4"]
+margin_left = 1539.0
+margin_right = 1920.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 5 )
+text = "5"
+
+[node name="Container7" parent="Sections/Section A/RadioButtons" index="6"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container7" index="0"]
+margin_right = 380.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 6 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container7" index="1"]
+margin_left = 384.0
+margin_right = 765.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 6 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container7" index="2"]
+margin_left = 769.0
+margin_right = 1150.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 6 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container7" index="3"]
+margin_left = 1154.0
+margin_right = 1535.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 6 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container7" index="4"]
+margin_left = 1539.0
+margin_right = 1920.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 6 )
+text = "5"
+
+[node name="Container8" parent="Sections/Section A/RadioButtons" index="7"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container8" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 7 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container8" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 7 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container8" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 7 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container8" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 7 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container8" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 7 )
+text = "5"
+
+[node name="Container9" parent="Sections/Section A/RadioButtons" index="8"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container9" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 8 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container9" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 8 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container9" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 8 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container9" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 8 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container9" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 8 )
+text = "5"
+
+[node name="Container10" parent="Sections/Section A/RadioButtons" index="9"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container10" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 9 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container10" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 9 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container10" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 9 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container10" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 9 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container10" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 9 )
+text = "5"
+
+[node name="Container11" parent="Sections/Section A/RadioButtons" index="10"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container11" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 10 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container11" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 10 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container11" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 10 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container11" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 10 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container11" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 10 )
+text = "5"
+
+[node name="Container12" parent="Sections/Section A/RadioButtons" index="11"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container12" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 11 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container12" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 11 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container12" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 11 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container12" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 11 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container12" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 11 )
+text = "5"
+
+[node name="Container13" parent="Sections/Section A/RadioButtons" index="12"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container13" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 12 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container13" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 12 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container13" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 12 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container13" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 12 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container13" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 12 )
+text = "5"
+
+[node name="Container14" parent="Sections/Section A/RadioButtons" index="13"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container14" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 13 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container14" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 13 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container14" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 13 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container14" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 13 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container14" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 13 )
+text = "5"
+
+[node name="Container15" parent="Sections/Section A/RadioButtons" index="14"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container15" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 14 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container15" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 14 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container15" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 14 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container15" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 14 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container15" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 14 )
+text = "5"
+
+[node name="Container16" parent="Sections/Section A/RadioButtons" index="15"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container16" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 15 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container16" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 15 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container16" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 15 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container16" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 15 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container16" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 15 )
+text = "5"
+
+[node name="Container17" parent="Sections/Section A/RadioButtons" index="16"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container17" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 16 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container17" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 16 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container17" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 16 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container17" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 16 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container17" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 16 )
+text = "5"
+
+[node name="Container18" parent="Sections/Section A/RadioButtons" index="17"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container18" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 17 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container18" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 17 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container18" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 17 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container18" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 17 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container18" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 17 )
+text = "5"
+
+[node name="Container19" parent="Sections/Section A/RadioButtons" index="18"]
+margin_right = 1920.0
+margin_bottom = 38.0
+
+[node name="CheckBox" parent="Sections/Section A/RadioButtons/Container19" index="0"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 18 )
+text = "1"
+
+[node name="CheckBox2" parent="Sections/Section A/RadioButtons/Container19" index="1"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 18 )
+text = "2"
+
+[node name="CheckBox3" parent="Sections/Section A/RadioButtons/Container19" index="2"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 18 )
+text = "3"
+
+[node name="CheckBox4" parent="Sections/Section A/RadioButtons/Container19" index="3"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 18 )
+text = "4"
+
+[node name="CheckBox5" parent="Sections/Section A/RadioButtons/Container19" index="4"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+group = SubResource( 18 )
+text = "5"
+
+[node name="Section B" type="VBoxContainer" parent="Sections"]
+margin_top = 483.0
+margin_right = 1920.0
+margin_bottom = 637.0
+
+[node name="HSeparator4" type="HSeparator" parent="Sections/Section B"]
+margin_right = 1920.0
+margin_bottom = 50.0
+
+[node name="Text_EN4" type="Label" parent="Sections/Section B"]
+margin_top = 54.0
+margin_right = 1920.0
+margin_bottom = 81.0
+text = "Likert scale in a MarginContainer:"
+autowrap = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Sections/Section B"]
+margin_top = 85.0
+margin_right = 1920.0
+margin_bottom = 154.0
+custom_constants/margin_right = 300
+custom_constants/margin_left = 300
+
+[node name="LikertScale" type="HBoxContainer" parent="Sections/Section B/MarginContainer"]
+margin_left = 300.0
+margin_right = 1620.0
+margin_bottom = 69.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource( 3 )
+id = "LikertOptions"
+labels = [ "Strongly agree", "Agree", "Neutral", "Disagree", "Strongly disagree" ]
+scale_item_scene = ExtResource( 5 )
+
+[node name="Condition" parent="Sections/Section B/MarginContainer/LikertScale" instance=ExtResource( 6 )]
+target = NodePath("../../../../Navigation/CenterContainer2/SubmitButton")
+
+[node name="HSeparator" type="HSeparator" parent="Sections"]
+margin_top = 641.0
+margin_right = 1920.0
+margin_bottom = 691.0
+size_flags_horizontal = 3
+
+[node name="Navigation" type="HBoxContainer" parent="Sections"]
+margin_top = 695.0
+margin_right = 1920.0
+margin_bottom = 724.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Sections/Navigation"]
+margin_right = 958.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="Sections/Navigation/CenterContainer"]
+margin_left = 450.0
+margin_right = 508.0
+margin_bottom = 29.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Back"
+
+[node name="CenterContainer2" type="CenterContainer" parent="Sections/Navigation"]
+margin_left = 962.0
+margin_right = 1920.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SubmitButton" type="Button" parent="Sections/Navigation/CenterContainer2"]
+margin_left = 441.0
+margin_right = 516.0
+margin_bottom = 29.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Submit"
+
+[connection signal="pressed" from="Sections/Navigation/CenterContainer/BackButton" to="." method="back"]
+[connection signal="pressed" from="Sections/Navigation/CenterContainer2/SubmitButton" to="." method="submit"]
+
+[editable path="Sections/Section A/RadioButtons"]
