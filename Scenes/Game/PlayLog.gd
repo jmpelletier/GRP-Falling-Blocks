@@ -89,4 +89,4 @@ func _on_PauseButton_pressed():
 
 
 func _on_QuitButon_pressed():
-	get_tree().change_scene("res://Scenes/Game/Start.tscn")
+	var _err = get_tree().change_scene("res://Scenes/Game/Start.tscn")

@@ -136,7 +136,7 @@ margin_bottom = 939.0
 text = "PLAY"
 
 [node name="AppVersion" parent="." instance=ExtResource( 9 )]
-version = "b987092"
+version = "3ea88df"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 visible = true
