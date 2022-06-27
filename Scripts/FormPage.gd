@@ -3,7 +3,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 extends MarginContainer
-class_name QuestionnairePage
+class_name FormPage
 
 signal back
 signal next

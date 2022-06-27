@@ -3,13 +3,16 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 extends MarginContainer
-class_name Questionnaire
+class_name Form
 
 signal set_item_value(id, value)
+signal form_submit(id, json_string)
 
+export var id = "Demo Form"
 export(PackedScene) var previous_scene
 export(PackedScene) var next_scene
 export(Array, PackedScene) var pages
+export(Dictionary) var extra_data = {}
 
 var current_index = -1
 var current_page = null
@@ -24,9 +27,9 @@ func _show_page(index:int):
 		if current_page != null:
 			current_page.queue_free()
 		
-		current_page = pages[index].instance() as QuestionnairePage
+		current_page = pages[index].instance() as FormPage
 		if current_page == null:
-			push_error("Questionnaire page is not an instance of QuestionnairePage.")
+			push_error("Form page is not an instance of FormPage.")
 			return
 			
 		add_child(current_page)
@@ -38,8 +41,8 @@ func _show_page(index:int):
 		current_page.connect("exit", self, "_exit")
 		current_page.connect("submit", self, "_submit")
 		
-		for id in data.keys():
-			emit_signal("set_item_value", id, data[id])
+		for item_id in data.keys():
+			emit_signal("set_item_value", item_id, data[item_id])
 
 func _next():
 	_show_page(current_index + 1)
@@ -48,6 +51,10 @@ func _back():
 	_show_page(current_index - 1)
 	
 func _submit():
+	for key in extra_data.keys():
+		data[key] = extra_data[key]
+	var json_str = JSON.print(data)
+	emit_signal("form_submit", id, json_str)
 	if next_scene != null:
 		var _err = get_tree().change_scene_to(next_scene)
 	
@@ -55,11 +62,14 @@ func _exit():
 	if previous_scene != null:
 		var _err = get_tree().change_scene_to(previous_scene)
 		
-func _set_bool(id:String, val:bool):
-	data[id] = val
+func _set_bool(item_id:String, val:bool):
+	data[item_id] = val
 	
-func _set_string(id:String, val:String):
-	data[id] = val
+func _set_string(item_id:String, val:String):
+	data[item_id] = val
 	
-func _set_selection(id:String, index:int, label:String):
-	data[id] = {"index":index, "label":label}
+func _set_selection(item_id:String, index:int, label:String):
+	data[item_id] = {"index":index, "label":label}
+	
+func _set_multiple_selection(item_id:String, indices:Array, labels:Array):
+	data[item_id] = {"indices": indices, "labels":labels}

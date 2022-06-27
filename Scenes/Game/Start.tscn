@@ -136,7 +136,7 @@ margin_bottom = 939.0
 text = "PLAY"
 
 [node name="AppVersion" parent="." instance=ExtResource( 9 )]
-version = "0d2e917"
+version = "a505ddc"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 visible = true
@@ -146,8 +146,8 @@ window_title = "Open a File"
 mode = 0
 access = 1
 filters = PoolStringArray( "*.csv" )
-current_dir = "user://C:/Users/jmp/Documents/Godot/GRP-Falling-Blocks"
-current_path = "user://C:/Users/jmp/Documents/Godot/GRP-Falling-Blocks/"
+current_dir = "user://Users/jmp/Documents/Godot/FallingBlocks"
+current_path = "user://Users/jmp/Documents/Godot/FallingBlocks/"
 
 [node name="InvalidLogFile" type="AcceptDialog" parent="."]
 visible = true

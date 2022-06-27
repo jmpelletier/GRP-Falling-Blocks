@@ -5,6 +5,8 @@
 tool
 extends Node2D
 
+const EditorLabel = preload("res://Scenes/Tools/EditorLabel.tscn")
+
 export var target_rotation = 0 setget set_target_rotation
 
 export var grid_size = Vector2(6,6)

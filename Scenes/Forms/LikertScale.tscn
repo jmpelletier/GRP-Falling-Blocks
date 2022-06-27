@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Forms/LikertScaleItem.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/LikertScale.gd" type="Script" id=2]
+
+[node name="LikertScale" type="HBoxContainer"]
+margin_left = 300.0
+margin_right = 1620.0
+margin_bottom = 69.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource( 2 )
+id = "LikertOptions"
+labels = [ "Strongly agree", "Agree", "Neutral", "Disagree", "Strongly disagree" ]
+scale_item_scene = ExtResource( 1 )

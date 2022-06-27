@@ -34,6 +34,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/ClearLines.gd"
 }, {
+"base": "MarginContainer",
+"class": "Form",
+"language": "GDScript",
+"path": "res://Scripts/Form.gd"
+}, {
+"base": "CheckBox",
+"class": "FormCheckbox",
+"language": "GDScript",
+"path": "res://Scripts/FormCheckbox.gd"
+}, {
+"base": "MarginContainer",
+"class": "FormPage",
+"language": "GDScript",
+"path": "res://Scripts/FormPage.gd"
+}, {
 "base": "Node2D",
 "class": "Grid",
 "language": "GDScript",
@@ -75,16 +90,6 @@ _global_script_classes=[ {
 "path": "res://Scripts/QuantizedTimer.gd"
 }, {
 "base": "MarginContainer",
-"class": "Questionnaire",
-"language": "GDScript",
-"path": "res://Scripts/Questionnaire.gd"
-}, {
-"base": "MarginContainer",
-"class": "QuestionnairePage",
-"language": "GDScript",
-"path": "res://Scripts/QuestionnairePage.gd"
-}, {
-"base": "MarginContainer",
 "class": "RadioButtons",
 "language": "GDScript",
 "path": "res://Scripts/RadioButtons.gd"
@@ -120,6 +125,9 @@ _global_script_class_icons={
 "BlockGravity": "",
 "BlockShape": "",
 "ClearLines": "",
+"Form": "",
+"FormCheckbox": "",
+"FormPage": "",
 "Grid": "",
 "GridItem": "",
 "Hold": "",
@@ -128,8 +136,6 @@ _global_script_class_icons={
 "LikertScaleItem": "",
 "Pivot": "",
 "QuantizedTimer": "",
-"Questionnaire": "",
-"QuestionnairePage": "",
 "RadioButtons": "",
 "RotationSettings": "",
 "ShapeLoader": "",
@@ -224,7 +230,7 @@ hold={
 }
 open_log={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":79,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":true,"command":true,"pressed":false,"scancode":79,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

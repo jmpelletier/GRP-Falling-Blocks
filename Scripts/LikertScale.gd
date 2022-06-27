@@ -10,14 +10,14 @@ signal selection(id, index, label)
 
 export var id = "Options"
 export(Array, String) var labels setget set_labels
-export(PackedScene) var scale_item_scene = load("res://Scenes/Questionnaire/LikertScaleItem.tscn")
+export(PackedScene) var scale_item_scene = load("res://Scenes/Forms/LikertScaleItem.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var p = get_parent()
-	while p != null and not p is Questionnaire:
+	while p != null and not p is Form:
 		p = p.get_parent()
-	if p is Questionnaire:
+	if p is Form:
 		var _err = p.connect("set_item_value", self, "_set_item_value")
 		_err = self.connect("selection", p, "_set_selection")
 		

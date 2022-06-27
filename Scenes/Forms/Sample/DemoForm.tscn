@@ -1,0 +1,24 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/Form.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Forms/Sample/Page 2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Themes/default_theme.tres" type="Theme" id=3]
+[ext_resource path="res://Scenes/Forms/Sample/Page 1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Forms/Sample/FormCompleted.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Forms/Sample/FormCancelled.tscn" type="PackedScene" id=6]
+
+[node name="Form" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+theme = ExtResource( 3 )
+script = ExtResource( 1 )
+previous_scene = ExtResource( 6 )
+next_scene = ExtResource( 5 )
+pages = [ ExtResource( 4 ), ExtResource( 2 ) ]
+extra_data = {
+"Foo": [ "bar", "hoge" ]
+}

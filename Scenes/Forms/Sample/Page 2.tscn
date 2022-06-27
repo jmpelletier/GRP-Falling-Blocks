@@ -1,0 +1,151 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/FormPage.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Tools/RadioButtons.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Forms/LikertScale.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Themes/default_theme.tres" type="Theme" id=4]
+[ext_resource path="res://Scenes/Forms/Condition.tscn" type="PackedScene" id=6]
+
+[node name="FormPage" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Sections" type="VBoxContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+theme = ExtResource( 4 )
+
+[node name="Section A" type="VBoxContainer" parent="Sections"]
+margin_right = 1920.0
+margin_bottom = 479.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section A"]
+margin_right = 1920.0
+margin_bottom = 207.0
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. "
+autowrap = true
+
+[node name="HSeparator2" type="HSeparator" parent="Sections/Section A"]
+margin_top = 211.0
+margin_right = 1920.0
+margin_bottom = 261.0
+
+[node name="Text_EN2" type="Label" parent="Sections/Section A"]
+margin_top = 265.0
+margin_right = 1920.0
+margin_bottom = 352.0
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim, neque sit amet posuere iaculis, odio eros cursus turpis, a congue mi diam a tortor. Quisque quis dapibus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin in mi sodales, posuere nisl quis, convallis libero. Proin vehicula purus vitae quam elementum eleifend. Mauris gravida sit amet eros eget dapibus. Cras mollis erat vitae pretium malesuada. Pellentesque gravida viverra neque ut accumsan. Cras dictum metus ullamcorper leo lacinia convallis. Ut eu est ut libero tempus auctor in pellentesque nisi. Maecenas sit amet est non elit elementum accumsan sed at libero. Mauris odio diam, euismod in ex et, rutrum dapibus dolor. "
+autowrap = true
+
+[node name="HSeparator3" type="HSeparator" parent="Sections/Section A"]
+margin_top = 356.0
+margin_right = 1920.0
+margin_bottom = 406.0
+
+[node name="Text_EN3" type="Label" parent="Sections/Section A"]
+margin_top = 410.0
+margin_right = 1920.0
+margin_bottom = 437.0
+text = "Regular radio buttons:"
+autowrap = true
+
+[node name="RadioButtons" parent="Sections/Section A" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 441.0
+margin_right = 1920.0
+margin_bottom = 479.0
+button_labels = [ "1", "2", "3", "4", "5" ]
+layout = 1
+
+[node name="Condition" parent="Sections/Section A/RadioButtons" instance=ExtResource( 6 )]
+target = NodePath("../../../Section B")
+
+[node name="Section B" type="VBoxContainer" parent="Sections"]
+margin_top = 483.0
+margin_right = 1920.0
+margin_bottom = 637.0
+
+[node name="HSeparator4" type="HSeparator" parent="Sections/Section B"]
+margin_right = 1920.0
+margin_bottom = 50.0
+
+[node name="Text_EN4" type="Label" parent="Sections/Section B"]
+margin_top = 54.0
+margin_right = 1920.0
+margin_bottom = 81.0
+text = "Likert scale in a MarginContainer:"
+autowrap = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Sections/Section B"]
+margin_top = 85.0
+margin_right = 1920.0
+margin_bottom = 154.0
+custom_constants/margin_right = 300
+custom_constants/margin_left = 300
+
+[node name="LikertScale" parent="Sections/Section B/MarginContainer" instance=ExtResource( 3 )]
+
+[node name="Condition" parent="Sections/Section B/MarginContainer/LikertScale" instance=ExtResource( 6 )]
+target = NodePath("../../../../Navigation/CenterContainer2/SubmitButton")
+
+[node name="HSeparator" type="HSeparator" parent="Sections"]
+margin_top = 641.0
+margin_right = 1920.0
+margin_bottom = 691.0
+size_flags_horizontal = 3
+
+[node name="Navigation" type="HBoxContainer" parent="Sections"]
+margin_top = 695.0
+margin_right = 1920.0
+margin_bottom = 724.0
+
+[node name="CenterContainer3" type="CenterContainer" parent="Sections/Navigation"]
+margin_right = 637.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+
+[node name="CancelButton" type="Button" parent="Sections/Navigation/CenterContainer3"]
+margin_left = 282.0
+margin_right = 354.0
+margin_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Cancel"
+
+[node name="CenterContainer" type="CenterContainer" parent="Sections/Navigation"]
+margin_left = 641.0
+margin_right = 1278.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BackButton" type="Button" parent="Sections/Navigation/CenterContainer"]
+margin_left = 289.0
+margin_right = 347.0
+margin_bottom = 29.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Back"
+
+[node name="CenterContainer2" type="CenterContainer" parent="Sections/Navigation"]
+margin_left = 1282.0
+margin_right = 1920.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SubmitButton" type="Button" parent="Sections/Navigation/CenterContainer2"]
+margin_left = 281.0
+margin_right = 356.0
+margin_bottom = 29.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Submit"
+
+[connection signal="pressed" from="Sections/Navigation/CenterContainer3/CancelButton" to="." method="exit"]
+[connection signal="pressed" from="Sections/Navigation/CenterContainer/BackButton" to="." method="back"]
+[connection signal="pressed" from="Sections/Navigation/CenterContainer2/SubmitButton" to="." method="submit"]
