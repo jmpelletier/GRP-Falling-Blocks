@@ -20,6 +20,11 @@ func _ready():
 	if likert_scale != null:
 		likert_scale.connect("selection", self, "_on_selection")
 		
+	var validated_input = get_parent() as ValidatedInput
+	if validated_input != null:
+		validated_input.connect("text_validated", self, "_on_input_validated")
+		validated_input.connect("text_invalid", self, "_on_invalid_input")
+		
 	_show_target(target_visible_on_load)
 		
 func _show_target(visible:bool) -> void:
@@ -33,3 +38,9 @@ func _on_toggle(pressed:bool) -> void:
 
 func _on_selection(_id:String, _index:int, _label:String) -> void:
 	_show_target(true)
+	
+func _on_input_validated(_id:String, _input:String) -> void:
+	_show_target(true)
+	
+func _on_invalid_input(_id:String, _input:String) -> void:
+	_show_target(false)

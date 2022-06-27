@@ -6,7 +6,7 @@
 [ext_resource path="res://Fonts/StatsHeadingFont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Fonts/CheckboxFont.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Scenes/Game/Start.gd" type="Script" id=6]
-[ext_resource path="res://Scripts/IntegerInput.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Forms/ValidatedInput.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Fonts/NotoSansJP-Medium.otf" type="DynamicFontData" id=8]
 [ext_resource path="res://Scenes/AppVersion.tscn" type="PackedScene" id=9]
 
@@ -89,21 +89,7 @@ margin_top = 660.0
 margin_right = 1320.0
 margin_bottom = 840.0
 
-[node name="IdInput" type="LineEdit" parent="id_entry"]
-margin_left = 280.0
-margin_top = 120.0
-margin_right = 440.0
-margin_bottom = 144.0
-align = 1
-max_length = 4
-context_menu_enabled = false
-shortcut_keys_enabled = false
-selecting_enabled = false
-placeholder_text = "0000"
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="IdInput" parent="id_entry" instance=ExtResource( 7 )]
 
 [node name="SubjectId" type="Label" parent="id_entry"]
 margin_top = 40.0
@@ -136,7 +122,7 @@ margin_bottom = 939.0
 text = "PLAY"
 
 [node name="AppVersion" parent="." instance=ExtResource( 9 )]
-version = "a505ddc"
+version = "ecef8c1"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 visible = true
@@ -156,6 +142,5 @@ margin_bottom = 58.0
 dialog_text = "Invalid log file."
 
 [connection signal="toggled" from="AgreementCheckBox" to="." method="_on_AgreementCheckBox_toggled"]
-[connection signal="text_validated" from="id_entry/IdInput" to="." method="_on_IdInput_text_validated"]
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

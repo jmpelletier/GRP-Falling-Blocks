@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/ValidatedInput.gd" type="Script" id=1]
+
+[node name="ValidatedInput" type="LineEdit"]
+margin_right = 160.0
+margin_bottom = 24.0
+size_flags_vertical = 0
+align = 1
+max_length = 4
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+placeholder_text = "0000"
+script = ExtResource( 1 )
