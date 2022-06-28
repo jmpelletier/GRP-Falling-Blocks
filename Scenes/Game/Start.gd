@@ -29,4 +29,7 @@ func _on_FileDialog_file_selected(path):
 func _on_form_submit(_form_id:String, form_json:String):
 	Logger.log_event("form", form_json)
 	
+	# Don't forget to log the start of the game.
+	Logger.start_game()
+	
 	var _err = get_tree().change_scene("res://Scenes/Game/Main.tscn")

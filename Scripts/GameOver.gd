@@ -12,10 +12,6 @@ func _init():
 func setup():
 	visible = false
 
-# Called when the node enters the scene tree for the first time.
-#func _ready():
-#	visible = false
-
 func _on_ShapeLoader_cannot_place():
 	visible = true
 	
