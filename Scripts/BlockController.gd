@@ -153,12 +153,22 @@ func _cell_is_empty_or_under_control(cell:Vector2) -> bool:
 	# Return false if cell is out of bounds
 	return false
 
+func _get_block_cell(block:Block) -> Vector2:
+	return parent_grid.get_cell(block.position)
+
+func get_block_cells_json() -> String:
+	var arr = []
+	for block in blocks:
+		var cell = _get_block_cell(block)
+		arr.append([cell.x, cell.y])
+	return JSON.print(arr)
+
 # Checks whether a rotation can be performed without collisions.
 func _can_rotate(transform2D:Transform2D, translation:Vector2) -> bool:
 	for block in blocks:
 		var new_offset = transform2D.xform(block.rotation_offset)
 		var delta = new_offset - block.rotation_offset
-		var old_cell = parent_grid.get_cell(block.position)
+		var old_cell = _get_block_cell(block)
 		var new_cell = old_cell + delta + translation
 		if not _cell_is_empty_or_under_control(new_cell):
 			return false
@@ -204,7 +214,7 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 		# Before we can rotate the blocks, we need to release them from 
 		# the grid's control so that they don't collide against each other.
 		for block in blocks:
-			var cell = parent_grid.get_cell(block.position)
+			var cell = _get_block_cell(block)
 			parent_grid.release_block(cell)
 		
 		# Now we can move the blocks to their new position.
@@ -212,7 +222,7 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 			var new_offset = transform2D.xform(block.rotation_offset)
 			var delta = new_offset - block.rotation_offset
 	
-			var old_cell = parent_grid.get_cell(block.position)
+			var old_cell = _get_block_cell(block)
 			var new_cell = old_cell + delta + kick_offset
 			parent_grid.add_block(block, new_cell)
 			
@@ -225,6 +235,9 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 		# Recalculate the outline
 		if shape_outline != null:
 			shape_outline.update_corners(blocks, parent_grid.cell_size)
+
+		# Log the rotation
+		Logger.log_event("rotate", get_block_cells_json())
 	
 	if did_kick:
 		emit_signal("rotation_kick", kick_rotation_index, kick_tries)
@@ -236,7 +249,7 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 func maximum_movement(direction:Vector2) -> Vector2:
 	var offset = parent_grid.size
 	for block in blocks:
-		var cell = parent_grid.get_cell(block.position)
+		var cell = _get_block_cell(block)
 		var block_offset = Vector2.ZERO
 		while parent_grid.cell_is_in_bounds(cell + block_offset + direction):
 			if not _cell_is_empty_or_under_control(cell + block_offset + direction):
@@ -251,7 +264,7 @@ func maximum_movement(direction:Vector2) -> Vector2:
 # Checks whether the translation, in cells, is possible without collision.
 func can_move(movement:Vector2) -> bool:
 	for block in blocks:
-		var cell = parent_grid.get_cell(block.position)
+		var cell = _get_block_cell(block)
 		var new_cell = cell + movement
 		if not _cell_is_empty_or_under_control(new_cell):
 			return false
@@ -288,12 +301,12 @@ func move(input:Vector2) -> Vector2:
 		# the grid's control so that they don't collide against each other
 		# when moving
 		for block in blocks:
-			var cell = parent_grid.get_cell(block.position)
+			var cell = _get_block_cell(block)
 			parent_grid.release_block(cell)
 		
 		# Now we can move the blocks to their new location
 		for block in blocks:
-			var cell = parent_grid.get_cell(block.position)
+			var cell = _get_block_cell(block)
 			var new_cell = cell + input
 			parent_grid.add_block(block, new_cell)
 		
@@ -304,11 +317,16 @@ func move(input:Vector2) -> Vector2:
 		# Update the movement offset so that we know by how much we moved
 		# since the last reset.
 		position_offset += input
+
+		# Log the motion:
+		# Logger.log_event("move", JSON.print([input.x, input.y]))
+		Logger.log_event("move", get_block_cells_json())
 		
 	return input
 
 # 'Place', or 'lockdown' the blocks on the field, relinquishing control.
 func place_blocks():
+	Logger.log_event("place", get_block_cells_json())
 	for block in blocks:
 		block.place()
 	blocks.clear()
@@ -324,7 +342,7 @@ func _get_line() -> int:
 	var line = -1
 	
 	for block in blocks:
-		var cell = parent_grid.get_cell(block.position)
+		var cell = _get_block_cell(block)
 		if cell.y > line:
 			line = cell.y
 		

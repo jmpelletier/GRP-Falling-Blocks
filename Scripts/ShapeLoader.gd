@@ -161,6 +161,7 @@ func load_shape_scene(shape:PackedScene) -> void:
 					send_to.add_child(child)
 					
 		emit_signal("shape_loaded", shape)
+		Logger.log_event("set_blocks", to_controller.get_block_cells_json())
 
 	# Release the shape template
 	shape_instance.queue_free()
