@@ -7,8 +7,10 @@ class_name Form
 
 signal set_item_value(id, value)
 signal form_submit(id, json_string)
+signal form_cancel()
 
-export var id = "Demo Form"
+export var id = "Falling blocks"
+export var reload_scene_on_exit = false
 export(PackedScene) var previous_scene
 export(PackedScene) var next_scene
 export(Array, PackedScene) var pages
@@ -53,6 +55,7 @@ func _back():
 func _submit():
 	for key in extra_data.keys():
 		data[key] = extra_data[key]
+	data["form_id"] = id
 	var json_str = JSON.print(data)
 	emit_signal("form_submit", id, json_str)
 	if next_scene != null:
@@ -61,6 +64,9 @@ func _submit():
 func _exit():
 	if previous_scene != null:
 		var _err = get_tree().change_scene_to(previous_scene)
+	elif reload_scene_on_exit:
+		var _err = get_tree().reload_current_scene()
+	emit_signal("form_cancel")
 		
 func _set_bool(item_id:String, val:bool):
 	data[item_id] = val

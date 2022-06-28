@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/FormPage.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Tools/RadioButtons.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Forms/RadioButtons.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Forms/LikertScale.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Themes/default_theme.tres" type="Theme" id=4]
 [ext_resource path="res://Scenes/Forms/ValidatedInput.tscn" type="PackedScene" id=5]

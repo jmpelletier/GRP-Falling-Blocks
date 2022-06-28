@@ -6,25 +6,13 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$id_entry.visible = false
-	$StartButton.visible = false
-
-func _on_AgreementCheckBox_toggled(_button_pressed):
-	$id_entry.visible = true
-
-
-func _on_IdInput_text_validated(new_text:String):
-	# Validate the user id:
-	if new_text.length() == 4:
-		Logger.player_id = new_text
-		$StartButton.visible = true
-
+	pass
 
 func _on_StartButton_pressed():
 	Logger.start_game()
 	var _err = get_tree().change_scene("res://Scenes/Game/GazeCheck.tscn")
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("open_log"):
 		$FileDialog.current_dir = ProjectSettings.globalize_path("user://logs") 
 		$FileDialog.popup_centered()
@@ -37,4 +25,8 @@ func _on_FileDialog_file_selected(path):
 		var _err = get_tree().change_scene("res://Scenes/Game/LogPlayback.tscn")
 	else:
 		$InvalidLogFile.popup_centered()
-
+		
+func _on_form_submit(_form_id:String, form_json:String):
+	Logger.log_event("form", form_json)
+	
+	var _err = get_tree().change_scene("res://Scenes/Game/Main.tscn")

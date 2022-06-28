@@ -42,3 +42,4 @@ func _set_item_value(target_id:String, value):
 	if target_id == id:
 		if value is String:
 			text = value
+			_on_text_changed(value)

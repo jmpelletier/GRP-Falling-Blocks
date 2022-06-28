@@ -1,0 +1,159 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/Forms/RadioButtons.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Forms/ValidatedInput.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Forms/Condition.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Themes/default_theme.tres" type="Theme" id=4]
+[ext_resource path="res://Scripts/FormPage.gd" type="Script" id=5]
+
+[node name="FormPage" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1120.0
+script = ExtResource( 5 )
+
+[node name="Sections" type="VBoxContainer" parent="."]
+margin_right = 800.0
+margin_bottom = 1080.0
+theme = ExtResource( 4 )
+
+[node name="Section A" type="VBoxContainer" parent="Sections"]
+margin_right = 800.0
+margin_bottom = 69.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section A"]
+margin_right = 800.0
+margin_bottom = 27.0
+text = "How old are you?"
+autowrap = true
+
+[node name="CenterContainer" type="CenterContainer" parent="Sections/Section A"]
+margin_top = 31.0
+margin_right = 800.0
+margin_bottom = 69.0
+
+[node name="AgeInput" parent="Sections/Section A/CenterContainer" instance=ExtResource( 2 )]
+margin_left = 377.0
+margin_right = 423.0
+margin_bottom = 38.0
+max_length = 3
+placeholder_text = "00"
+id = "Age"
+validation_pattern = "[0-9]+"
+
+[node name="Condition" parent="Sections/Section A/CenterContainer/AgeInput" instance=ExtResource( 3 )]
+target = NodePath("../../../../Section B")
+
+[node name="Section B" type="VBoxContainer" parent="Sections"]
+margin_top = 73.0
+margin_right = 800.0
+margin_bottom = 280.0
+
+[node name="HSeparator" type="HSeparator" parent="Sections/Section B"]
+margin_right = 800.0
+margin_bottom = 50.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section B"]
+margin_top = 54.0
+margin_right = 800.0
+margin_bottom = 81.0
+text = "What is your gender?"
+autowrap = true
+
+[node name="RadioButtons" parent="Sections/Section B" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 85.0
+margin_right = 800.0
+margin_bottom = 207.0
+id = "Gender"
+button_labels = [ "Male", "Female", "Other / Would rather not say" ]
+
+[node name="Condition" parent="Sections/Section B/RadioButtons" instance=ExtResource( 3 )]
+target = NodePath("../../../Section C")
+
+[node name="Section C" type="VBoxContainer" parent="Sections"]
+margin_top = 284.0
+margin_right = 800.0
+margin_bottom = 575.0
+
+[node name="HSeparator" type="HSeparator" parent="Sections/Section C"]
+margin_right = 800.0
+margin_bottom = 50.0
+
+[node name="Text_EN" type="Label" parent="Sections/Section C"]
+margin_top = 54.0
+margin_right = 800.0
+margin_bottom = 81.0
+text = "How often do you play video games?"
+autowrap = true
+
+[node name="RadioButtons" parent="Sections/Section C" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 85.0
+margin_right = 800.0
+margin_bottom = 291.0
+id = "Playtime"
+button_labels = [ "More than 3 hours a day", "1 to 3 hours a day", "Less than 1 hour a day", "Infrequently", "Never" ]
+
+[node name="Condition" parent="Sections/Section C/RadioButtons" instance=ExtResource( 3 )]
+target = NodePath("../../../Navigation/Buttons/CenterContainer/SubmitButton")
+
+[node name="Navigation" type="VBoxContainer" parent="Sections"]
+margin_top = 579.0
+margin_right = 800.0
+margin_bottom = 662.0
+
+[node name="HSeparator" type="HSeparator" parent="Sections/Navigation"]
+margin_right = 800.0
+margin_bottom = 50.0
+
+[node name="Buttons" type="HBoxContainer" parent="Sections/Navigation"]
+margin_top = 54.0
+margin_right = 800.0
+margin_bottom = 83.0
+
+[node name="CenterContainer2" type="CenterContainer" parent="Sections/Navigation/Buttons"]
+margin_right = 398.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Sections/Navigation/Buttons/CenterContainer2"]
+margin_left = 109.0
+margin_right = 289.0
+margin_bottom = 29.0
+custom_constants/separation = 50
+
+[node name="CancelButton" type="Button" parent="Sections/Navigation/Buttons/CenterContainer2/HBoxContainer"]
+margin_right = 72.0
+margin_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Cancel"
+
+[node name="BackButton" type="Button" parent="Sections/Navigation/Buttons/CenterContainer2/HBoxContainer"]
+margin_left = 122.0
+margin_right = 180.0
+margin_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back"
+
+[node name="CenterContainer" type="CenterContainer" parent="Sections/Navigation/Buttons"]
+margin_left = 402.0
+margin_right = 800.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+
+[node name="SubmitButton" type="Button" parent="Sections/Navigation/Buttons/CenterContainer"]
+margin_left = 99.0
+margin_right = 299.0
+margin_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Submit and Start Game"
+
+[connection signal="pressed" from="Sections/Navigation/Buttons/CenterContainer2/HBoxContainer/CancelButton" to="." method="exit"]
+[connection signal="pressed" from="Sections/Navigation/Buttons/CenterContainer2/HBoxContainer/BackButton" to="." method="back"]
+[connection signal="pressed" from="Sections/Navigation/Buttons/CenterContainer/SubmitButton" to="." method="submit"]
