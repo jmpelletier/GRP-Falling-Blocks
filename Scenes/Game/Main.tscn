@@ -79,8 +79,9 @@ align = 1
 [node name="ShapeLoader" parent="." instance=ExtResource( 13 )]
 scale = Vector2( 0.5, 0.5 )
 single_block_index = 6
+preview_count = 2
 target = NodePath("../EditableGrid/BlockController")
-spawn_cell = Vector2( 5, 4 )
+spawn_cell = Vector2( 6, 5 )
 shapes = [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 4 ) ]
 
 [node name="ShapePreview" parent="ShapeLoader" instance=ExtResource( 1 )]
@@ -89,13 +90,9 @@ position = Vector2( 2440, 360 )
 [node name="ShapePreview2" parent="ShapeLoader" instance=ExtResource( 1 )]
 position = Vector2( 2440, 600 )
 
-[node name="ShapePreview3" parent="ShapeLoader" instance=ExtResource( 1 )]
-position = Vector2( 2440, 840 )
-
 [node name="EditableGrid" parent="." instance=ExtResource( 14 )]
 position = Vector2( 960, 140 )
-size = Vector2( 10, 24 )
-offset = Vector2( -5, -4 )
+size = Vector2( 12, 24 )
 margin_top = 4
 hide_margin = true
 
@@ -189,6 +186,7 @@ __meta__ = {
 }
 
 [node name="GameOver" type="Node2D" parent="."]
+visible = false
 position = Vector2( 960, 140 )
 z_index = 2000
 script = ExtResource( 25 )

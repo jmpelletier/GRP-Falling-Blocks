@@ -13,7 +13,7 @@ signal block_removed(block, cell)
 
 export(Vector2) var size = Vector2(10, 10) setget set_size
 export(Vector2) var cell_size = Vector2(40, 40) setget set_cell_size
-export(Vector2) var offset = Vector2.ZERO setget set_offset
+#export(Vector2) var offset = Vector2.ZERO setget set_offset
 export(int) var margin_top = 4 setget set_margin_top
 export(bool) var hide_margin = false
 
@@ -50,11 +50,11 @@ func set_cell_size(value:Vector2):
 	cell_size = value
 	_update()
 	
-func set_offset(value:Vector2):
-	offset = value
-	for child in get_children():
-		_constrain_item(child)
-	_update()
+#func set_offset(value:Vector2):
+#	offset = value
+#	for child in get_children():
+#		_constrain_item(child)
+#	_update()
 
 func _get_block(cell:Vector2):
 	return rows[int(cell.y)][int(cell.x)]
@@ -89,7 +89,8 @@ func get_block_cell(block:Block) -> Vector2:
 func get_cell_position(cell:Vector2) -> Vector2:
 	if not cell_is_in_bounds(cell):
 		return Vector2.ONE * -1
-	return (cell + offset) * cell_size + cell_size * 0.5
+	return cell * cell_size + cell_size * 0.5
+#	return (cell + offset) * cell_size + cell_size * 0.5
 	
 func get_block_at_cell(cell:Vector2) -> Node2D:
 	if cell_is_in_bounds(cell):
@@ -102,7 +103,8 @@ func get_occupied_cells(relative_coords:bool = false) -> Array:
 		for j in range(rows[i].size()):
 			if rows[i][j] != null:
 				if relative_coords:
-					arr.push_back(Vector2(j, i) + offset)
+					arr.push_back(Vector2(j, i))
+#					arr.push_back(Vector2(j, i) + offset)
 				else:
 					arr.push_back(Vector2(j, i))
 	return arr
@@ -228,17 +230,21 @@ func get_cell(local_position:Vector2) -> Vector2:
 	return cell
 	
 func local_position_to_cell_coordinates(local_position:Vector2) -> Vector2:
-	return (local_position / cell_size) - offset
+#	return (local_position / cell_size) - offset
+	return (local_position / cell_size)
 	
 func cell_coordinates_to_local_position(cell_coords:Vector2) -> Vector2:
-	return (cell_coords + offset) * cell_size
+#	return (cell_coords + offset) * cell_size
+	return cell_coords * cell_size
 			
 func _constrain_item(item):
 	if item is GridItem:
-		var relative_cell = item.cell - offset
+#		var relative_cell = item.cell - offset
+		var relative_cell = item.cell
 		relative_cell.x = clamp(relative_cell.x, 0, size.x - 1)
 		relative_cell.y = clamp(relative_cell.y, 0, size.y - 1)
-		var new_cell = relative_cell + offset
+#		var new_cell = relative_cell + offset
+		var new_cell = relative_cell
 		if new_cell != item.cell:
 			item.cell = new_cell
 			item.position = item.cell * cell_size
@@ -285,10 +291,10 @@ func _update():
 			bg.rect_scale = Vector2.ONE
 			bg.rect_size = cell_size * size
 		if bg:
-			bg.rect_position = (offset + margin_size) * cell_size
+#			bg.rect_position = (offset + margin_size) * cell_size
+			bg.rect_position = margin_size * cell_size
 
 func _update_children() -> void:
-
 	for child in get_children():
 		if child is Block:
 			var cell = get_cell(child.position)
