@@ -21,6 +21,10 @@ signal blocks_rotated(line_change)
 # This signal is sent when a 'hard drop' is succesfully perfomed by the player.
 signal hard_drop(motion)
 
+# These signals are used for debugging:
+signal rotation_success(rotation_index, tries, kick_motion)
+signal rotation_fail(rotation_index)
+
 # If this is true, this node allows the user to control the blocks.
 # Turn this off if you want to only control the blocks programatically.
 export var accept_user_input = true
@@ -204,7 +208,6 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 			if kicks[i] is Array and kicks[i][rotation_index] != null:
 				kick_offset = kicks[i][rotation_index]
 				can_rotate = _can_rotate(transform2D, kick_offset)
-				print("Kick tries: " + str(i) + ": " + str(rotation_index) + " -- " + str(kick_offset) + " :: " + str(can_rotate))
 				if can_rotate:
 					did_kick = true
 					kick_rotation_index = rotation_index
@@ -212,6 +215,7 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 					break
 		
 	if can_rotate:
+		emit_signal("rotation_success", rotation_index, kick_tries + 1, kick_offset)
 		# Before we can rotate the blocks, we need to release them from 
 		# the grid's control so that they don't collide against each other.
 		for block in blocks:
@@ -239,7 +243,9 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 
 		# Log the rotation
 		Logger.log_event("rotate", get_block_cells_json())
-	
+	else:
+		emit_signal("rotation_fail", rotation_index)
+		
 	if did_kick:
 		emit_signal("rotation_kick", kick_rotation_index, kick_tries)
 		

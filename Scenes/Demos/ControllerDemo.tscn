@@ -24,7 +24,7 @@ spawn_cell = Vector2( 5, 4 )
 shapes = [ ExtResource( 1 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ) ]
 
 [node name="EditableGrid" parent="." instance=ExtResource( 8 )]
-position = Vector2( 384, 72 )
+position = Vector2( 64, 56 )
 size = Vector2( 10, 24 )
 margin_top = 4
 hide_margin = true
@@ -48,31 +48,143 @@ loop = false
 ticks_per_loop = 20.0
 
 [node name="Label" type="Label" parent="."]
-margin_left = 832.0
-margin_top = 232.0
-margin_right = 1378.0
-margin_bottom = 319.0
+margin_left = 1288.0
+margin_top = 224.0
+margin_right = 1834.0
+margin_bottom = 311.0
 theme = ExtResource( 2 )
 text = "Be careful to save the scene after you change the margin in the editor.
 
 The changes might not be applied to the game otherwise!"
 
+[node name="RotationLabel" type="Label" parent="."]
+margin_left = 496.0
+margin_top = 928.0
+margin_right = 1042.0
+margin_bottom = 1015.0
+theme = ExtResource( 2 )
+text = "Rotation"
+
 [node name="Label2" type="Label" parent="."]
-margin_left = 832.0
-margin_top = 424.0
-margin_right = 1378.0
-margin_bottom = 511.0
+margin_left = 1288.0
+margin_top = 416.0
+margin_right = 1834.0
+margin_bottom = 503.0
 theme = ExtResource( 2 )
 text = "Try turning the margin visibility on and off in the EditableGrid."
 
 [node name="RadioButtons" parent="." instance=ExtResource( 7 )]
-margin_left = 992.0
-margin_top = 656.0
-margin_right = 992.0
-margin_bottom = 656.0
+margin_left = 512.0
+margin_top = 216.0
+margin_right = 617.0
+margin_bottom = 422.0
 button_labels = [ "Shape 0", "Shape 1", "Shape 2", "Shape 3", "Shape 4" ]
 
+[node name="Kicks" type="VBoxContainer" parent="."]
+margin_left = 512.0
+margin_top = 543.0
+margin_right = 1352.0
+margin_bottom = 574.0
+theme = ExtResource( 2 )
+
+[node name="Headers" type="GridContainer" parent="Kicks"]
+margin_right = 840.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+columns = 8
+
+[node name="Label" type="Label" parent="Kicks/Headers"]
+margin_right = 101.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "0->90"
+align = 1
+
+[node name="Label2" type="Label" parent="Kicks/Headers"]
+margin_left = 105.0
+margin_right = 206.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "0->270"
+align = 1
+
+[node name="Label3" type="Label" parent="Kicks/Headers"]
+margin_left = 210.0
+margin_right = 311.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "90->180"
+align = 1
+
+[node name="Label4" type="Label" parent="Kicks/Headers"]
+margin_left = 315.0
+margin_right = 416.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "90->0"
+align = 1
+
+[node name="Label5" type="Label" parent="Kicks/Headers"]
+margin_left = 420.0
+margin_right = 521.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "180->270"
+align = 1
+
+[node name="Label6" type="Label" parent="Kicks/Headers"]
+margin_left = 525.0
+margin_right = 626.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "180->90"
+align = 1
+
+[node name="Label7" type="Label" parent="Kicks/Headers"]
+margin_left = 630.0
+margin_right = 731.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "270->0"
+align = 1
+
+[node name="Label8" type="Label" parent="Kicks/Headers"]
+margin_left = 735.0
+margin_right = 836.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+text = "270->180"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Kicks"]
+margin_top = 31.0
+margin_right = 840.0
+margin_bottom = 49.0
+custom_constants/separation = 18
+
+[node name="Values" type="GridContainer" parent="Kicks"]
+margin_top = 53.0
+margin_right = 840.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+columns = 8
+
 [connection signal="ready" from="." to="ShapeLoader" method="load_next_shape"]
+[connection signal="shape_loaded" from="ShapeLoader" to="." method="_on_ShapeLoader_shape_loaded"]
+[connection signal="rotation_fail" from="EditableGrid/BlockController" to="." method="_on_BlockController_rotation_fail"]
+[connection signal="rotation_success" from="EditableGrid/BlockController" to="." method="_on_BlockController_rotation_success"]
 [connection signal="timer_update" from="QuantizedTimer" to="EditableGrid/BlockController" method="_update"]
 [connection signal="selection" from="RadioButtons" to="." method="_on_RadioButtons_selection"]
 
