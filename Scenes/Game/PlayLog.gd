@@ -58,16 +58,6 @@ func _on_MainTimer_timer_pre_update(_time_seconds, _delta_seconds):
 					$PlaybackUI/Control/KeyInput.text = key_str
 					$PlaybackUI/Control/KeyInput/AnimationPlayer.play("Show")
 					$PlaybackUI/Control/KeyInput/AnimationPlayer.seek(0, true)
-					
-			if Logger.get_event_type(e) == "gaze":
-				var data = Logger.get_event_data(e)
-				var res = JSON.parse(data)
-				if res.error == OK:
-					var ev = res.result
-					var left = Vector2(ev["left"]["x"], ev["left"]["y"])
-					var right = Vector2(ev["right"]["x"], ev["right"]["y"])
-					
-					$GazeDisplay.update_display(left, right)
 		
 		if $MainTimer.enabled:
 			$PlaybackUI/Control/PlaybackLocation.value = frame_index

@@ -58,9 +58,6 @@ enum {PLAYER_ID = 0, REVISION = 1, EVENT_TYPE = 2, EVENT_TIME = 3, EVENT_DATA = 
 func _ready():
 	pass
 
-func data_is_gaze() -> bool:
-	return true
-
 func reset() -> void:
 	agree = false
 	player_id = ""
@@ -138,7 +135,6 @@ func load_log(path):
 				playback_log.frames[i] = PlaybackFrame.new(int(playback_log.events["update"][i][0]))
 				
 		playback_log.add_events_to_frames("key")
-		playback_log.add_events_to_frames("gaze")
 		
 		csv.close()
 		
