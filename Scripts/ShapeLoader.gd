@@ -126,8 +126,8 @@ func load_shape_scene(shape:PackedScene) -> void:
 	for child in shape_instance.get_children():
 		if child is Block:
 			if from_grid != null and to_grid != null:
-				var from_cell = from_grid.get_cell(child.position)
-#				var from_cell = from_grid.get_cell(child.position) + from_grid.offset
+				# var from_cell = from_grid.get_cell(child.position)
+				var from_cell = from_grid.get_cell(child.position) + from_grid.offset
 				var to_cell = from_cell + spawn_cell + Vector2.DOWN
 				if to_grid.cell_is_occupied(to_cell):
 					can_place = false
@@ -149,8 +149,8 @@ func load_shape_scene(shape:PackedScene) -> void:
 		for child in shape_instance.get_children():
 			if child is Block:
 				if from_grid != null and to_grid != null:
-					var from_cell = from_grid.get_cell(child.position)
-#					var from_cell = from_grid.get_cell(child.position) + from_grid.offset
+					# var from_cell = from_grid.get_cell(child.position)
+					var from_cell = from_grid.get_cell(child.position) + from_grid.offset
 					var to_cell = from_cell + spawn_cell + Vector2.DOWN
 					shape_instance.remove_child(child)
 					if to_controller != null:

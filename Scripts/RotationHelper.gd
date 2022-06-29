@@ -42,8 +42,8 @@ func _place_grid_beside(grid:Grid, neighbor:Grid) -> void:
 		var x_offset = (neighbor.size.x + 1) * neighbor.cell_size.x
 		new_position = neighbor.position + Vector2(x_offset, 0)
 	else:
-		new_position = grid.cell_size * -1.0
-		# new_position = grid.offset * grid.cell_size * -1.0
+		# new_position = grid.cell_size * -1.0
+		new_position = grid.offset * grid.cell_size * -1.0
 	grid.position = new_position
 	
 func _copy_blocks(source_grid:Grid, target_grid:Grid, block_scene:PackedScene) -> void:
@@ -52,10 +52,10 @@ func _copy_blocks(source_grid:Grid, target_grid:Grid, block_scene:PackedScene) -
 		for node in source_grid.get_children():
 			if node is Block:
 				var cell = source_grid.get_cell(node.position)
-				var relative_cell = cell
-				var target_cell = relative_cell
-				# var relative_cell = cell + source_grid.offset
-				# var target_cell = relative_cell - target_grid.offset
+				# var relative_cell = cell
+				# var target_cell = relative_cell
+				var relative_cell = cell + source_grid.offset
+				var target_cell = relative_cell - target_grid.offset
 				var new_block = block_scene.instance() as Block
 				new_block.rotation_offset = node.rotation_offset
 				if block_control != null:
@@ -88,8 +88,8 @@ func _show_pivot(target_grid:Grid) -> void:
 	var parent_grid = get_parent() as Grid
 	var pivot_marker = target_grid.get_node_or_null("PivotMarker") as Sprite
 	if pivot != null and parent_grid != null and pivot_marker != null:
-		var cell = pivot.cell - Vector2.ONE * 0.5
-		# var cell = pivot.cell + parent_grid.offset - target_grid.offset - Vector2.ONE * 0.5
+		# var cell = pivot.cell - Vector2.ONE * 0.5
+		var cell = pivot.cell + parent_grid.offset - target_grid.offset - Vector2.ONE * 0.5
 		_resize_sprite(pivot_marker, target_grid.cell_size * 0.75)
 		pivot_marker.position = target_grid.get_cell_position(cell)
 		
@@ -98,8 +98,8 @@ func _add_cell_markers(target_grid:Grid, cells:Array, scene:PackedScene) -> void
 		var marker = scene.instance()
 		_resize_sprite(marker, target_grid.cell_size)
 		target_grid.add_child(marker)
-		marker.position = target_grid.get_cell_position(cell)
-		# marker.position = target_grid.get_cell_position(cell - target_grid.offset)
+		# marker.position = target_grid.get_cell_position(cell)
+		marker.position = target_grid.get_cell_position(cell - target_grid.offset)
 		
 func _setup_kick_grids() -> void:
 	# Clear the previous grids
@@ -121,7 +121,7 @@ func _setup_kick_grids() -> void:
 			try_count += 1
 			
 			var new_grid = grid_scene.instance() as Grid
-			# new_grid.offset = $FromGrid.offset
+			new_grid.offset = $FromGrid.offset
 			new_grid.size = $FromGrid.size
 			new_grid.cell_size = $FromGrid.cell_size
 			$KickGrids.add_child(new_grid)
@@ -173,19 +173,19 @@ func _layout() -> void:
 	
 	# Resize both grids and center their offsets.
 	$FromGrid.size = grid_size
-	# $FromGrid.offset = Vector2(int(grid_size.x * -0.5), int(grid_size.y * -0.5))
+	$FromGrid.offset = Vector2(int(grid_size.x * -0.5), int(grid_size.y * -0.5))
 	$ToGrid.size = grid_size
-	# $ToGrid.offset = $FromGrid.offset
+	$ToGrid.offset = $FromGrid.offset
 	
 	# Now place the grids size-by-side
 	_place_grid_beside($FromGrid, null)
 	_place_grid_beside($ToGrid, $FromGrid)
 	
 	# Adjust the labels
-	$FromLabel.rect_position = $FromGrid.position + Vector2.DOWN * $FromGrid.cell_size.y * ($FromGrid.size.y + 1) * $FromGrid.cell_size
-	$ToLabel.rect_position = $ToGrid.position + Vector2.DOWN * $ToGrid.cell_size.y * ($ToGrid.size.y + 1) * $ToGrid.cell_size
-	# $FromLabel.rect_position = $FromGrid.position + Vector2.DOWN * $FromGrid.cell_size.y * ($FromGrid.size.y + 1) + $FromGrid.offset * $FromGrid.cell_size
-	# $ToLabel.rect_position = $ToGrid.position + Vector2.DOWN * $ToGrid.cell_size.y * ($ToGrid.size.y + 1) + $ToGrid.offset * $ToGrid.cell_size
+	# $FromLabel.rect_position = $FromGrid.position + Vector2.DOWN * $FromGrid.cell_size.y * ($FromGrid.size.y + 1) * $FromGrid.cell_size
+	# $ToLabel.rect_position = $ToGrid.position + Vector2.DOWN * $ToGrid.cell_size.y * ($ToGrid.size.y + 1) * $ToGrid.cell_size
+	$FromLabel.rect_position = $FromGrid.position + Vector2.DOWN * $FromGrid.cell_size.y * ($FromGrid.size.y + 1) + $FromGrid.offset * $FromGrid.cell_size
+	$ToLabel.rect_position = $ToGrid.position + Vector2.DOWN * $ToGrid.cell_size.y * ($ToGrid.size.y + 1) + $ToGrid.offset * $ToGrid.cell_size
 	
 	# Change the label text
 	$FromLabel.text = "From: " + str(labels[target_rotation][0])
