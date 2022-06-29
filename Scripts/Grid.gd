@@ -301,7 +301,7 @@ func _update_children() -> void:
 			add_block(child, cell)
 
 
-func setup():
+func _ready():
 	_update()
 	_update_children()
 	
