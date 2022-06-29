@@ -1,21 +1,23 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/BlockShape.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/RotationSettings_I3.tres" type="Resource" id=3]
 
 [node name="I_Shape" instance=ExtResource( 1 )]
+rotation_settings = ExtResource( 3 )
 
 [node name="Block" parent="." index="1" instance=ExtResource( 2 )]
 position = Vector2( -20, -20 )
-rotation_offset = Vector2( -0.5, -0.5 )
+rotation_offset = Vector2( -1, 0 )
 
 [node name="Block2" parent="." index="2" instance=ExtResource( 2 )]
 position = Vector2( 20, -20 )
-rotation_offset = Vector2( 0.5, -0.5 )
 
 [node name="Block3" parent="." index="3" instance=ExtResource( 2 )]
 position = Vector2( 60, -20 )
-rotation_offset = Vector2( 1.5, -0.5 )
+rotation_offset = Vector2( 1, 0 )
 
 [node name="Pivot" parent="." index="4"]
-cell = Vector2( 0, 0 )
+position = Vector2( 20, -20 )
+cell = Vector2( 3.5, 2.5 )

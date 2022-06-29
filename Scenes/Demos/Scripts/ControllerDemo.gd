@@ -19,7 +19,6 @@ func _on_RadioButtons_selection(_id, index, _label):
 
 func _on_BlockController_rotation_success(rotation_index, tries, kick_motion):
 	$RotationLabel.text = "Rotation: " + str(rotation_index) + "\nTries: " + str(tries) + "\nKick: " + str(kick_motion) 
-	tries -= 1
 	var i = tries * 8 + rotation_index
 	for j in range(kick_labels.size()):
 		if i == j:

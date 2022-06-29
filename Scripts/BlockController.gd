@@ -199,7 +199,7 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 	var kick_offset = Vector2.ZERO
 	var did_kick = false
 	var kick_rotation_index = 0
-	var kick_tries = 0
+	var kick_tries = -1
 	var can_rotate = _can_rotate(transform2D, kick_offset)
 	if not can_rotate:
 		# Try 'kicking' the shape
