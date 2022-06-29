@@ -47,4 +47,4 @@ func _tick(_ticks, delta_ticks):
 			
 func move(motion):
 	if motion.length_squared() > 0:
-			emit_signal("gravity_move", motion)
+		emit_signal("gravity_move", motion)

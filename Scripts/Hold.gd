@@ -24,16 +24,18 @@ func set_active(state:bool) -> void:
 		else:
 			$AnimationPlayer.play("Inactive")
 	
-func hold():
+func hold(silent:bool = false):
 	if can_hold:
 		set_active(false)
 		
 		if active_shape != null:
 			$ShapePreview.preview_shape(active_shape)
 		
-		emit_signal("clear_shape")
+		if not silent:
+			emit_signal("clear_shape")
 		if held_shape != null:
-			emit_signal("load_shape", held_shape)
+			if not silent:
+				emit_signal("load_shape", held_shape)
 			held_shape = active_shape
 		else:
 			# This is a bit of a hack: We only reach this point the very first time
@@ -44,7 +46,8 @@ func hold():
 			# to update the held shape before sending the signal out.
 			held_shape = active_shape
 			can_hold = true
-			emit_signal("load_next_shape")
+			if not silent:
+				emit_signal("load_next_shape")
 			can_hold = false
 			
 		Logger.log_event("hold", held_shape.resource_path)

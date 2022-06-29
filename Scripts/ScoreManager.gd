@@ -14,6 +14,9 @@ var in_soft_drop = false
 
 var cleared_lines_points = [100, 300, 500, 800]
 
+func set_score(val:int) -> void:
+	score = val
+
 func set_level(val:int) -> void:
 	level = val
 	

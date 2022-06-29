@@ -46,6 +46,8 @@ export var autoshift_delay = 0.5
 # The same as autoshift_delay but for rotation.
 export var autorotate_delay = 0.5
 
+export(PackedScene) var default_block
+
 var kicks = []
 
 var parent_grid:Grid = null
@@ -105,6 +107,8 @@ func get_grid() -> Grid:
 # The block will be reparented to the grid.
 # If there is already a block at the same position, nothing happens.
 func add_block(block:Block, cell:Vector2) -> void:
+	if block == null and default_block != null:
+		block = default_block.instance()
 	if _lazy_load_grid() and block != null:
 		if not parent_grid.cell_is_occupied(cell):
 			if block.is_inside_tree() and block.get_parent() != null:
@@ -165,7 +169,7 @@ func get_block_cells_json() -> String:
 	for block in blocks:
 		var cell = _get_block_cell(block)
 		arr.append([cell.x, cell.y])
-	return JSON.print(arr)
+	return arr
 
 # Checks whether a rotation can be performed without collisions.
 func _can_rotate(transform2D:Transform2D, translation:Vector2) -> bool:
@@ -242,7 +246,12 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 			shape_outline.update_corners(blocks, parent_grid.cell_size)
 
 		# Log the rotation
-		Logger.log_event("rotate", get_block_cells_json())
+		# Logger.log_event("rotate", JSON.print(get_block_cells_json()))
+		var transform_json = {
+			"origin":_vector2_to_dic(transform2D.origin),
+			"x":_vector2_to_dic(transform2D.x),
+			"y":_vector2_to_dic(transform2D.y)}
+		Logger.log_event("rotate", JSON.print(transform_json))
 	else:
 		emit_signal("rotation_fail", rotation_index)
 		
@@ -250,6 +259,9 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 		emit_signal("rotation_kick", kick_rotation_index, kick_tries)
 		
 	return can_rotate
+
+func _vector2_to_dic(vec:Vector2) -> Dictionary:
+	return {"x":vec.x,"y":vec.y}
 
 # Find out how far, in cell units, we can move the block without
 # hitting something or going out of bounds.
@@ -327,13 +339,14 @@ func move(input:Vector2) -> Vector2:
 
 		# Log the motion:
 		# Logger.log_event("move", JSON.print([input.x, input.y]))
-		Logger.log_event("move", get_block_cells_json())
+		var block_array = get_block_cells_json()
+		Logger.log_event("move", JSON.print({"delta":{"x":input.x,"y":input.y},"blocks":block_array}))
 		
 	return input
 
 # 'Place', or 'lockdown' the blocks on the field, relinquishing control.
-func place_blocks():
-	Logger.log_event("place", get_block_cells_json())
+func place_blocks(silent:bool = false):
+	Logger.log_event("place", JSON.print(get_block_cells_json()))
 	for block in blocks:
 		block.place()
 	blocks.clear()
@@ -341,8 +354,9 @@ func place_blocks():
 	# Also get rid of the outline
 	if shape_outline != null:
 		shape_outline.hide() 
-		
-	emit_signal("blocks_placed")	
+	
+	if not silent:
+		emit_signal("blocks_placed")	
 
 # Get the y value, in cell units, of the lowest block in our control.
 func _get_line() -> int:

@@ -43,9 +43,19 @@ class PlaybackLog:
 					else:
 						f.events.push_back([event_type, ev[i][0], ev[i][1]])
 						key_i += 1
+
+	func sort_events_in_frames():
+		for event_type in events.keys():
+			add_events_to_frames(event_type)
+		
+		for f in frames:
+			f.events.sort_custom(EventSorter, "sort_events")
+
 	
 class EventSorter:
 	static func sort_events(a, b):
+		if a[0] == b[0]:
+			return a[2] < b[2]
 		if a[0] < b[0]:
 			return true
 		return false
@@ -95,6 +105,7 @@ func load_log(path):
 	
 	var csv = File.new()
 	var err = csv.open(path, File.READ)
+	var index = 0
 	if OK == err and csv.is_open():
 		playback_log = PlaybackLog.new()
 		var _header = csv.get_csv_line()
@@ -110,7 +121,9 @@ func load_log(path):
 				if not playback_log.events.has(event_type):
 					playback_log.events[event_type] = []
 					
-				playback_log.events[event_type].append([event_time, event[EVENT_DATA]])
+				playback_log.events[event_type].append([event_time, event[EVENT_DATA], index])
+				
+				index += 1
 		
 		# Sort the events
 		for e in playback_log.events.values ():
@@ -134,7 +147,8 @@ func load_log(path):
 			for i in range(playback_log.events["update"].size()):
 				playback_log.frames[i] = PlaybackFrame.new(int(playback_log.events["update"][i][0]))
 				
-		playback_log.add_events_to_frames("key")
+		# playback_log.add_events_to_frames("key")
+		playback_log.sort_events_in_frames()
 		
 		csv.close()
 		

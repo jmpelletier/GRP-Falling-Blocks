@@ -37,7 +37,6 @@ func _modify_cell(cell:Vector2) -> void:
 
 
 func _on_EditableGrid_mouse_press(_button, cell):
-	print(cell)
 	_modify_cell(cell)
 
 

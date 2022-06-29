@@ -163,10 +163,15 @@ func load_shape_scene(shape:PackedScene) -> void:
 					send_to.add_child(child)
 					
 		emit_signal("shape_loaded", shape)
-		Logger.log_event("set_blocks", to_controller.get_block_cells_json())
+		Logger.log_event("set_blocks", JSON.print(to_controller.get_block_cells_json()))
 
 	# Release the shape template
 	shape_instance.queue_free()
+	
+func load_shape_at_path(path:String) -> void:
+	for shape in shapes:
+		if shape.resource_path == path:
+			load_shape_scene(shape)
 
 func load_shape(index:int) -> PackedScene:
 	if index >= 0 and index < shapes.size() and shapes[index] != null:

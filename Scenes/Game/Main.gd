@@ -4,8 +4,13 @@
 
 extends Node2D
 
+enum Mode {PLAY, PLAYBACK}
+export(Mode) var mode = Mode.PLAY
+
 func _ready():
-	Logger.log_event("start","")
 	get_tree().call_group("Scheduling", "setup")
-	
-	$MainTimer.start()
+
+	if mode == Mode.PLAY:
+		Logger.log_event("start","")
+				
+		$MainTimer.start()
