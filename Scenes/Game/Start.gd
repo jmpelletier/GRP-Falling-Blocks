@@ -21,10 +21,17 @@ func _on_FileDialog_file_selected(path):
 		$InvalidLogFile.popup_centered()
 
 # Called when the form is completed
-func _on_form_submit(_form_id:String, form_json:String):
-	Logger.log_event("form", form_json)
+func _on_form_submit(form_id:String, form_data:Dictionary):
+	# Get the user id from the form
+	if form_data.has("Subject"):
+		Logger.player_id = form_data["Subject"]
+	else:
+		Logger.player_id = "no_id"
 	
 	# Don't forget to log the start of the game.
 	Logger.start_game()
+	
+	# We must log the form after the game has started.
+	Logger.log_form(form_id, form_data)
 	
 	var _err = get_tree().change_scene("res://Scenes/Game/Main.tscn")

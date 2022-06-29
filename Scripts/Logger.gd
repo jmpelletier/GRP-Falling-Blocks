@@ -211,6 +211,10 @@ func _input(event):
 		var data = JSON.print({"scancode":event.scancode,"pressed":event.pressed,"echo":event.echo})
 		log_event("key", data)
 		
+func log_form(_form_id:String, data:Dictionary) -> void:
+	if log_file != null and log_file.is_open():
+		log_file.store_csv_line([player_id, revision, "form", get_time(), data])
+		
 func log_event(event:String, data:String) -> void:
 	if game_started and log_file != null and log_file.is_open():
 		log_file.store_csv_line([player_id, revision, event, get_time(), data])

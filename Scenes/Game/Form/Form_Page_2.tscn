@@ -19,7 +19,7 @@ theme = ExtResource( 4 )
 
 [node name="Section A" type="VBoxContainer" parent="Sections"]
 margin_right = 800.0
-margin_bottom = 69.0
+margin_bottom = 63.0
 
 [node name="Text_EN" type="Label" parent="Sections/Section A"]
 margin_right = 800.0
@@ -30,12 +30,12 @@ autowrap = true
 [node name="CenterContainer" type="CenterContainer" parent="Sections/Section A"]
 margin_top = 31.0
 margin_right = 800.0
-margin_bottom = 69.0
+margin_bottom = 63.0
 
 [node name="AgeInput" parent="Sections/Section A/CenterContainer" instance=ExtResource( 2 )]
-margin_left = 377.0
-margin_right = 423.0
-margin_bottom = 38.0
+margin_left = 368.0
+margin_right = 432.0
+margin_bottom = 32.0
 max_length = 3
 placeholder_text = "00"
 id = "Age"
@@ -45,9 +45,9 @@ validation_pattern = "[0-9]+"
 target = NodePath("../../../../Section B")
 
 [node name="Section B" type="VBoxContainer" parent="Sections"]
-margin_top = 73.0
+margin_top = 67.0
 margin_right = 800.0
-margin_bottom = 280.0
+margin_bottom = 274.0
 
 [node name="HSeparator" type="HSeparator" parent="Sections/Section B"]
 margin_right = 800.0
@@ -73,9 +73,9 @@ button_labels = [ "Male", "Female", "Other / Would rather not say" ]
 target = NodePath("../../../Section C")
 
 [node name="Section C" type="VBoxContainer" parent="Sections"]
-margin_top = 284.0
+margin_top = 278.0
 margin_right = 800.0
-margin_bottom = 575.0
+margin_bottom = 569.0
 
 [node name="HSeparator" type="HSeparator" parent="Sections/Section C"]
 margin_right = 800.0
@@ -101,9 +101,9 @@ button_labels = [ "More than 3 hours a day", "1 to 3 hours a day", "Less than 1 
 target = NodePath("../../../Navigation/Buttons/CenterContainer/SubmitButton")
 
 [node name="Navigation" type="VBoxContainer" parent="Sections"]
-margin_top = 579.0
+margin_top = 573.0
 margin_right = 800.0
-margin_bottom = 662.0
+margin_bottom = 656.0
 
 [node name="HSeparator" type="HSeparator" parent="Sections/Navigation"]
 margin_right = 800.0

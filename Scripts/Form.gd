@@ -6,7 +6,7 @@ extends MarginContainer
 class_name Form
 
 signal set_item_value(id, value)
-signal form_submit(id, json_string)
+signal form_submit(id, data)
 signal form_cancel()
 
 export var id = "Falling blocks"
@@ -56,8 +56,7 @@ func _submit():
 	for key in extra_data.keys():
 		data[key] = extra_data[key]
 	data["form_id"] = id
-	var json_str = JSON.print(data)
-	emit_signal("form_submit", id, json_str)
+	emit_signal("form_submit", id, data)
 	if next_scene != null:
 		var _err = get_tree().change_scene_to(next_scene)
 	
