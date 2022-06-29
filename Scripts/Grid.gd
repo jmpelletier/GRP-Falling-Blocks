@@ -305,11 +305,6 @@ func setup():
 	_update()
 	_update_children()
 	
-#func _ready():
-#	if Engine.editor_hint:
-#		_update()
-#		_update_children()
-	
 func _process(_delta):
 	if Engine.editor_hint:
 		_update_children()

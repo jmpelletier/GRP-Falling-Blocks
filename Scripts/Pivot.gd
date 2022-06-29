@@ -39,6 +39,7 @@ func _process(_delta):
 			
 		cell_position *= 0.5
 		position = grid.cell_coordinates_to_local_position(cell_position)
+	
 		
 		if cell != cell_position:
 			cell = cell_position

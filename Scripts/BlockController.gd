@@ -204,6 +204,7 @@ func rotate_blocks(transform2D:Transform2D) -> bool:
 			if kicks[i] is Array and kicks[i][rotation_index] != null:
 				kick_offset = kicks[i][rotation_index]
 				can_rotate = _can_rotate(transform2D, kick_offset)
+				print("Kick tries: " + str(i) + ": " + str(rotation_index) + " -- " + str(kick_offset) + " :: " + str(can_rotate))
 				if can_rotate:
 					did_kick = true
 					kick_rotation_index = rotation_index

@@ -169,7 +169,6 @@ func update_corners(blocks : Array, cell_size : Vector2) -> void:
 			add_child(outline)
 
 func _set_corners(block_shape : BlockShape):
-	
 	if not block_outline:
 		push_warning("Block outline scene not set.")
 		return
@@ -185,8 +184,8 @@ func _set_corners(block_shape : BlockShape):
 func init_outline(shape : BlockShape):
 	if shape != null:
 		_set_corners(shape)
-
-func _ready():
+	
+func _process(_delta):
 	if Engine.editor_hint:
 		# Make sure the Block is inside a BlockShape
 		var block_shape := get_parent() as BlockShape
