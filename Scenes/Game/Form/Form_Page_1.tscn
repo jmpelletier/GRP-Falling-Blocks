@@ -62,7 +62,7 @@ target = NodePath("../../../../Id_Entry")
 [node name="Id_Entry" type="VBoxContainer" parent="Sections"]
 margin_top = 547.0
 margin_right = 800.0
-margin_bottom = 670.0
+margin_bottom = 664.0
 
 [node name="HSeparator" type="HSeparator" parent="Sections/Id_Entry"]
 margin_right = 800.0
@@ -80,20 +80,20 @@ autowrap = true
 [node name="CenterContainer" type="CenterContainer" parent="Sections/Id_Entry"]
 margin_top = 85.0
 margin_right = 800.0
-margin_bottom = 123.0
+margin_bottom = 117.0
 
 [node name="ValidatedInput" parent="Sections/Id_Entry/CenterContainer" instance=ExtResource( 4 )]
-margin_left = 377.0
-margin_right = 423.0
-margin_bottom = 38.0
+margin_left = 368.0
+margin_right = 432.0
+margin_bottom = 32.0
 
 [node name="Condition" parent="Sections/Id_Entry/CenterContainer/ValidatedInput" instance=ExtResource( 1 )]
 target = NodePath("../../../../Navigation/Buttons/CenterContainer/ContinueButton")
 
 [node name="Navigation" type="VBoxContainer" parent="Sections"]
-margin_top = 674.0
+margin_top = 668.0
 margin_right = 800.0
-margin_bottom = 757.0
+margin_bottom = 751.0
 
 [node name="HSeparator" type="HSeparator" parent="Sections/Navigation"]
 margin_right = 800.0

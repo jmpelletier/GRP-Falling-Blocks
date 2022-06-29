@@ -33,7 +33,7 @@ text = "FALLING BLOCKS"
 align = 1
 
 [node name="AppVersion" parent="." instance=ExtResource( 9 )]
-version = "b0ad6ac"
+version = "dcfdf9e"
 
 [node name="FileDialog" type="FileDialog" parent="."]
 visible = true

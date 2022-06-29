@@ -31,7 +31,10 @@ func _show_target(visible:bool) -> void:
 	if target != null:
 		var control = get_node(target) as Control
 		if control != null:
+			if visible and not control.visible:
+				control.grab_focus()
 			control.visible = visible
+			
 
 func _on_toggle(pressed:bool) -> void:
 	_show_target(pressed)
