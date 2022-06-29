@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Rotations.svg-5a8a2940357ee9a8d5555fa1efaa8332.stex"
+path="res://.import/Rotations.svg-fae8afeb3ba325959ea66f8e8f0c9675.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://新しいフォルダー/Rotations.svg"
-dest_files=[ "res://.import/Rotations.svg-5a8a2940357ee9a8d5555fa1efaa8332.stex" ]
+source_file="res://Design/Rotations.svg"
+dest_files=[ "res://.import/Rotations.svg-fae8afeb3ba325959ea66f8e8f0c9675.stex" ]
 
 [params]
 
